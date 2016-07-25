@@ -47,10 +47,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/liam/Test
+CMAKE_SOURCE_DIR = /home/liam/Documents/Project/github/nest_track
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/liam/Test/out
+CMAKE_BINARY_DIR = /home/liam/Documents/Project/github/nest_track/out
 
 #=============================================================================
 # Target rules for target CMakeFiles/EntranceTracker.dir
@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = /home/liam/Test/out
 CMakeFiles/EntranceTracker.dir/all:
 	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/depend
 	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/liam/Test/out/CMakeFiles  1 2
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/liam/Documents/Project/github/nest_track/out/CMakeFiles  1 2
 	@echo "Built target EntranceTracker"
 .PHONY : CMakeFiles/EntranceTracker.dir/all
 
@@ -69,9 +69,9 @@ all: CMakeFiles/EntranceTracker.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/EntranceTracker.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/liam/Test/out/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/liam/Documents/Project/github/nest_track/out/CMakeFiles 2
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/EntranceTracker.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/liam/Test/out/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/liam/Documents/Project/github/nest_track/out/CMakeFiles 0
 .PHONY : CMakeFiles/EntranceTracker.dir/rule
 
 # Convenience name for target.

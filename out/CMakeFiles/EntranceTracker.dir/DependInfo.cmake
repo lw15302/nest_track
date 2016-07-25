@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/liam/Test/src/display/VideoPlayer.cpp" "/home/liam/Test/out/CMakeFiles/EntranceTracker.dir/src/display/VideoPlayer.cpp.o"
-  "/home/liam/Test/src/main/Main.cpp" "/home/liam/Test/out/CMakeFiles/EntranceTracker.dir/src/main/Main.cpp.o"
+  "/home/liam/Documents/Project/github/nest_track/src/display/VideoPlayer.cpp" "/home/liam/Documents/Project/github/nest_track/out/CMakeFiles/EntranceTracker.dir/src/display/VideoPlayer.cpp.o"
+  "/home/liam/Documents/Project/github/nest_track/src/main/Main.cpp" "/home/liam/Documents/Project/github/nest_track/out/CMakeFiles/EntranceTracker.dir/src/main/Main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

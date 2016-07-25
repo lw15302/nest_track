@@ -3,7 +3,7 @@
 
 CMakeFiles/EntranceTracker.dir/src/display/VideoPlayer.cpp.o
  ../include/display/VideoPlayer.hpp
- /home/liam/Test/src/display/VideoPlayer.cpp
+ /home/liam/Documents/Project/github/nest_track/src/display/VideoPlayer.cpp
  /usr/local/include/opencv/cxcore.h
  /usr/local/include/opencv2/calib3d.hpp
  /usr/local/include/opencv2/calib3d/calib3d_c.h
@@ -60,7 +60,7 @@ CMakeFiles/EntranceTracker.dir/src/display/VideoPlayer.cpp.o
 CMakeFiles/EntranceTracker.dir/src/main/Main.cpp.o
  ../include/display/VideoPlayer.hpp
  ../include/main/Main.hpp
- /home/liam/Test/src/main/Main.cpp
+ /home/liam/Documents/Project/github/nest_track/src/main/Main.cpp
  /usr/local/include/opencv/cxcore.h
  /usr/local/include/opencv2/calib3d.hpp
  /usr/local/include/opencv2/calib3d/calib3d_c.h

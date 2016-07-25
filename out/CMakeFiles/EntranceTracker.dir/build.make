@@ -35,10 +35,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/liam/Test
+CMAKE_SOURCE_DIR = /home/liam/Documents/Project/github/nest_track
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/liam/Test/out
+CMAKE_BINARY_DIR = /home/liam/Documents/Project/github/nest_track/out
 
 # Include any dependencies generated for this target.
 include CMakeFiles/EntranceTracker.dir/depend.make
@@ -51,17 +51,17 @@ include CMakeFiles/EntranceTracker.dir/flags.make
 
 CMakeFiles/EntranceTracker.dir/src/main/Main.cpp.o: CMakeFiles/EntranceTracker.dir/flags.make
 CMakeFiles/EntranceTracker.dir/src/main/Main.cpp.o: ../src/main/Main.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/liam/Test/out/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/liam/Documents/Project/github/nest_track/out/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/EntranceTracker.dir/src/main/Main.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/EntranceTracker.dir/src/main/Main.cpp.o -c /home/liam/Test/src/main/Main.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/EntranceTracker.dir/src/main/Main.cpp.o -c /home/liam/Documents/Project/github/nest_track/src/main/Main.cpp
 
 CMakeFiles/EntranceTracker.dir/src/main/Main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/EntranceTracker.dir/src/main/Main.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/liam/Test/src/main/Main.cpp > CMakeFiles/EntranceTracker.dir/src/main/Main.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/liam/Documents/Project/github/nest_track/src/main/Main.cpp > CMakeFiles/EntranceTracker.dir/src/main/Main.cpp.i
 
 CMakeFiles/EntranceTracker.dir/src/main/Main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/EntranceTracker.dir/src/main/Main.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/liam/Test/src/main/Main.cpp -o CMakeFiles/EntranceTracker.dir/src/main/Main.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/liam/Documents/Project/github/nest_track/src/main/Main.cpp -o CMakeFiles/EntranceTracker.dir/src/main/Main.cpp.s
 
 CMakeFiles/EntranceTracker.dir/src/main/Main.cpp.o.requires:
 .PHONY : CMakeFiles/EntranceTracker.dir/src/main/Main.cpp.o.requires
@@ -74,17 +74,17 @@ CMakeFiles/EntranceTracker.dir/src/main/Main.cpp.o.provides.build: CMakeFiles/En
 
 CMakeFiles/EntranceTracker.dir/src/display/VideoPlayer.cpp.o: CMakeFiles/EntranceTracker.dir/flags.make
 CMakeFiles/EntranceTracker.dir/src/display/VideoPlayer.cpp.o: ../src/display/VideoPlayer.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/liam/Test/out/CMakeFiles $(CMAKE_PROGRESS_2)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/liam/Documents/Project/github/nest_track/out/CMakeFiles $(CMAKE_PROGRESS_2)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/EntranceTracker.dir/src/display/VideoPlayer.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/EntranceTracker.dir/src/display/VideoPlayer.cpp.o -c /home/liam/Test/src/display/VideoPlayer.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/EntranceTracker.dir/src/display/VideoPlayer.cpp.o -c /home/liam/Documents/Project/github/nest_track/src/display/VideoPlayer.cpp
 
 CMakeFiles/EntranceTracker.dir/src/display/VideoPlayer.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/EntranceTracker.dir/src/display/VideoPlayer.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/liam/Test/src/display/VideoPlayer.cpp > CMakeFiles/EntranceTracker.dir/src/display/VideoPlayer.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/liam/Documents/Project/github/nest_track/src/display/VideoPlayer.cpp > CMakeFiles/EntranceTracker.dir/src/display/VideoPlayer.cpp.i
 
 CMakeFiles/EntranceTracker.dir/src/display/VideoPlayer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/EntranceTracker.dir/src/display/VideoPlayer.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/liam/Test/src/display/VideoPlayer.cpp -o CMakeFiles/EntranceTracker.dir/src/display/VideoPlayer.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/liam/Documents/Project/github/nest_track/src/display/VideoPlayer.cpp -o CMakeFiles/EntranceTracker.dir/src/display/VideoPlayer.cpp.s
 
 CMakeFiles/EntranceTracker.dir/src/display/VideoPlayer.cpp.o.requires:
 .PHONY : CMakeFiles/EntranceTracker.dir/src/display/VideoPlayer.cpp.o.requires
@@ -140,6 +140,6 @@ CMakeFiles/EntranceTracker.dir/clean:
 .PHONY : CMakeFiles/EntranceTracker.dir/clean
 
 CMakeFiles/EntranceTracker.dir/depend:
-	cd /home/liam/Test/out && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/liam/Test /home/liam/Test /home/liam/Test/out /home/liam/Test/out /home/liam/Test/out/CMakeFiles/EntranceTracker.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/liam/Documents/Project/github/nest_track/out && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/liam/Documents/Project/github/nest_track /home/liam/Documents/Project/github/nest_track /home/liam/Documents/Project/github/nest_track/out /home/liam/Documents/Project/github/nest_track/out /home/liam/Documents/Project/github/nest_track/out/CMakeFiles/EntranceTracker.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/EntranceTracker.dir/depend
 

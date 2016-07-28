@@ -9,16 +9,17 @@
   */
 int VideoPlayer::run(void)
 {
-  cv::VideoCapture capture(0);
+  initVC();
+  openStream();
+}
 
-  if( !capture.isOpened() ) {
-    std::cout << "Cannot open video stream" << std::endl;
-    return -1;
+
+void VideoPlayer::initVC() {
+  if(!capture.open(0)) {
+      throw "Cannot open video stream";
   }
 
   cv::namedWindow("Tracker");
-
-  openStream(capture);
 }
 
 
@@ -26,7 +27,7 @@ VideoPlayer::VideoPlayer()
 {
   threshold = 100;
   threshold_max = 255;
-
+  rng(12345);
 }
 
 
@@ -35,26 +36,39 @@ VideoPlayer::VideoPlayer()
  * Private functions
  */
 
-/**
- * Uses the OpenCV VideoCapture object to create open the video stream and
- * display it on the screen
- * @params - VideoCapture object initialised in run()
- */
-void VideoPlayer::openStream(cv::VideoCapture capture)
+
+void VideoPlayer::openStream()
 {
+  pMOG2 = cv::createBackgroundSubtractorMOG2();
+  if(!capture.read(background)) {
+    throw "Unable to read frame for background";
+  }
+  captureStream();
+}
+
+
+void VideoPlayer::captureBackground() {
+}
+
+
+
+void VideoPlayer::captureStream() {
   while(1) {
-    cv::Mat frame;
+    cv::Mat colourFrame;
+
     bool read = capture.read(frame);
 
     if(!read) {
       std::cout << "Cannot read frame" << std::endl;
       break;
     }
+    cv::cvtColor(frame, frame, CV_BGR2GRAY);
+    transform();
+    pMOG2->apply(frame, fgMaskMOG2);
+    //
+    boundingBox();
 
-    cv::Mat transformedFrame = transform(frame);
-    cv::Mat boundingBoxFrame = boundingBox(transformedFrame);
-
-    cv::imshow("Tracker", boundingBoxFrame);
+    cv::imshow("Tracker", fgMaskMOG2);
 
     if(cv::waitKey(30) == 27) {
       std::cout << "Exiting program" << std::endl;
@@ -63,24 +77,22 @@ void VideoPlayer::openStream(cv::VideoCapture capture)
   }
 }
 
+
 /**
  * Converts frame to grayscale, applies blur and binary threshold
  * @params - frame to convert
  * @return - converted frame
  */
-cv::Mat VideoPlayer::transform(cv::Mat frame)
+void VideoPlayer::transform()
 {
-  cv::Mat transformed;
-  cv::cvtColor(frame, transformed, CV_BGR2GRAY);
-  cv::blur(transformed, transformed, cv::Size(3, 3));
-  cv::threshold(transformed, transformed, threshold, threshold_max, cv::THRESH_BINARY);
-  return transformed;
+  // cv::cvtColor(frame, transformed, CV_BGR2GRAY);
+  cv::threshold(frame, frame, threshold, threshold_max, cv::THRESH_BINARY);
+  cv::blur(frame, frame, cv::Size(3, 3));
 }
 
 
-cv::Mat VideoPlayer::boundingBox(cv::Mat frame)
+void VideoPlayer::boundingBox()
 {
-  cv::Mat withRect;
   std::vector<std::vector<cv::Point> > contours;
   std::vector<cv::Vec4i> hierarchy;
 
@@ -90,24 +102,30 @@ cv::Mat VideoPlayer::boundingBox(cv::Mat frame)
   int cSize = contours.size();
 
   std::vector<std::vector<cv::Point> > contours_poly(cSize);
-  std::vector<cv::Rect> boundRect(cSize);
+  cv::Rect boundRect;
   std::vector<cv::Point2f> centre(cSize);
   std::vector<float> radius(cSize);
 
+  double area = 0;
+  double tempArea  = 0;
+  int largestIdx = 0;
+
+
   for(int i = 0; i < cSize; i++) {
-    cv::approxPolyDP(cv::Mat(contours[i]), contours_poly[i], 3, true);
-    boundRect[i] = boundingRect(cv::Mat(contours_poly[i]));
-    cv::minEnclosingCircle((cv::Mat)contours_poly[i], centre[i], radius[i]);
+
+    tempArea = cv::contourArea(contours[i], false);
+    if(tempArea > area) largestIdx = i;
+    area = tempArea;
   }
 
-  withRect = cv::Mat::zeros(frame.size(), CV_8UC3);
+  cv::approxPolyDP(cv::Mat(contours[largestIdx]), contours_poly[largestIdx], 5, true);
+  boundRect = boundingRect(cv::Mat(contours_poly[largestIdx]));
+  cv::minEnclosingCircle((cv::Mat)contours_poly[largestIdx], centre[largestIdx], radius[largestIdx]);
 
   for(int i = 0; i < cSize; i++) {
     cv::Scalar colour = cv::Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
-    cv::drawContours(withRect, contours_poly, i, colour, 1, 8, std::vector<cv::Vec4i>(), 0, cv::Point());
-    cv::rectangle(withRect, boundRect[i].tl(), boundRect[i].br(), colour, 2, 8, 0);
-    cv::circle(withRect, centre[i], (int)radius[i], colour, 2, 8, 0);
+    cv::drawContours(frame, contours_poly, i, colour, 1, 8, std::vector<cv::Vec4i>(), 0, cv::Point());
+    cv::rectangle(frame, boundRect.tl(), boundRect.br(), colour, 2, 8, 0);
+    cv::circle(frame, centre[i], (int)radius[i], colour, 2, 8, 0);
   }
-
-  return withRect;
 }

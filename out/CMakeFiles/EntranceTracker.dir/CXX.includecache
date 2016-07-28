@@ -7,6 +7,8 @@
 #IncludeRegexTransform: 
 
 ../include/display/VideoPlayer.hpp
+Tracker.hpp
+-
 iostream
 -
 opencv2/opencv.hpp

@@ -6,6 +6,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/liam/Documents/Project/github/nest_track/src/display/VideoPlayer.cpp" "/home/liam/Documents/Project/github/nest_track/CMakeFiles/EntranceTracker.dir/src/display/VideoPlayer.cpp.o"
   "/home/liam/Documents/Project/github/nest_track/src/main/Main.cpp" "/home/liam/Documents/Project/github/nest_track/CMakeFiles/EntranceTracker.dir/src/main/Main.cpp.o"
+  "/home/liam/Documents/Project/github/nest_track/src/track/Tracker.cpp" "/home/liam/Documents/Project/github/nest_track/CMakeFiles/EntranceTracker.dir/src/track/Tracker.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -19,6 +20,7 @@ set(CMAKE_C_TARGET_INCLUDE_PATH
   "/usr/local/include"
   "include/main"
   "include/display"
+  "include/track"
   )
 set(CMAKE_CXX_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})
 set(CMAKE_Fortran_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})

@@ -1,5 +1,12 @@
 #include <Tracker.hpp>
 
+/**
+ * Public functions
+ */
+
+/**
+ * Tracker class constructor
+ */
 Tracker::Tracker()
 {
   samplePosition = 0;
@@ -9,6 +16,12 @@ Tracker::Tracker()
   initRectArray(rectH);
 }
 
+
+/**
+ * Returns the Tracker field of interest
+ * @param  p - enumerated type specifying the field of interest
+ * @return   - value of the field of interst
+ */
 int Tracker::get(Property p)
 {
   switch(p) {
@@ -25,22 +38,11 @@ int Tracker::get(Property p)
   }
 }
 
-
-void Tracker::set(int val, Property p)
-{
-  switch(p) {
-    case X:
-      x = val;
-      break;
-    case Y:
-      y = val;
-      break;
-    default:
-      break;
-  }
-}
-
-
+/**
+ * Add the current bounding box value to the array of box values. These area
+ * used to calculate the average value over the previous 5 frames
+ * @param box - current bounding box from VideoPlayer object
+ */
 void Tracker::averageTrackerProperties(cv::Rect box)
 {
   if(samplePosition == SAMPLE) samplePosition = 0;
@@ -55,11 +57,18 @@ void Tracker::averageTrackerProperties(cv::Rect box)
   setAvg(W, rectW);
   setAvg(H, rectH);
 
-
   samplePosition++;
 }
 
 
+/**
+ * Private functions
+ */
+
+/**
+ * Initialises property array values to 0.
+ * @param rectProp - array with property values of interst
+ */
 void Tracker::initRectArray(int rectProp[])
 {
   for(int i = 0; i < SAMPLE; i++) {
@@ -68,6 +77,12 @@ void Tracker::initRectArray(int rectProp[])
 }
 
 
+/**
+ * Calculates the average property value over the past 5 frames and assigns it
+ * to the appropriate field
+ * @param p        - the property of interest
+ * @param rectProp - the property array of interst
+ */
 void Tracker::setAvg(Property p, int rectProp[])
 {
   int value = 0;

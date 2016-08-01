@@ -4,40 +4,48 @@
  */
 
  /**
-  * Create VideoCapture object, check that it is valid and initialise the
-  * stream
-  */
-int VideoPlayer::run(void)
+ * VideoPlayer class constructor. Initialises the thresholds used in
+ * transform() and a random number generator used for bounding box highlight
+ * colours
+ */
+ VideoPlayer::VideoPlayer()
+ {
+   tracking = Tracker();
+   threshold = 100;
+   threshold_max = 255;
+   rng(12345);
+ }
+
+
+/**
+ * Calls the initialisation functions
+ */
+void VideoPlayer::run(void)
 {
   initVC();
   openStream();
 }
 
 
+/**
+ * Initialises the OpenCV VideoCapture object. Throws exception if there is
+ * a problem
+ */
 void VideoPlayer::initVC() {
   if(!capture.open(0)) {
       throw "Cannot open video stream";
   }
-
   cv::namedWindow("Tracker");
 }
-
-
-VideoPlayer::VideoPlayer()
-{
-  tracking = Tracker();
-  threshold = 100;
-  threshold_max = 255;
-  rng(12345);
-}
-
 
 
 /**
  * Private functions
  */
 
-
+/**
+ * Creates a background subtractor and calls the main video capturing function
+ */
 void VideoPlayer::openStream()
 {
   pMOG2 = cv::createBackgroundSubtractorMOG2();
@@ -48,11 +56,18 @@ void VideoPlayer::openStream()
 }
 
 
+/**
+ * [VideoPlayer::captureBackground description]
+ */
 void VideoPlayer::captureBackground() {
 }
 
 
-
+/**
+ * Contains the main loop that captures and displays the frames from the
+ * camera. It also calls a number of functions associated with image processing
+ * and object detection
+ */
 void VideoPlayer::captureStream() {
   while(1) {
     cv::Mat colourFrame;
@@ -63,7 +78,7 @@ void VideoPlayer::captureStream() {
       std::cout << "Cannot read frame" << std::endl;
       break;
     }
-    cv::cvtColor(frame, frame, CV_BGR2GRAY);
+
     transform();
     pMOG2->apply(frame, fgMaskMOG2);
 
@@ -87,12 +102,15 @@ void VideoPlayer::captureStream() {
  */
 void VideoPlayer::transform()
 {
-  // cv::cvtColor(frame, transformed, CV_BGR2GRAY);
+  cv::cvtColor(frame, frame, CV_BGR2GRAY);
   cv::threshold(frame, frame, threshold, threshold_max, cv::THRESH_BINARY);
   cv::blur(frame, frame, cv::Size(3, 3));
 }
 
 
+/**
+ * Draws a bounding box around the object with the largest contour
+ */
 void VideoPlayer::boundingBox()
 {
   std::vector<std::vector<cv::Point> > contours;

@@ -3,11 +3,12 @@
 #include <opencv2/opencv.hpp>
 
 
+
 class VideoPlayer
 {
   public:
     VideoPlayer();
-    int run(void);
+    void run(void);
     void initVC();
 
   private:

@@ -1,13 +1,23 @@
 #include <opencv2/opencv.hpp>
 
-enum Coordinate {X, Y}
+#define SAMPLE 5
+typedef enum Property {X, Y, W, H} Property;
 
 class Tracker
 {
-  private:
-    int x;
-    int y;
 
-    int get(Coordinate c);
-    void set(int val, Coordinate c);
-}
+  public:
+    Tracker();
+
+    int get(Property p);
+    void set(int val, Property p);
+    void averageTrackerProperties(cv::Rect box);
+
+  private:
+    int x, y, w, h;
+    int rectX[SAMPLE], rectY[SAMPLE], rectW[SAMPLE], rectH[SAMPLE];
+    int samplePosition;
+
+    void setAvg(Property p, int rectProp[]);
+    void initRectArray(int rectProp[]);
+};

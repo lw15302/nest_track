@@ -7,9 +7,9 @@
 #IncludeRegexTransform: 
 
 ../include/display/VideoPlayer.hpp
-Tracker.hpp
--
 iostream
+-
+Tracker.hpp
 -
 opencv2/opencv.hpp
 -
@@ -18,12 +18,20 @@ opencv2/opencv.hpp
 VideoPlayer.hpp
 -
 
+../include/track/Tracker.hpp
+opencv2/opencv.hpp
+-
+
 /home/liam/Documents/Project/github/nest_track/src/display/VideoPlayer.cpp
 VideoPlayer.hpp
 -
 
 /home/liam/Documents/Project/github/nest_track/src/main/Main.cpp
 Main.hpp
+-
+
+/home/liam/Documents/Project/github/nest_track/src/track/Tracker.cpp
+Tracker.hpp
 -
 
 /usr/local/include/opencv/cxcore.h

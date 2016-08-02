@@ -83,14 +83,8 @@ void VideoPlayer::captureStream() {
     pMOG2->apply(frame, fgMaskMOG2);
 
     boundingBox();
-
     cv::imshow("Tracker", fgMaskMOG2);
-
-    if(cv::waitKey(30) == 27) {
-      std::cout << "Exiting program" << std::endl;
-      capture.release();
-      break;
-    }
+    if(checkExit()) break;
   }
 }
 
@@ -113,45 +107,78 @@ void VideoPlayer::transform()
  */
 void VideoPlayer::boundingBox()
 {
-  std::vector<std::vector<cv::Point> > contours;
-  std::vector<cv::Vec4i> hierarchy;
+  int largestIdx = 0;
 
+  getContours();
+  getLargestContour(&largestIdx);
+  getBoundingShapes(largestIdx);
+  getAverageTrackerProperties();
+  drawOnFrame(largestIdx);
+}
+
+
+
+void VideoPlayer::getContours()
+{
   cv::findContours(frame, contours, hierarchy, CV_RETR_TREE,
     CV_CHAIN_APPROX_SIMPLE, cv::Point(0, 0));
 
-  int cSize = contours.size();
+    cSize = contours.size();
 
-  std::vector<std::vector<cv::Point> > contours_poly(cSize);
-  cv::Rect boundRect;
-  std::vector<cv::Point2f> centre(cSize);
-  std::vector<float> radius(cSize);
-
-  double area = 0;
-  double tempArea  = 0;
-  int largestIdx = 0;
+    contours_poly = std::vector<std::vector<cv::Point> >(cSize);
+    centre = std::vector<cv::Point2f>(cSize);
+    radius = std::vector<float>(cSize);
+}
 
 
-  for(int i = 0; i < cSize; i++) {
-    tempArea = cv::contourArea(contours[i], false);
-    if(tempArea > area) largestIdx = i;
-    area = tempArea;
-  }
-
-  cv::approxPolyDP(cv::Mat(contours[largestIdx]), contours_poly[largestIdx], 5, true);
-  boundRect = boundingRect(cv::Mat(contours_poly[largestIdx]));
-  cv::minEnclosingCircle((cv::Mat)contours_poly[largestIdx], centre[largestIdx], radius[largestIdx]);
-
+void VideoPlayer::getAverageTrackerProperties()
+{
   tracking.averageTrackerProperties(boundRect);
+
   trackX = tracking.get(X);
   trackY = tracking.get(Y);
   trackW = tracking.get(W);
   trackH = tracking.get(H);
-
   std::cout<< "x:"<<trackX<<" y:"<<trackY<<" w:"<<trackW<<" h:"<<trackH<<std::endl;
+}
 
+
+void VideoPlayer::getBoundingShapes(int index)
+{
+  cv::approxPolyDP(cv::Mat(contours[index]), contours_poly[index], 5, true);
+  boundRect = boundingRect(cv::Mat(contours_poly[index]));
+  cv::minEnclosingCircle((cv::Mat)contours_poly[index], centre[index], radius[index]);
+}
+
+
+void VideoPlayer::drawOnFrame(int index)
+{
   cv::Scalar colour = cv::Scalar(0,255, 0);
-    // rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
-  cv::drawContours(frame, contours_poly, largestIdx, colour, 1, 8, std::vector<cv::Vec4i>(), 0, cv::Point());
+  // rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
+  cv::drawContours(frame, contours_poly, index, colour, 1, 8, std::vector<cv::Vec4i>(), 0, cv::Point());
   cv::rectangle(frame, cv::Point(trackX, trackY), cv::Point(trackX + trackW, trackY + trackY), colour, 2, 8, 0);
-  cv::circle(frame, centre[largestIdx], (int)radius[largestIdx], colour, 2, 8, 0);
+  cv::circle(frame, centre[index], (int)radius[index], colour, 2, 8, 0);
+}
+
+void VideoPlayer::getLargestContour(int* index)
+{
+  double area = 0;
+  double tempArea  = 0;
+
+  for(int i = 0; i < cSize; i++) {
+    tempArea = cv::contourArea(contours[i], false);
+    if(tempArea > area) *index = i;
+    area = tempArea;
+  }
+}
+
+
+bool VideoPlayer::checkExit()
+{
+  if(cv::waitKey(30) == 27) {
+    std::cout << "Exiting program" << std::endl;
+    capture.release();
+    return true;
+  }
+  return false;
 }

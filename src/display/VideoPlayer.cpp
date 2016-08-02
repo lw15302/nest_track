@@ -117,7 +117,10 @@ void VideoPlayer::boundingBox()
 }
 
 
-
+/**
+ * Finds all of the contours in the current frame and adds them to a vector.
+ * Finds the centre and radius of the object, for use in drawing a circle
+ */
 void VideoPlayer::getContours()
 {
   cv::findContours(frame, contours, hierarchy, CV_RETR_TREE,
@@ -131,6 +134,10 @@ void VideoPlayer::getContours()
 }
 
 
+/**
+ * Sets the tracking properties based on an average of the past 5 frames. These
+ * values are used later to draw a bounding rectangle
+ */
 void VideoPlayer::getAverageTrackerProperties()
 {
   tracking.averageTrackerProperties(boundRect);
@@ -143,6 +150,11 @@ void VideoPlayer::getAverageTrackerProperties()
 }
 
 
+/**
+ * Finds the bounding box around the largest contour. Also finds the minimum
+ * enclosing circle around the largest contour
+ * @param index - the index of the largest contour in the contours vector
+ */
 void VideoPlayer::getBoundingShapes(int index)
 {
   cv::approxPolyDP(cv::Mat(contours[index]), contours_poly[index], 5, true);
@@ -151,15 +163,22 @@ void VideoPlayer::getBoundingShapes(int index)
 }
 
 
+/**
+ * Draws the contours and the bounding shapes on the screen
+ * @param index - the index of the largest contour in the contours vector
+ */
 void VideoPlayer::drawOnFrame(int index)
 {
-  cv::Scalar colour = cv::Scalar(0,255, 0);
-  // rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
+  cv::Scalar colour = cv::Scalar(255,0, 0);
   cv::drawContours(frame, contours_poly, index, colour, 1, 8, std::vector<cv::Vec4i>(), 0, cv::Point());
   cv::rectangle(frame, cv::Point(trackX, trackY), cv::Point(trackX + trackW, trackY + trackY), colour, 2, 8, 0);
   cv::circle(frame, centre[index], (int)radius[index], colour, 2, 8, 0);
 }
 
+/**
+ * Finds the largest contour in the array of contours
+ * @param index - the index of the largest contour in the contours vector
+ */
 void VideoPlayer::getLargestContour(int* index)
 {
   double area = 0;

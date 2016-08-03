@@ -10,10 +10,9 @@
 Tracker::Tracker()
 {
   samplePosition = 0;
-  initRectArray(rectX);
-  initRectArray(rectY);
-  initRectArray(rectW);
-  initRectArray(rectH);
+  initArray(arrayX);
+  initArray(arrayY);
+  initArray(arrayRad);
 }
 
 
@@ -29,10 +28,8 @@ int Tracker::get(Property p)
       return x;
     case Y:
       return y;
-    case W:
-      return w;
-    case H:
-      return h;
+    case RADIUS:
+      return rad;
     default:
       break;
   }
@@ -43,19 +40,22 @@ int Tracker::get(Property p)
  * used to calculate the average value over the previous 5 frames
  * @param box - current bounding box from VideoPlayer object
  */
-void Tracker::averageTrackerProperties(cv::Rect box)
+void Tracker::averageTrackerProperties(cv::Point2f centre, float radius)
 {
   if(samplePosition == SAMPLE) samplePosition = 0;
+  std::cout << "centre: " << centre << std::endl;
+  std::cout << "centreX: " << centre.x << std::endl;
+  std::cout << "centreY: " << centre.y << std::endl;
+  arrayX[samplePosition] = centre.x;
+  arrayY[samplePosition] = centre.y;
+  arrayRad[samplePosition] = radius;
 
-  rectX[samplePosition] = box.x;
-  rectY[samplePosition] = box.y;
-  rectW[samplePosition] = box.width;
-  rectH[samplePosition] = box.height;
+  setAvg(X, arrayX);
+  setAvg(Y, arrayY);
+  setAvg(RADIUS, arrayRad);
 
-  setAvg(X, rectX);
-  setAvg(Y, rectY);
-  setAvg(W, rectW);
-  setAvg(H, rectH);
+  std::cout << "X: " << x << std::endl;
+  std::cout << "Y: " << y << std::endl;
 
   samplePosition++;
 }
@@ -69,10 +69,11 @@ void Tracker::averageTrackerProperties(cv::Rect box)
  * Initialises property array values to 0.
  * @param rectProp - array with property values of interst
  */
-void Tracker::initRectArray(int rectProp[])
+void Tracker::initArray(int prop[])
 {
   for(int i = 0; i < SAMPLE; i++) {
-    rectProp = 0;
+    prop[i] = 0;
+    std::cout << "value in initArray: " << prop[i] << std::endl;
   }
 }
 
@@ -83,13 +84,15 @@ void Tracker::initRectArray(int rectProp[])
  * @param p        - the property of interest
  * @param rectProp - the property array of interst
  */
-void Tracker::setAvg(Property p, int rectProp[])
+void Tracker::setAvg(Property p, int prop[])
 {
   int value = 0;
   for(int i = 0; i < SAMPLE; i++) {
-    value += rectProp[i];
+    value += prop[i];
+    // std::cout << "value in loop: " << value << std::endl;
   }
   value = value/SAMPLE;
+  std::cout << "value in setAvg: " << value << std::endl;
 
   switch(p) {
     case X:
@@ -98,11 +101,8 @@ void Tracker::setAvg(Property p, int rectProp[])
     case Y:
       y = value;
       break;
-    case W:
-      w = value;
-      break;
-    case H:
-      h = value;
+    case RADIUS:
+      rad = value;
       break;
     default:
       break;

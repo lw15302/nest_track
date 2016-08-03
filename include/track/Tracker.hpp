@@ -1,7 +1,7 @@
 #include <opencv2/opencv.hpp>
 
-#define SAMPLE 5
-typedef enum Property {X, Y, W, H} Property;
+#define SAMPLE 20
+typedef enum Property {X, Y, RADIUS} Property;
 
 class Tracker
 {
@@ -11,13 +11,13 @@ class Tracker
 
     int get(Property p);
     void set(int val, Property p);
-    void averageTrackerProperties(cv::Rect box);
+    void averageTrackerProperties(cv::Point2f centre, float radius);
 
   private:
-    int x, y, w, h;
-    int rectX[SAMPLE], rectY[SAMPLE], rectW[SAMPLE], rectH[SAMPLE];
+    int x, y, rad;
+    int arrayX[SAMPLE], arrayY[SAMPLE], arrayRad[SAMPLE];
     int samplePosition;
 
-    void setAvg(Property p, int rectProp[]);
-    void initRectArray(int rectProp[]);
+    void setAvg(Property p, int prop[]);
+    void initArray(int prop[]);
 };

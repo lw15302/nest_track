@@ -49,17 +49,7 @@ void VideoPlayer::initVC() {
 void VideoPlayer::openStream()
 {
   pMOG2 = cv::createBackgroundSubtractorMOG2();
-  if(!capture.read(background)) {
-    throw "Unable to read frame for background";
-  }
   captureStream();
-}
-
-
-/**
- * [VideoPlayer::captureBackground description]
- */
-void VideoPlayer::captureBackground() {
 }
 
 
@@ -70,20 +60,13 @@ void VideoPlayer::captureBackground() {
  */
 void VideoPlayer::captureStream() {
   while(1) {
-    cv::Mat colourFrame;
-
-    bool read = capture.read(frame);
-
-    if(!read) {
-      std::cout << "Cannot read frame" << std::endl;
-      break;
-    }
+    if(!capture.read(frame)) break;
 
     transform();
-    pMOG2->apply(frame, fgMaskMOG2);
+    pMOG2->apply(frame, frame);
 
     boundingBox();
-    cv::imshow("Tracker", fgMaskMOG2);
+    cv::imshow("Tracker", frame);
     if(checkExit()) break;
   }
 }
@@ -112,7 +95,7 @@ void VideoPlayer::boundingBox()
   getContours();
   getLargestContour(&largestIdx);
   getBoundingShapes(largestIdx);
-  getAverageTrackerProperties();
+  getAverageTrackerProperties(largestIdx);
   drawOnFrame(largestIdx);
 }
 
@@ -123,7 +106,7 @@ void VideoPlayer::boundingBox()
  */
 void VideoPlayer::getContours()
 {
-  cv::findContours(frame, contours, hierarchy, CV_RETR_TREE,
+  cv::findContours(frame, contours, hierarchy, CV_RETR_LIST,
     CV_CHAIN_APPROX_SIMPLE, cv::Point(0, 0));
 
     cSize = contours.size();
@@ -138,15 +121,15 @@ void VideoPlayer::getContours()
  * Sets the tracking properties based on an average of the past 5 frames. These
  * values are used later to draw a bounding rectangle
  */
-void VideoPlayer::getAverageTrackerProperties()
+void VideoPlayer::getAverageTrackerProperties(int index)
 {
-  tracking.averageTrackerProperties(boundRect);
+  std::cout << "centre in getAverageTrackerProperties: " << centre[index] << std::endl;
+  tracking.averageTrackerProperties(centre[index], radius[index]);
 
   trackX = tracking.get(X);
   trackY = tracking.get(Y);
-  trackW = tracking.get(W);
-  trackH = tracking.get(H);
-  std::cout<< "x:"<<trackX<<" y:"<<trackY<<" w:"<<trackW<<" h:"<<trackH<<std::endl;
+  trackRad = tracking.get(RADIUS);
+  // std::cout<< "x:"<<trackX<<" y:"<<trackY<<" w:"<<trackW<<" h:"<<trackH<<std::endl;
 }
 
 
@@ -158,7 +141,7 @@ void VideoPlayer::getAverageTrackerProperties()
 void VideoPlayer::getBoundingShapes(int index)
 {
   cv::approxPolyDP(cv::Mat(contours[index]), contours_poly[index], 5, true);
-  boundRect = boundingRect(cv::Mat(contours_poly[index]));
+  // boundRect = boundingRect(cv::Mat(contours_poly[index]));
   cv::minEnclosingCircle((cv::Mat)contours_poly[index], centre[index], radius[index]);
 }
 
@@ -169,10 +152,14 @@ void VideoPlayer::getBoundingShapes(int index)
  */
 void VideoPlayer::drawOnFrame(int index)
 {
-  cv::Scalar colour = cv::Scalar(255,0, 0);
+  cv::Point2f circCent(trackX, trackY);
+  cv::Scalar colour = cv::Scalar(rng.uniform(0, 255),rng.uniform(0, 255), rng.uniform(0, 255));
   cv::drawContours(frame, contours_poly, index, colour, 1, 8, std::vector<cv::Vec4i>(), 0, cv::Point());
-  cv::rectangle(frame, cv::Point(trackX, trackY), cv::Point(trackX + trackW, trackY + trackY), colour, 2, 8, 0);
-  cv::circle(frame, centre[index], (int)radius[index], colour, 2, 8, 0);
+  // cv::rectangle(frame, cv::Point(trackX, trackY), cv::Point(trackX + trackW, trackY + trackY), colour, 2, 8, 0);
+  std::cout << "flag" << std::endl;
+  std::cout <<"centre: " << circCent << std::endl;
+  std::cout <<"radius: " << trackRad << std::endl;
+  cv::circle(frame, circCent, trackRad, colour, 2, 8, 0);
 }
 
 /**

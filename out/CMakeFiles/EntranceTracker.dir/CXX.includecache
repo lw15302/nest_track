@@ -19,6 +19,12 @@ VideoPlayer.hpp
 -
 
 ../include/track/Tracker.hpp
+Tracking.hpp
+-
+opencv2/opencv.hpp
+-
+
+../include/track/Tracking.hpp
 opencv2/opencv.hpp
 -
 
@@ -32,6 +38,10 @@ Main.hpp
 
 /home/liam/Documents/Project/github/nest_track/src/track/Tracker.cpp
 Tracker.hpp
+-
+
+/home/liam/Documents/Project/github/nest_track/src/track/Tracking.cpp
+Tracking.hpp
 -
 
 /usr/local/include/opencv/cxcore.h

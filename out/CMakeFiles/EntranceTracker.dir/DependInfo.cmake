@@ -7,6 +7,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/liam/Documents/Project/github/nest_track/src/display/VideoPlayer.cpp" "/home/liam/Documents/Project/github/nest_track/out/CMakeFiles/EntranceTracker.dir/src/display/VideoPlayer.cpp.o"
   "/home/liam/Documents/Project/github/nest_track/src/main/Main.cpp" "/home/liam/Documents/Project/github/nest_track/out/CMakeFiles/EntranceTracker.dir/src/main/Main.cpp.o"
   "/home/liam/Documents/Project/github/nest_track/src/track/Tracker.cpp" "/home/liam/Documents/Project/github/nest_track/out/CMakeFiles/EntranceTracker.dir/src/track/Tracker.cpp.o"
+  "/home/liam/Documents/Project/github/nest_track/src/track/Tracking.cpp" "/home/liam/Documents/Project/github/nest_track/out/CMakeFiles/EntranceTracker.dir/src/track/Tracking.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

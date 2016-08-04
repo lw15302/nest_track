@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = /home/liam/Documents/Project/github/nest_track/out
 CMakeFiles/EntranceTracker.dir/all:
 	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/depend
 	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/liam/Documents/Project/github/nest_track/out/CMakeFiles  1 2 3
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/liam/Documents/Project/github/nest_track/out/CMakeFiles  1 2 3 4
 	@echo "Built target EntranceTracker"
 .PHONY : CMakeFiles/EntranceTracker.dir/all
 
@@ -69,7 +69,7 @@ all: CMakeFiles/EntranceTracker.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/EntranceTracker.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/liam/Documents/Project/github/nest_track/out/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/liam/Documents/Project/github/nest_track/out/CMakeFiles 4
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/EntranceTracker.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/liam/Documents/Project/github/nest_track/out/CMakeFiles 0
 .PHONY : CMakeFiles/EntranceTracker.dir/rule

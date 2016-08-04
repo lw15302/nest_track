@@ -186,6 +186,30 @@ src/track/Tracker.cpp.s:
 	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/src/track/Tracker.cpp.s
 .PHONY : src/track/Tracker.cpp.s
 
+src/track/Tracking.o: src/track/Tracking.cpp.o
+.PHONY : src/track/Tracking.o
+
+# target to build an object file
+src/track/Tracking.cpp.o:
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/src/track/Tracking.cpp.o
+.PHONY : src/track/Tracking.cpp.o
+
+src/track/Tracking.i: src/track/Tracking.cpp.i
+.PHONY : src/track/Tracking.i
+
+# target to preprocess a source file
+src/track/Tracking.cpp.i:
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/src/track/Tracking.cpp.i
+.PHONY : src/track/Tracking.cpp.i
+
+src/track/Tracking.s: src/track/Tracking.cpp.s
+.PHONY : src/track/Tracking.s
+
+# target to generate assembly for a file
+src/track/Tracking.cpp.s:
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/src/track/Tracking.cpp.s
+.PHONY : src/track/Tracking.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -204,6 +228,9 @@ help:
 	@echo "... src/track/Tracker.o"
 	@echo "... src/track/Tracker.i"
 	@echo "... src/track/Tracker.s"
+	@echo "... src/track/Tracking.o"
+	@echo "... src/track/Tracking.i"
+	@echo "... src/track/Tracking.s"
 .PHONY : help
 
 

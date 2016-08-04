@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/EntranceTracker.dir/src/main/Main.cpp.o"
   "CMakeFiles/EntranceTracker.dir/src/display/VideoPlayer.cpp.o"
+  "CMakeFiles/EntranceTracker.dir/src/track/Tracking.cpp.o"
   "CMakeFiles/EntranceTracker.dir/src/track/Tracker.cpp.o"
   "EntranceTracker.pdb"
   "EntranceTracker"

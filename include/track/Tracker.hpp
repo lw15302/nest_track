@@ -1,23 +1,32 @@
+#include <Tracking.hpp>
 #include <opencv2/opencv.hpp>
-
-#define SAMPLE 20
-typedef enum Property {X, Y, RADIUS} Property;
 
 class Tracker
 {
-
   public:
     Tracker();
-
-    int get(Property p);
-    void set(int val, Property p);
-    void averageTrackerProperties(cv::Point2f centre, float radius);
+    cv::Mat transform(cv::Mat frame);
+    cv::Mat boundingBox(cv::Mat frame);
 
   private:
-    int x, y, rad;
-    int arrayX[SAMPLE], arrayY[SAMPLE], arrayRad[SAMPLE];
-    int samplePosition;
+    int threshold;
+    int threshold_max;
+    int cSize;
+    int trackX, trackY, trackRad;
 
-    void setAvg(Property p, int prop[]);
-    void initArray(int prop[]);
+    Tracking tracking;
+    cv::RNG rng;
+    cv::Mat frame;
+
+    std::vector<std::vector<cv::Point> > contours;
+    std::vector<cv::Vec4i> hierarchy;
+    std::vector<std::vector<cv::Point> > contours_poly;
+    std::vector< cv::Point2f > centre;
+    std::vector< float > radius;
+
+    void getContours();
+    void getAverageTrackerProperties(int index);
+    void getBoundingShapes(int index);
+    void drawOnFrame(int index);
+    void getLargestContour(int* index);
 };

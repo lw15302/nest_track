@@ -1,110 +1,122 @@
 #include <Tracker.hpp>
 
-/**
- * Public functions
- */
-
-/**
- * Tracker class constructor
- */
 Tracker::Tracker()
 {
-  samplePosition = 0;
-  initArray(arrayX);
-  initArray(arrayY);
-  initArray(arrayRad);
+  tracking = Tracking();
+  threshold = 100;
+  threshold_max = 255;
+  rng(12345);
 }
 
 
 /**
- * Returns the Tracker field of interest
- * @param  p - enumerated type specifying the field of interest
- * @return   - value of the field of interst
+ * Converts frame to grayscale, applies blur and binary threshold
+ * @params - frame to convert
+ * @return - converted frame
  */
-int Tracker::get(Property p)
+cv::Mat Tracker::transform(cv::Mat frame)
 {
-  switch(p) {
-    case X:
-      return x;
-    case Y:
-      return y;
-    case RADIUS:
-      return rad;
-    default:
-      break;
-  }
-}
-
-/**
- * Add the current bounding box value to the array of box values. These area
- * used to calculate the average value over the previous 5 frames
- * @param box - current bounding box from VideoPlayer object
- */
-void Tracker::averageTrackerProperties(cv::Point2f centre, float radius)
-{
-  if(samplePosition == SAMPLE) samplePosition = 0;
-  std::cout << "centre: " << centre << std::endl;
-  std::cout << "centreX: " << centre.x << std::endl;
-  std::cout << "centreY: " << centre.y << std::endl;
-  arrayX[samplePosition] = centre.x;
-  arrayY[samplePosition] = centre.y;
-  arrayRad[samplePosition] = radius;
-
-  setAvg(X, arrayX);
-  setAvg(Y, arrayY);
-  setAvg(RADIUS, arrayRad);
-
-  std::cout << "X: " << x << std::endl;
-  std::cout << "Y: " << y << std::endl;
-
-  samplePosition++;
+  cv::cvtColor(frame, frame, CV_BGR2GRAY);
+  cv::threshold(frame, frame, threshold, threshold_max, cv::THRESH_BINARY);
+  cv::blur(frame, frame, cv::Size(3, 3));
+  cv::erode(frame, frame, cv::Mat());
+  cv::dilate(frame, frame, cv::Mat());
+  return frame;
 }
 
 
 /**
- * Private functions
+ * Draws a bounding box around the object with the largest contour
  */
-
-/**
- * Initialises property array values to 0.
- * @param rectProp - array with property values of interst
- */
-void Tracker::initArray(int prop[])
+cv::Mat Tracker::boundingBox(cv::Mat frame)
 {
-  for(int i = 0; i < SAMPLE; i++) {
-    prop[i] = 0;
-    std::cout << "value in initArray: " << prop[i] << std::endl;
+  this->frame = frame;
+  int largestIdx = 0;
+
+  getContours();
+  if( !contours.empty() ) {
+    getLargestContour(&largestIdx);
+    getBoundingShapes(largestIdx);
+    getAverageTrackerProperties(largestIdx);
+    drawOnFrame(largestIdx);
   }
+  return this->frame;
 }
 
 
 /**
- * Calculates the average property value over the past 5 frames and assigns it
- * to the appropriate field
- * @param p        - the property of interest
- * @param rectProp - the property array of interst
+ * Finds all of the contours in the current frame and adds them to a vector.
+ * Finds the centre and radius of the object, for use in drawing a circle
  */
-void Tracker::setAvg(Property p, int prop[])
+void Tracker::getContours()
 {
-  int value = 0;
-  for(int i = 0; i < SAMPLE; i++) {
-    value += prop[i];
-    // std::cout << "value in loop: " << value << std::endl;
-  }
-  value = value/SAMPLE;
-  std::cout << "value in setAvg: " << value << std::endl;
+  cv::findContours(frame, contours, hierarchy, CV_RETR_LIST,
+    CV_CHAIN_APPROX_SIMPLE, cv::Point(0, 0));
 
-  switch(p) {
-    case X:
-      x = value;
-      break;
-    case Y:
-      y = value;
-      break;
-    case RADIUS:
-      rad = value;
-      break;
-    default:
-      break;
+    cSize = contours.size();
+
+    contours_poly = std::vector<std::vector<cv::Point> >(cSize);
+    centre = std::vector<cv::Point2f>(cSize);
+    radius = std::vector<float>(cSize);
+}
+
+
+/**
+ * Sets the tracking properties based on an average of the past 5 frames. These
+ * values are used later to draw a bounding rectangle
+ */
+void Tracker::getAverageTrackerProperties(int index)
+{
+  std::cout << "centre in getAverageTrackerProperties: " << centre[index] << std::endl;
+  tracking.averageTrackingProperties(centre[index], radius[index]);
+
+  trackX = tracking.get(X);
+  trackY = tracking.get(Y);
+  trackRad = tracking.get(RADIUS);
+  // std::cout<< "x:"<<trackX<<" y:"<<trackY<<" w:"<<trackW<<" h:"<<trackH<<std::endl;
+}
+
+
+/**
+ * Finds the bounding box around the largest contour. Also finds the minimum
+ * enclosing circle around the largest contour
+ * @param index - the index of the largest contour in the contours vector
+ */
+void Tracker::getBoundingShapes(int index)
+{
+  cv::approxPolyDP(cv::Mat(contours[index]), contours_poly[index], 5, true);
+  // boundRect = boundingRect(cv::Mat(contours_poly[index]));
+  cv::minEnclosingCircle((cv::Mat)contours_poly[index], centre[index], radius[index]);
+}
+
+
+/**
+ * Draws the contours and the bounding shapes on the screen
+ * @param index - the index of the largest contour in the contours vector
+ */
+void Tracker::drawOnFrame(int index)
+{
+  cv::Point2f circCent(trackX, trackY);
+  cv::Scalar colour = cv::Scalar(rng.uniform(0, 255),rng.uniform(0, 255), rng.uniform(0, 255));
+  cv::drawContours(frame, contours_poly, index, colour, 1, 8, std::vector<cv::Vec4i>(), 0, cv::Point());
+  std::cout <<"centre: " << circCent << std::endl;
+  std::cout <<"radius: " << trackRad << std::endl;
+  cv::circle(frame, circCent, trackRad, colour, 2, 8, 0);
+}
+
+/**
+ * Finds the largest contour in the array of contours
+ * @param index - the index of the largest contour in the contours vector
+ */
+void Tracker::getLargestContour(int* index)
+{
+  double area = 0;
+  double tempArea  = 0;
+
+  for(int i = 0; i < cSize; i++) {
+    tempArea = cv::contourArea(contours[i], false);
+    if(tempArea > area) *index = i;
+    area = tempArea;
   }
+  std::cout<<"contourArea: " << area << std::endl;
 }

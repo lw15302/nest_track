@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import javafx.geometry.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.control.Button?>
@@ -8,6 +9,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.text.*?>
 
 <GridPane alignment="CENTER" hgap="10.0" prefHeight="1080.0" prefWidth="1920.0" vgap="10.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="display.Controller">
   <children>
@@ -15,55 +17,71 @@
       <bottom>
         <AnchorPane prefHeight="176.0" prefWidth="1920.0">
           <children>
-            <Button fx:id="connect" alignment="CENTER" layoutX="860.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="200.0" text="Connect" />
-            <Button fx:id="start" disable="true" layoutY="40.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="200.0" text="Start Tracking" AnchorPane.leftAnchor="860.0" AnchorPane.rightAnchor="860.0" />
+            <Button fx:id="connect" alignment="CENTER" layoutX="860.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#piConnection" prefHeight="25.0" prefWidth="200.0" text="Connect" />
+            <Button fx:id="start" disable="true" layoutY="40.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#startTracking" prefHeight="25.0" prefWidth="200.0" text="Start Tracking" AnchorPane.leftAnchor="860.0" AnchorPane.rightAnchor="860.0" />
+            <Text fx:id="status" layoutX="1081.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" visible="false" />
           </children>
         </AnchorPane>
       </bottom>
       <center>
         <ImageView fx:id="dataView" fitHeight="835.0" fitWidth="1113.3333333333333" pickOnBounds="true" preserveRatio="true" />
       </center>
-      <top>
-        <HBox prefHeight="25.0" prefWidth="1920.0">
+      <right>
+        <AnchorPane prefHeight="880.0" prefWidth="350.0">
           <children>
-            <MenuBar fx:id="menu" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="-1.0" prefWidth="1920.0">
-              <menus>
-                <Menu mnemonicParsing="false" text="File" fx:id="file">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Save" fx:id="save" />
-                    <Menu mnemonicParsing="false" text="Export..." fx:id="export">
-                      <items>
-                        <MenuItem mnemonicParsing="false" text="As spreadsheet" />
-                      </items>
-                    </Menu>
-                    <MenuItem mnemonicParsing="false" text="Exit" fx:id="exit" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit" fx:id="edit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="???" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Analyse" fx:id="analyse">
-                  <items>
-                    <Menu mnemonicParsing="false" text="Statistical Functions..." fx:id="statistical">
-                      <items>
-                        <MenuItem mnemonicParsing="false" text="Mean" fx:id="mean" />
-                        <MenuItem mnemonicParsing="false" text="Median" fx:id="median" />
-                        <MenuItem mnemonicParsing="false" text="Standard Deviation" fx:id="stDev" />
-                      </items>
-                    </Menu>
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help" fx:id="help">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About" fx:id="about" />
-                  </items>
-                </Menu>
-              </menus>
-            </MenuBar>
+            <Text layoutX="14.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Save:" textAlignment="LEFT" underline="false">
+              <font>
+                <Font name="System Bold" size="16.0" />
+              </font>
+            </Text>
+            <CheckBox id="save" fx:id="saveCheck" layoutX="14.0" layoutY="116.0" mnemonicParsing="false" onAction="#setSavePreferences" selected="true" text="Save data?" />
+            <TextField id="locationSave" fx:id="saveLocation" alignment="CENTER_LEFT" layoutX="14.0" layoutY="145.0" minWidth="-1.0" prefHeight="30.0" prefWidth="250.0" promptText="Save Location" />
+            <Button fx:id="find" layoutX="266.0" layoutY="145.0" mnemonicParsing="false" onAction="#setSaveLocation" prefHeight="30.0" prefWidth="70.0" text="Find..." />
+            <TextField fx:id="fileName" layoutX="14.0" layoutY="185.0" prefHeight="30.0" prefWidth="250.0" promptText="File Name" />
+            <Button fx:id="setFileName" layoutX="266.0" layoutY="185.0" mnemonicParsing="false" onAction="#lockFileName" prefHeight="30.0" prefWidth="75.0" text="Ok" />
           </children>
-        </HBox>
+        </AnchorPane>
+      </right>
+      <top>
+        <MenuBar fx:id="menu" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="-1.0">
+          <menus>
+            <Menu mnemonicParsing="false" text="File" fx:id="file">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Save" fx:id="save" />
+                <Menu mnemonicParsing="false" text="Export..." fx:id="export">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="As spreadsheet" />
+                  </items>
+                </Menu>
+                <MenuItem mnemonicParsing="false" text="Exit" fx:id="exit" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Edit" fx:id="edit">
+              <items>
+                <MenuItem mnemonicParsing="false" text="???" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Analyse" fx:id="analyse">
+              <items>
+                <Menu mnemonicParsing="false" text="Statistical Functions..." fx:id="statistical">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Mean" fx:id="mean" />
+                    <MenuItem mnemonicParsing="false" text="Median" fx:id="median" />
+                    <MenuItem mnemonicParsing="false" text="Standard Deviation" fx:id="stDev" />
+                  </items>
+                </Menu>
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help" fx:id="help">
+              <items>
+                <MenuItem mnemonicParsing="false" text="About" fx:id="about" />
+              </items>
+            </Menu>
+          </menus>
+          <BorderPane.margin>
+            <Insets />
+          </BorderPane.margin>
+        </MenuBar>
       </top>
     </BorderPane>
   </children>

@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     private double screenW, screenH;
+    private Controller mainController;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -27,6 +28,8 @@ public class Main extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
 
+            mainController = loader.getController();
+            mainController.init(primaryStage);
         } catch (Exception e) {
             e.printStackTrace();
 

@@ -1,6 +1,6 @@
 #include <opencv2/opencv.hpp>
 
-#define SAMPLE 5
+#define SAMPLE 10
 typedef enum Property {X, Y, RADIUS} Property;
 
 class Tracking

@@ -3,7 +3,7 @@
 Tracker::Tracker()
 {
   tracking = Tracking();
-  threshold = 100;
+  threshold = 75;
   threshold_max = 255;
   rng(12345);
 }
@@ -18,9 +18,10 @@ cv::Mat Tracker::transform(cv::Mat frame)
 {
   cv::cvtColor(frame, frame, CV_BGR2GRAY);
   cv::threshold(frame, frame, threshold, threshold_max, cv::THRESH_BINARY);
-  cv::blur(frame, frame, cv::Size(3, 3));
   cv::erode(frame, frame, cv::Mat());
   cv::dilate(frame, frame, cv::Mat());
+  cv::blur(frame, frame, cv::Size(3, 3));
+  cv::Canny(frame, frame, 100, 200);
   return frame;
 }
 
@@ -69,10 +70,14 @@ void Tracker::getAverageTrackerProperties(int index)
 {
   std::cout << "centre in getAverageTrackerProperties: " << centre[index] << std::endl;
   tracking.averageTrackingProperties(centre[index], radius[index]);
-
+  lastX = trackX;
   trackX = tracking.get(X);
   trackY = tracking.get(Y);
   trackRad = tracking.get(RADIUS);
+  if(trackX > lastX) std::cout << "target moving right" << std::endl;
+  else if(trackX < lastX) std::cout << "target moving left" << std::endl;
+  else std::cout << "target is stationary" <<  std::endl;
+
   // std::cout<< "x:"<<trackX<<" y:"<<trackY<<" w:"<<trackW<<" h:"<<trackH<<std::endl;
 }
 
@@ -97,7 +102,8 @@ void Tracker::getBoundingShapes(int index)
 void Tracker::drawOnFrame(int index)
 {
   cv::Point2f circCent(trackX, trackY);
-  cv::Scalar colour = cv::Scalar(rng.uniform(0, 255),rng.uniform(0, 255), rng.uniform(0, 255));
+  cv::Scalar colour = cv::Scalar(0, 255, 0);
+  cv::cvtColor(frame, frame, CV_GRAY2BGR);
   cv::drawContours(frame, contours_poly, index, colour, 1, 8, std::vector<cv::Vec4i>(), 0, cv::Point());
   std::cout <<"centre: " << circCent << std::endl;
   std::cout <<"radius: " << trackRad << std::endl;

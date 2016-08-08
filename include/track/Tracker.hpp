@@ -13,6 +13,7 @@ class Tracker
     int threshold_max;
     int cSize;
     int trackX, trackY, trackRad;
+    int lastX;
 
     Tracking tracking;
     cv::RNG rng;

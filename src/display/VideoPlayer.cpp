@@ -30,7 +30,7 @@ void VideoPlayer::run(void)
  */
 void VideoPlayer::initVC()
 {
-  if(!capture.open(0)) {
+  if(!capture.open("cut.mp4")) {
       throw "Cannot open video stream";
   }
   cv::namedWindow("Tracker");
@@ -42,22 +42,11 @@ void VideoPlayer::initVC()
  */
 
 /**
- * Creates a background subtractor and calls the main video capturing function
+ * Creates a comparisonFrame subtractor and calls the main video capturing function
  */
 void VideoPlayer::openStream()
 {
-  initBackground();
   captureStream();
-}
-
-
-void VideoPlayer::initBackground()
-{
-  // pMOG2 = cv::createBackgroundSubtractorMOG2();
-  if(!capture.read(background)) return;
-  cv::cvtColor(background, background, CV_BGR2GRAY);
-  cv::threshold(background, background, 100, 255, cv::THRESH_BINARY);
-  // cv::erode(background, background, cv::Mat());
 }
 
 
@@ -68,19 +57,25 @@ void VideoPlayer::initBackground()
  */
 void VideoPlayer::captureStream() {
   while(1) {
-    frame = cv::Mat();
-    if(!capture.read(frame1)) break;
+    differenceFrame = cv::Mat();
+    if(!capture.read(frame)) break;
+    if(!capture.read(comparisonFrame)) return;
+    comparisonFrame = tracker.transform(comparisonFrame);
+    cv::imshow("Original", frame);
+    frame = tracker.transform(frame);
+    cv::imshow("Transformed", frame);
 
-    frame1 = tracker.transform(frame1);
-    cv::subtract(frame1, background, frame);
-    // pMOG2->apply(frame, frame);
-    cv::imshow("frame before contours", frame);
-    frame = tracker.boundingBox(frame);
-    // cv::imshow("frame1", frame1);
-    cv::imshow("Tracker", frame);
-    // cv::imshow("back", background);
+    // removeBackground();
+    cv::absdiff(frame, comparisonFrame, differenceFrame);
+
+    differenceFrame = tracker.boundingBox(differenceFrame);
+    cv::imshow("Tracker", differenceFrame);
+
     if(checkExit()) break;
   }
+  frame.release();
+  differenceFrame.release();
+  comparisonFrame.release();
 }
 
 

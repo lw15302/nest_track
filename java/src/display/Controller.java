@@ -1,6 +1,7 @@
 package display;
 
 import connect.Connection;
+import connect.NativeServer;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -41,13 +42,18 @@ public class Controller {
 
     private Stage primaryStage;
     private Connection connection;
+    private NativeServer s;
 
 
     @FXML
     private void piConnection() {
-        connection = new Connection();
-        if(!connection.open()) failedConnection();
-        else successfulConnection();
+        s.hello();
+        System.out.println("Flag");
+
+
+//        connection = new Connection();
+//        if(!connection.open()) failedConnection();
+//        else successfulConnection();
     }
 
 
@@ -166,5 +172,6 @@ public class Controller {
 
     public void init(Stage primaryStage) {
         this.primaryStage = primaryStage;
+        s = new NativeServer();
     }
 }

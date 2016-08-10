@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.o"
-  "CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.o"
-  "CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.o"
-  "CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.o"
+  "CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.o"
+  "CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.o"
+  "CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o"
+  "CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o"
   "EntranceTracker.pdb"
   "EntranceTracker"
 )

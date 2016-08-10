@@ -85,8 +85,8 @@ void processSignal(int data, int sockfd)
       sendData(sockfd, TRACKING_INITIATED);
       initiateTracking();
     default:
-      sendData(sockfd, CONNECTION_DENIED);
-      printf("Repling - %d\n", CONNECTION_DENIED);
+      sendData(sockfd, DENIED);
+      printf("Repling - %d\n", DENIED);
       break;
   }
 }
@@ -94,7 +94,9 @@ void processSignal(int data, int sockfd)
 
 void initiateTracking()
 {
-
+  VideoPlayer player = VideoPlayer();
+  // player.setTrack(true);
+  player.run();
 }
 
 

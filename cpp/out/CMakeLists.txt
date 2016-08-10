@@ -25,4 +25,4 @@ add_executable(${tracking_project} ${src_display_out} ${src_track_out} ${src_ser
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS} ${include_display_dir} ${include_track_dir} ${include_server_out})
 
-target_link_libraries(${tracking_project} ${OpenCV_LIBS})
+target_link_libraries(${tracking_project} ${OpenCV_LIBS} -lpthread)

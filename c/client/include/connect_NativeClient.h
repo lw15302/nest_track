@@ -21,6 +21,14 @@ extern "C" {
 JNIEXPORT jboolean JNICALL Java_connect_NativeClient_connect
   (JNIEnv *, jobject);
 
+/*
+ * Class:     connect_NativeClient
+ * Method:    track
+ * Signature: ()Z
+ */
+JNIEXPORT jboolean JNICALL Java_connect_NativeClient_track
+  (JNIEnv *, jobject);
+
 #ifdef __cplusplus
 }
 #endif

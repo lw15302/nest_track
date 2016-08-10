@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-../include/display/VideoPlayer.hpp
+../tracking/include/display/VideoPlayer.hpp
 iostream
 -
 Tracker.hpp
@@ -14,33 +14,63 @@ Tracker.hpp
 opencv2/opencv.hpp
 -
 
-../include/main/Main.hpp
-VideoPlayer.hpp
--
-
-../include/track/Tracker.hpp
+../tracking/include/track/Tracker.hpp
 Tracking.hpp
 -
 opencv2/opencv.hpp
 -
 
-../include/track/Tracking.hpp
+../tracking/include/track/Tracking.hpp
 opencv2/opencv.hpp
 -
 
-/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp
+/home/liam/Documents/Project/github/nest_track/cpp/host/include/server.hpp
+stdio.h
+-
+sys/types.h
+-
+sys/socket.h
+-
+netinet/in.h
+-
+netdb.h
+-
+string.h
+-
+stdlib.h
+-
+unistd.h
+-
+errno.h
+-
+../../tracking/include/display/VideoPlayer.hpp
+/home/liam/Documents/Project/github/nest_track/cpp/tracking/include/display/VideoPlayer.hpp
+string
+-
+iostream
+-
+
+/home/liam/Documents/Project/github/nest_track/cpp/host/src/server.cpp
+../include/server.hpp
+/home/liam/Documents/Project/github/nest_track/cpp/host/include/server.hpp
+
+/home/liam/Documents/Project/github/nest_track/cpp/tracking/include/display/VideoPlayer.hpp
+iostream
+-
+Tracker.hpp
+-
+opencv2/opencv.hpp
+-
+
+/home/liam/Documents/Project/github/nest_track/cpp/tracking/src/display/VideoPlayer.cpp
 VideoPlayer.hpp
 -
 
-/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp
-Main.hpp
--
-
-/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp
+/home/liam/Documents/Project/github/nest_track/cpp/tracking/src/track/Tracker.cpp
 Tracker.hpp
 -
 
-/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp
+/home/liam/Documents/Project/github/nest_track/cpp/tracking/src/track/Tracking.cpp
 Tracking.hpp
 -
 

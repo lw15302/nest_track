@@ -1,9 +1,10 @@
 package connect;
 
 public class NativeClient extends Thread {
-    public boolean status;
+    private boolean trackingStatus;
 
     public native boolean connect();
+    public native boolean track();
 
     static {
         System.loadLibrary("server");
@@ -11,11 +12,13 @@ public class NativeClient extends Thread {
 
     @Override
     public void run() {
-        status = connect();
+        trackingStatus = track();
     }
 
-    public boolean getStatus() {
-        return status;
+
+    public boolean getTrackingStatus() {
+        return trackingStatus;
     }
+
 }
 

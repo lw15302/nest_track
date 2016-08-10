@@ -41,7 +41,8 @@ public class Controller {
 
     private Stage primaryStage;
     private Connection connection;
-    private boolean connected = false;
+    private boolean connected;
+    private boolean tracking;
 
 
     @FXML
@@ -49,12 +50,10 @@ public class Controller {
         if(!connected) {
             disableSave(true);
             connection.open();
-            connected = true;
-            checkStatus();
+            checkConnectionStatus();
         }
         else {
             disableSave(false);
-            connection.close();
             connected = false;
         }
     }
@@ -62,7 +61,13 @@ public class Controller {
 
     @FXML
     private void startTracking() {
-
+        if(connected && !tracking) {
+            connection.track();
+            checkTrackingStatus();
+        }
+        else {
+            tracking = false;
+        }
     }
 
 
@@ -176,6 +181,7 @@ public class Controller {
         this.primaryStage = primaryStage;
         connection = new Connection();
         connected = false;
+        tracking = false;
     }
 
     private void disableSave(boolean disable) {
@@ -187,15 +193,34 @@ public class Controller {
     }
 
 
-    private void checkStatus() {
+    private void checkConnectionStatus() {
         try {
-            Thread.sleep(500);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        boolean status = connection.getStatus();
-        if(status) successfulConnection();
+        connected = connection.getConnectionStatus();
+        if(connected) successfulConnection();
         else failedConnection();
+    }
+
+
+    private void checkTrackingStatus() {
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        tracking = connection.getTrackingStatus();
+        if(tracking) {
+            start.setText("Stop Tracking");
+            connect.setDisable(true);
+        }
+        else {
+            start.setText("Start Tracking");
+            connect.setDisable(false);
+        }
     }
 }

@@ -10,17 +10,15 @@
 
 #include "../../tracking/include/display/VideoPlayer.hpp"
 #include <string>
-#include <thread>
 #include <iostream>
 
 typedef enum signal {
-  CONNECTION_DENIED = -1,
+  DENIED = -1,
   CONNECTION_REQUEST = 991645,
   CONNECTION_APPROVED = 1058395,
   INITIATE_TRACKING = 7405245,
   TRACKING_INITIATED = 8135084
 } Signal;
-
 
 void run();
 void sendData( int sockfd, int x );

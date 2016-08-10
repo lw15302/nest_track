@@ -11,11 +11,11 @@
 #include "connect_NativeClient.h"
 
 typedef enum signal {
-  CONNECTION_DENIED = -1,
+  DENIED = -1,
   CONNECTION_REQUEST = 991645,
-  CONNECTION_APPROVED = 1058395
-  INITIATE_TRACKING = 7405245;
-  TRACKING_INITIATED = 8135084;
+  CONNECTION_APPROVED = 1058395,
+  INITIATE_TRACKING = 7405245,
+  TRACKING_INITIATED = 8135084
 } Signal;
 
 typedef enum bool {
@@ -27,4 +27,5 @@ void error(char *msg);
 void sendData( int sockfd, int x );
 int getData( int sockfd );
 Bool connectionCheck(int sockfd);
+int setUpConnection();
 void maintainConnection();

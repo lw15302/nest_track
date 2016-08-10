@@ -35,7 +35,7 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/liam/Documents/Project/github/nest_track/cpp/out
+CMAKE_SOURCE_DIR = /home/liam/Documents/Project/github/nest_track/cpp
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /home/liam/Documents/Project/github/nest_track/cpp/out
@@ -49,112 +49,112 @@ include CMakeFiles/EntranceTracker.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/EntranceTracker.dir/flags.make
 
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.o: CMakeFiles/EntranceTracker.dir/flags.make
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.o: /home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp
+CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.o: CMakeFiles/EntranceTracker.dir/flags.make
+CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.o: ../tracking/src/display/VideoPlayer.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/liam/Documents/Project/github/nest_track/cpp/out/CMakeFiles $(CMAKE_PROGRESS_1)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.o -c /home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.o -c /home/liam/Documents/Project/github/nest_track/cpp/tracking/src/display/VideoPlayer.cpp
 
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp > CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.i
+CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/liam/Documents/Project/github/nest_track/cpp/tracking/src/display/VideoPlayer.cpp > CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.i
 
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp -o CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.s
+CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/liam/Documents/Project/github/nest_track/cpp/tracking/src/display/VideoPlayer.cpp -o CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.s
 
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.o.requires:
-.PHONY : CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.o.requires
+CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.o.requires:
+.PHONY : CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.o.requires
 
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.o.provides: CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.o.requires
-	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.o.provides.build
-.PHONY : CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.o.provides
+CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.o.provides: CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.o.requires
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.o.provides.build
+.PHONY : CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.o.provides
 
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.o.provides.build: CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.o
+CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.o.provides.build: CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.o
 
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.o: CMakeFiles/EntranceTracker.dir/flags.make
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.o: /home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp
+CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.o: CMakeFiles/EntranceTracker.dir/flags.make
+CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.o: ../tracking/src/track/Tracking.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/liam/Documents/Project/github/nest_track/cpp/out/CMakeFiles $(CMAKE_PROGRESS_2)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.o -c /home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.o -c /home/liam/Documents/Project/github/nest_track/cpp/tracking/src/track/Tracking.cpp
 
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp > CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.i
+CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/liam/Documents/Project/github/nest_track/cpp/tracking/src/track/Tracking.cpp > CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.i
 
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp -o CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.s
+CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/liam/Documents/Project/github/nest_track/cpp/tracking/src/track/Tracking.cpp -o CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.s
 
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.o.requires:
-.PHONY : CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.o.requires
+CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.o.requires:
+.PHONY : CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.o.requires
 
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.o.provides: CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.o.requires
-	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.o.provides.build
-.PHONY : CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.o.provides
+CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.o.provides: CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.o.requires
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.o.provides.build
+.PHONY : CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.o.provides
 
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.o.provides.build: CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.o
+CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.o.provides.build: CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.o
 
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.o: CMakeFiles/EntranceTracker.dir/flags.make
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.o: /home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp
+CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o: CMakeFiles/EntranceTracker.dir/flags.make
+CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o: ../tracking/src/track/Tracker.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/liam/Documents/Project/github/nest_track/cpp/out/CMakeFiles $(CMAKE_PROGRESS_3)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.o -c /home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o -c /home/liam/Documents/Project/github/nest_track/cpp/tracking/src/track/Tracker.cpp
 
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp > CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.i
+CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/liam/Documents/Project/github/nest_track/cpp/tracking/src/track/Tracker.cpp > CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.i
 
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp -o CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.s
+CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/liam/Documents/Project/github/nest_track/cpp/tracking/src/track/Tracker.cpp -o CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.s
 
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.o.requires:
-.PHONY : CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.o.requires
+CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o.requires:
+.PHONY : CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o.requires
 
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.o.provides: CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.o.requires
-	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.o.provides.build
-.PHONY : CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.o.provides
+CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o.provides: CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o.requires
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o.provides.build
+.PHONY : CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o.provides
 
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.o.provides.build: CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.o
+CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o.provides.build: CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o
 
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.o: CMakeFiles/EntranceTracker.dir/flags.make
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.o: /home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp
+CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o: CMakeFiles/EntranceTracker.dir/flags.make
+CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o: ../host/src/server.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/liam/Documents/Project/github/nest_track/cpp/out/CMakeFiles $(CMAKE_PROGRESS_4)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.o -c /home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o -c /home/liam/Documents/Project/github/nest_track/cpp/host/src/server.cpp
 
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp > CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.i
+CMakeFiles/EntranceTracker.dir/host/src/server.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/EntranceTracker.dir/host/src/server.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/liam/Documents/Project/github/nest_track/cpp/host/src/server.cpp > CMakeFiles/EntranceTracker.dir/host/src/server.cpp.i
 
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp -o CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.s
+CMakeFiles/EntranceTracker.dir/host/src/server.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/EntranceTracker.dir/host/src/server.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/liam/Documents/Project/github/nest_track/cpp/host/src/server.cpp -o CMakeFiles/EntranceTracker.dir/host/src/server.cpp.s
 
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.o.requires:
-.PHONY : CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.o.requires
+CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o.requires:
+.PHONY : CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o.requires
 
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.o.provides: CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.o.requires
-	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.o.provides.build
-.PHONY : CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.o.provides
+CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o.provides: CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o.requires
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o.provides.build
+.PHONY : CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o.provides
 
-CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.o.provides.build: CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.o
+CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o.provides.build: CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o
 
 # Object files for target EntranceTracker
 EntranceTracker_OBJECTS = \
-"CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.o" \
-"CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.o" \
-"CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.o" \
-"CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.o"
+"CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.o" \
+"CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.o" \
+"CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o" \
+"CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o"
 
 # External object files for target EntranceTracker
 EntranceTracker_EXTERNAL_OBJECTS =
 
-EntranceTracker: CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.o
-EntranceTracker: CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.o
-EntranceTracker: CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.o
-EntranceTracker: CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.o
+EntranceTracker: CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.o
+EntranceTracker: CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.o
+EntranceTracker: CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o
+EntranceTracker: CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o
 EntranceTracker: CMakeFiles/EntranceTracker.dir/build.make
 EntranceTracker: /usr/local/lib/libopencv_viz.so.3.1.0
 EntranceTracker: /usr/local/lib/libopencv_videostab.so.3.1.0
@@ -181,10 +181,10 @@ EntranceTracker: CMakeFiles/EntranceTracker.dir/link.txt
 CMakeFiles/EntranceTracker.dir/build: EntranceTracker
 .PHONY : CMakeFiles/EntranceTracker.dir/build
 
-CMakeFiles/EntranceTracker.dir/requires: CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.o.requires
-CMakeFiles/EntranceTracker.dir/requires: CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.o.requires
-CMakeFiles/EntranceTracker.dir/requires: CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.o.requires
-CMakeFiles/EntranceTracker.dir/requires: CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.o.requires
+CMakeFiles/EntranceTracker.dir/requires: CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.o.requires
+CMakeFiles/EntranceTracker.dir/requires: CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.o.requires
+CMakeFiles/EntranceTracker.dir/requires: CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o.requires
+CMakeFiles/EntranceTracker.dir/requires: CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o.requires
 .PHONY : CMakeFiles/EntranceTracker.dir/requires
 
 CMakeFiles/EntranceTracker.dir/clean:
@@ -192,6 +192,6 @@ CMakeFiles/EntranceTracker.dir/clean:
 .PHONY : CMakeFiles/EntranceTracker.dir/clean
 
 CMakeFiles/EntranceTracker.dir/depend:
-	cd /home/liam/Documents/Project/github/nest_track/cpp/out && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/liam/Documents/Project/github/nest_track/cpp/out /home/liam/Documents/Project/github/nest_track/cpp/out /home/liam/Documents/Project/github/nest_track/cpp/out /home/liam/Documents/Project/github/nest_track/cpp/out /home/liam/Documents/Project/github/nest_track/cpp/out/CMakeFiles/EntranceTracker.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/liam/Documents/Project/github/nest_track/cpp/out && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/liam/Documents/Project/github/nest_track/cpp /home/liam/Documents/Project/github/nest_track/cpp /home/liam/Documents/Project/github/nest_track/cpp/out /home/liam/Documents/Project/github/nest_track/cpp/out /home/liam/Documents/Project/github/nest_track/cpp/out/CMakeFiles/EntranceTracker.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/EntranceTracker.dir/depend
 

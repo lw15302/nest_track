@@ -1,17 +1,21 @@
 package connect;
 
 public class NativeClient extends Thread {
-    public native void connect();
-    public native void disconnect();
+    public boolean status;
+
+    public native boolean connect();
 
     static {
         System.loadLibrary("server");
-        System.out.println("inside static block");
     }
 
     @Override
     public void run() {
-        connect();
+        status = connect();
+    }
+
+    public boolean getStatus() {
+        return status;
     }
 }
 

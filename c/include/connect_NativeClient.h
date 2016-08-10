@@ -16,17 +16,9 @@ extern "C" {
 /*
  * Class:     connect_NativeClient
  * Method:    connect
- * Signature: ()V
+ * Signature: ()Z
  */
-JNIEXPORT void JNICALL Java_connect_NativeClient_connect
-  (JNIEnv *, jobject);
-
-/*
- * Class:     connect_NativeClient
- * Method:    disconnect
- * Signature: ()V
- */
-JNIEXPORT void JNICALL Java_connect_NativeClient_disconnect
+JNIEXPORT jboolean JNICALL Java_connect_NativeClient_connect
   (JNIEnv *, jobject);
 
 #ifdef __cplusplus

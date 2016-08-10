@@ -1,7 +1,6 @@
 package display;
 
 import connect.Connection;
-import connect.NativeClient;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -42,27 +41,22 @@ public class Controller {
 
     private Stage primaryStage;
     private Connection connection;
-    private NativeClient s;
     private boolean connected = false;
 
 
     @FXML
     private void piConnection() {
         if(!connected) {
-            s.start();
+            disableSave(true);
+            connection.open();
             connected = true;
+            checkStatus();
         }
         else {
-            s.disconnect();
+            disableSave(false);
+            connection.close();
             connected = false;
         }
-
-        System.out.println("Flag");
-
-
-//        connection = new Connection();
-//        if(!connection.open()) failedConnection();
-//        else successfulConnection();
     }
 
 
@@ -95,7 +89,6 @@ public class Controller {
         navigator.setTitle("Set Save Location");
         File f = navigator.showOpenDialog(primaryStage);
         String saveDir = formatSaveLocation(f.getPath());
-//        System.out.println("File path: " + f.getPath());
         saveLocation.setText(saveDir);
 
 
@@ -181,6 +174,28 @@ public class Controller {
 
     public void init(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        s = new NativeClient();
+        connection = new Connection();
+        connected = false;
+    }
+
+    private void disableSave(boolean disable) {
+        saveLocation.setDisable(disable);
+        setFileName.setDisable(disable);
+        saveCheck.setDisable(disable);
+        fileName.setDisable(disable);
+        find.setDisable(disable);
+    }
+
+
+    private void checkStatus() {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        boolean status = connection.getStatus();
+        if(status) successfulConnection();
+        else failedConnection();
     }
 }

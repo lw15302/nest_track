@@ -1,7 +1,21 @@
 package connect;
 
 public class Connection {
-    public boolean open() {
-        return true;
+    private NativeClient client;
+
+    public Connection() {
+        client = new NativeClient();
+    }
+
+    public void open() {
+        client.start();
+    }
+
+    public void close() {
+
+    }
+
+    public boolean getStatus() {
+        return client.getStatus();
     }
 }

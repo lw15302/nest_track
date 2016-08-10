@@ -1,6 +1,6 @@
 #include "../include/NativeClient.h"
 
-JNIEXPORT void JNICALL Java_connect_NativeClient_connect(JNIEnv *env, jobject obj)
+JNIEXPORT jboolean JNICALL Java_connect_NativeClient_connect(JNIEnv *env, jobject obj)
 {
   int sockfd, portno = 51717, n;
   char serverIp[] = "127.0.0.1";
@@ -10,37 +10,36 @@ JNIEXPORT void JNICALL Java_connect_NativeClient_connect(JNIEnv *env, jobject ob
   int data;
 
   setbuf(stdout, NULL);
-  printf("Inside client.c\n");
   if( ( sockfd = socket(AF_INET, SOCK_STREAM, 0) ) < 0 ) {
     error("ERROR opening socket\n");
   }
   if( ( server = gethostbyname( serverIp ) ) == NULL ) {
     error("ERROR no such host\n");
   }
+
   bzero( (char *) &serv_addr, sizeof(serv_addr));
   serv_addr.sin_family = AF_INET;
+
   bcopy( (char *)server->h_addr, (char *)&serv_addr.sin_addr.s_addr, server->h_length);
   serv_addr.sin_port = htons(portno);
-  printf("flag1\n");
+
   if ( connect(sockfd,(struct sockaddr *)&serv_addr,sizeof(serv_addr)) < 0) {
     error( "ERROR connecting" );
   }
-  printf("flag2\n");
 
-  if(connectionCheck(sockfd)) maintainConnection();
-  else close( sockfd );
-
-  close( sockfd );
+  if(connectionCheck(sockfd)) {
+    printf("\nConnection established");
+    return TRUE;
+  }
+  else {
+    printf("\nConnection failed");
+    close( sockfd );
+    return FALSE;
+  }
 }
 
-
-JNIEXPORT void JNICALL Java_connect_NativeClient_disconnect(JNIEnv *env, jobject obj)
+void sendData( int sockfd, int x )
 {
-
-}
-
-
-void sendData( int sockfd, int x ) {
   int n;
 
   char buffer[32];
@@ -51,7 +50,8 @@ void sendData( int sockfd, int x ) {
 }
 
 
-int getData( int sockfd ) {
+int getData( int sockfd )
+{
   char buffer[32];
   int n;
 
@@ -64,7 +64,12 @@ int getData( int sockfd ) {
 
 Bool connectionCheck(int sockfd)
 {
-
+  sendData(sockfd, CONNECTION_REQUEST);
+  printf("\nSent connection request to server: %d", CONNECTION_REQUEST);
+  int data = getData(sockfd);
+  printf("\nReply from server: %d", data);
+  if(data == CONNECTION_APPROVED) return TRUE;
+  else return FALSE;
 }
 
 

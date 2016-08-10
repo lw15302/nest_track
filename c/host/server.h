@@ -14,6 +14,7 @@ typedef enum signal {
   CONNECTION_APPROVED = 1058395
 } Signal;
 
+
 void run();
 void sendData( int sockfd, int x );
 void error( char *msg );

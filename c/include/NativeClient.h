@@ -17,8 +17,8 @@ typedef enum signal {
 } Signal;
 
 typedef enum bool {
-  TRUE,
-  FALSE
+  FALSE,
+  TRUE
 } Bool;
 
 void error(char *msg);

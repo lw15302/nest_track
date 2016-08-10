@@ -1,23 +1,23 @@
 #include "server.h"
 
-void error( char *msg ) {
-  perror(  msg );
-  exit(1);
+int main(int argc, char *argv[]) {
+  run();
+  return 0;
 }
 
-int func( int a ) {
-   return 2 * a;
-}
 
-void sendData( int sockfd, int x ) {
+void sendData( int sockfd, int data ) {
   int n;
 
   char buffer[32];
-  sprintf( buffer, "%d\n", x );
+  sprintf( buffer, "%d\n", data );
+
   if ( (n = write( sockfd, buffer, strlen(buffer) ) ) < 0 )
     error( "ERROR writing to socket" );
+
   buffer[n] = '\0';
 }
+
 
 int getData( int sockfd ) {
   char buffer[32];
@@ -25,52 +25,52 @@ int getData( int sockfd ) {
 
   if ( (n = read(sockfd,buffer,31) ) < 0 )
     error( "ERROR reading from socket" );
+
   buffer[n] = '\0';
   return atoi( buffer );
 }
 
-int main(int argc, char *argv[]) {
-     int sockfd, newsockfd, portno = 51717, clilen;
-     char buffer[256];
-     struct sockaddr_in serv_addr, cli_addr;
-     int n;
-     int data;
 
-     printf( "using port #%d\n", portno );
+void  run()
+{
+  int sockfd, newsockfd, portno = 51717, clilen;
+  char buffer[256];
+  struct sockaddr_in serv_addr, cli_addr;
+  int n;
+  int data;
 
-     sockfd = socket(AF_INET, SOCK_STREAM, 0);
-     if (sockfd < 0)
-         error( "ERROR opening socket" );
-     bzero((char *) &serv_addr, sizeof(serv_addr));
+  printf( "using port #%d\n", portno );
 
-     serv_addr.sin_family = AF_INET;
-     serv_addr.sin_addr.s_addr = INADDR_ANY;
-     serv_addr.sin_port = htons( portno );
-     if (bind(sockfd, (struct sockaddr *) &serv_addr,
-              sizeof(serv_addr)) < 0)
-       error( "ERROR on binding" );
-     listen(sockfd,5);
-     clilen = sizeof(cli_addr);
+  sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
-     //--- infinite wait on a connection ---
-     while ( 1 ) {
-        printf( "waiting for new client...\n" );
-        if ( ( newsockfd = accept( sockfd, (struct sockaddr *) &cli_addr, (socklen_t*) &clilen) ) < 0 )
-            error( "ERROR on accept" );
-        printf( "opened new communication with client\n" );
-        while ( 1 ) {
-             //---- wait for a number from client ---
-             data = getData( newsockfd );
-             printf( "got %d\n", data );
-             processSignal(data, newsockfd);
-        }
-        close( newsockfd );
+  if (sockfd < 0) error( "ERROR opening socket" );
 
-        //--- if -2 sent by client, we can quit ---
-        if ( data == -2 )
-          break;
-     }
-     return 0;
+  bzero((char *) &serv_addr, sizeof(serv_addr));
+
+  serv_addr.sin_family = AF_INET;
+  serv_addr.sin_addr.s_addr = INADDR_ANY;
+  serv_addr.sin_port = htons( portno );
+
+  if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
+    error( "ERROR on binding" );
+
+  listen(sockfd,5);
+  clilen = sizeof(cli_addr);
+
+  while ( 1 ) {
+    printf( "waiting for new client...\n" );
+
+    if ( ( newsockfd = accept( sockfd, (struct sockaddr *) &cli_addr,
+    (socklen_t*) &clilen) ) < 0 )
+    error( "ERROR on accept" );
+
+    printf( "Opened new communication with client\n" );
+
+    data = getData( newsockfd );
+    printf( "Received - %d\n", data );
+    processSignal(data, newsockfd);
+  }
+  close( newsockfd );
 }
 
 
@@ -79,9 +79,17 @@ void processSignal(int data, int sockfd)
   switch(data) {
     case CONNECTION_REQUEST:
       sendData(sockfd, CONNECTION_APPROVED);
+      printf("Repling - %d\n", CONNECTION_APPROVED);
       break;
     default:
       sendData(sockfd, CONNECTION_DENIED);
+      printf("Repling - %d\n", CONNECTION_DENIED);
       break;
   }
+}
+
+
+void error( char *msg ) {
+  perror(  msg );
+  exit(1);
 }

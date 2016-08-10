@@ -1,4 +1,4 @@
-#include "server.h"
+#include "../include/server.hpp"
 
 int main(int argc, char *argv[]) {
   run();
@@ -81,6 +81,9 @@ void processSignal(int data, int sockfd)
       sendData(sockfd, CONNECTION_APPROVED);
       printf("Repling - %d\n", CONNECTION_APPROVED);
       break;
+    case INITIATE_TRACKING:
+      sendData(sockfd, TRACKING_INITIATED);
+      initiateTracking();
     default:
       sendData(sockfd, CONNECTION_DENIED);
       printf("Repling - %d\n", CONNECTION_DENIED);
@@ -89,7 +92,13 @@ void processSignal(int data, int sockfd)
 }
 
 
-void error( char *msg ) {
-  perror(  msg );
+void initiateTracking()
+{
+
+}
+
+
+void error( std::string msg ) {
+  std::cout << msg << std::endl;
   exit(1);
 }

@@ -1,4 +1,4 @@
-# Install script for directory: /home/liam/Documents/Project/github/nest_track/cpp/out
+# Install script for directory: /home/liam/Documents/Project/github/nest_track/cpp
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

@@ -42,7 +42,7 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/liam/Documents/Project/github/nest_track/cpp/out
+CMAKE_SOURCE_DIR = /home/liam/Documents/Project/github/nest_track/cpp
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /home/liam/Documents/Project/github/nest_track/cpp/out
@@ -114,101 +114,101 @@ EntranceTracker/fast:
 	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/build
 .PHONY : EntranceTracker/fast
 
-home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.o: home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.o
-.PHONY : home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.o
+host/src/server.o: host/src/server.cpp.o
+.PHONY : host/src/server.o
 
 # target to build an object file
-home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.o:
-	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.o
-.PHONY : home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.o
+host/src/server.cpp.o:
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o
+.PHONY : host/src/server.cpp.o
 
-home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.i: home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.i
-.PHONY : home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.i
+host/src/server.i: host/src/server.cpp.i
+.PHONY : host/src/server.i
 
 # target to preprocess a source file
-home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.i:
-	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.i
-.PHONY : home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.i
+host/src/server.cpp.i:
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/host/src/server.cpp.i
+.PHONY : host/src/server.cpp.i
 
-home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.s: home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.s
-.PHONY : home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.s
+host/src/server.s: host/src/server.cpp.s
+.PHONY : host/src/server.s
 
 # target to generate assembly for a file
-home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.s:
-	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.s
-.PHONY : home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.cpp.s
+host/src/server.cpp.s:
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/host/src/server.cpp.s
+.PHONY : host/src/server.cpp.s
 
-home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.o: home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.o
-.PHONY : home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.o
+tracking/src/display/VideoPlayer.o: tracking/src/display/VideoPlayer.cpp.o
+.PHONY : tracking/src/display/VideoPlayer.o
 
 # target to build an object file
-home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.o:
-	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.o
-.PHONY : home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.o
+tracking/src/display/VideoPlayer.cpp.o:
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.o
+.PHONY : tracking/src/display/VideoPlayer.cpp.o
 
-home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.i: home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.i
-.PHONY : home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.i
+tracking/src/display/VideoPlayer.i: tracking/src/display/VideoPlayer.cpp.i
+.PHONY : tracking/src/display/VideoPlayer.i
 
 # target to preprocess a source file
-home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.i:
-	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.i
-.PHONY : home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.i
+tracking/src/display/VideoPlayer.cpp.i:
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.i
+.PHONY : tracking/src/display/VideoPlayer.cpp.i
 
-home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.s: home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.s
-.PHONY : home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.s
+tracking/src/display/VideoPlayer.s: tracking/src/display/VideoPlayer.cpp.s
+.PHONY : tracking/src/display/VideoPlayer.s
 
 # target to generate assembly for a file
-home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.s:
-	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.s
-.PHONY : home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.cpp.s
+tracking/src/display/VideoPlayer.cpp.s:
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.s
+.PHONY : tracking/src/display/VideoPlayer.cpp.s
 
-home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.o: home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.o
-.PHONY : home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.o
+tracking/src/track/Tracker.o: tracking/src/track/Tracker.cpp.o
+.PHONY : tracking/src/track/Tracker.o
 
 # target to build an object file
-home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.o:
-	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.o
-.PHONY : home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.o
+tracking/src/track/Tracker.cpp.o:
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o
+.PHONY : tracking/src/track/Tracker.cpp.o
 
-home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.i: home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.i
-.PHONY : home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.i
+tracking/src/track/Tracker.i: tracking/src/track/Tracker.cpp.i
+.PHONY : tracking/src/track/Tracker.i
 
 # target to preprocess a source file
-home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.i:
-	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.i
-.PHONY : home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.i
+tracking/src/track/Tracker.cpp.i:
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.i
+.PHONY : tracking/src/track/Tracker.cpp.i
 
-home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.s: home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.s
-.PHONY : home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.s
+tracking/src/track/Tracker.s: tracking/src/track/Tracker.cpp.s
+.PHONY : tracking/src/track/Tracker.s
 
 # target to generate assembly for a file
-home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.s:
-	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.s
-.PHONY : home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.cpp.s
+tracking/src/track/Tracker.cpp.s:
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.s
+.PHONY : tracking/src/track/Tracker.cpp.s
 
-home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.o: home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.o
-.PHONY : home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.o
+tracking/src/track/Tracking.o: tracking/src/track/Tracking.cpp.o
+.PHONY : tracking/src/track/Tracking.o
 
 # target to build an object file
-home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.o:
-	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.o
-.PHONY : home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.o
+tracking/src/track/Tracking.cpp.o:
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.o
+.PHONY : tracking/src/track/Tracking.cpp.o
 
-home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.i: home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.i
-.PHONY : home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.i
+tracking/src/track/Tracking.i: tracking/src/track/Tracking.cpp.i
+.PHONY : tracking/src/track/Tracking.i
 
 # target to preprocess a source file
-home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.i:
-	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.i
-.PHONY : home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.i
+tracking/src/track/Tracking.cpp.i:
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.i
+.PHONY : tracking/src/track/Tracking.cpp.i
 
-home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.s: home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.s
-.PHONY : home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.s
+tracking/src/track/Tracking.s: tracking/src/track/Tracking.cpp.s
+.PHONY : tracking/src/track/Tracking.s
 
 # target to generate assembly for a file
-home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.s:
-	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.s
-.PHONY : home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.cpp.s
+tracking/src/track/Tracking.cpp.s:
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.s
+.PHONY : tracking/src/track/Tracking.cpp.s
 
 # Help Target
 help:
@@ -219,18 +219,18 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... EntranceTracker"
-	@echo "... home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.o"
-	@echo "... home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.i"
-	@echo "... home/liam/Documents/Project/github/nest_track/cpp/src/display/VideoPlayer.s"
-	@echo "... home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.o"
-	@echo "... home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.i"
-	@echo "... home/liam/Documents/Project/github/nest_track/cpp/src/main/Main.s"
-	@echo "... home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.o"
-	@echo "... home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.i"
-	@echo "... home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracker.s"
-	@echo "... home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.o"
-	@echo "... home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.i"
-	@echo "... home/liam/Documents/Project/github/nest_track/cpp/src/track/Tracking.s"
+	@echo "... host/src/server.o"
+	@echo "... host/src/server.i"
+	@echo "... host/src/server.s"
+	@echo "... tracking/src/display/VideoPlayer.o"
+	@echo "... tracking/src/display/VideoPlayer.i"
+	@echo "... tracking/src/display/VideoPlayer.s"
+	@echo "... tracking/src/track/Tracker.o"
+	@echo "... tracking/src/track/Tracker.i"
+	@echo "... tracking/src/track/Tracker.s"
+	@echo "... tracking/src/track/Tracking.o"
+	@echo "... tracking/src/track/Tracking.i"
+	@echo "... tracking/src/track/Tracking.s"
 .PHONY : help
 
 

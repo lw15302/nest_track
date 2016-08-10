@@ -8,15 +8,23 @@
 #include <unistd.h>
 #include <errno.h>
 
+#include "../../tracking/include/display/VideoPlayer.hpp"
+#include <string>
+#include <thread>
+#include <iostream>
+
 typedef enum signal {
   CONNECTION_DENIED = -1,
   CONNECTION_REQUEST = 991645,
-  CONNECTION_APPROVED = 1058395
+  CONNECTION_APPROVED = 1058395,
+  INITIATE_TRACKING = 7405245,
+  TRACKING_INITIATED = 8135084
 } Signal;
 
 
 void run();
 void sendData( int sockfd, int x );
-void error( char *msg );
+void error( std::string msg );
 void processSignal(int data, int newsockfd);
 int getData( int sockfd );
+void initiateTracking();

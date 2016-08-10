@@ -10,4 +10,4 @@
 # 	$(CC) $(LFLAGS) $(CFLAGS) -I/usr/lib/jvm/java-8-oracle/include -o shared/libserver.so -shared src/server.c -fPIC
 
 all:
-	gcc -I/usr/lib/jvm/java-8-oracle/include -o shared/libserver.so -shared src/server.c -fPIC
+	gcc -I/usr/lib/jvm/java-8-oracle/include -o shared/libserver.so -shared src/NativeClient.c -fPIC

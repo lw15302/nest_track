@@ -1,7 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../cpp/host/include/server.hpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../cpp/host/src/server.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../cpp/out/CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../c/client/shared/libserver.so" afterPath="$PROJECT_DIR$/../c/client/shared/libserver.so" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cpp/out/CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.o" afterPath="$PROJECT_DIR$/../cpp/out/CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.o" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cpp/out/CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o" afterPath="$PROJECT_DIR$/../cpp/out/CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cpp/out/CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.o" afterPath="$PROJECT_DIR$/../cpp/out/CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.o" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cpp/out/EntranceTracker" afterPath="$PROJECT_DIR$/../cpp/out/EntranceTracker" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/java/connect/Connection.class" afterPath="$PROJECT_DIR$/out/production/java/connect/Connection.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/java/connect/NativeClient.class" afterPath="$PROJECT_DIR$/out/production/java/connect/NativeClient.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/java/display/Controller.class" afterPath="$PROJECT_DIR$/out/production/java/display/Controller.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../c/client/include/NativeClient.h" afterPath="$PROJECT_DIR$/../c/client/include/NativeClient.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../c/client/include/connect_NativeClient.h" afterPath="$PROJECT_DIR$/../c/client/include/connect_NativeClient.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../c/client/src/NativeClient.c" afterPath="$PROJECT_DIR$/../c/client/src/NativeClient.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cpp/CMakeLists.txt" afterPath="$PROJECT_DIR$/../cpp/CMakeLists.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cpp/out/CMakeFiles/EntranceTracker.dir/CXX.includecache" afterPath="$PROJECT_DIR$/../cpp/out/CMakeFiles/EntranceTracker.dir/CXX.includecache" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cpp/out/CMakeFiles/EntranceTracker.dir/DependInfo.cmake" afterPath="$PROJECT_DIR$/../cpp/out/CMakeFiles/EntranceTracker.dir/DependInfo.cmake" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cpp/out/CMakeFiles/EntranceTracker.dir/build.make" afterPath="$PROJECT_DIR$/../cpp/out/CMakeFiles/EntranceTracker.dir/build.make" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cpp/out/CMakeFiles/EntranceTracker.dir/cmake_clean.cmake" afterPath="$PROJECT_DIR$/../cpp/out/CMakeFiles/EntranceTracker.dir/cmake_clean.cmake" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cpp/out/CMakeFiles/EntranceTracker.dir/depend.internal" afterPath="$PROJECT_DIR$/../cpp/out/CMakeFiles/EntranceTracker.dir/depend.internal" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cpp/out/CMakeFiles/EntranceTracker.dir/depend.make" afterPath="$PROJECT_DIR$/../cpp/out/CMakeFiles/EntranceTracker.dir/depend.make" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cpp/out/CMakeFiles/EntranceTracker.dir/flags.make" afterPath="$PROJECT_DIR$/../cpp/out/CMakeFiles/EntranceTracker.dir/flags.make" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cpp/out/CMakeFiles/EntranceTracker.dir/link.txt" afterPath="$PROJECT_DIR$/../cpp/out/CMakeFiles/EntranceTracker.dir/link.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cpp/out/CMakeLists.txt" afterPath="$PROJECT_DIR$/../cpp/out/CMakeLists.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cpp/out/Makefile" afterPath="$PROJECT_DIR$/../cpp/out/Makefile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cpp/tracking/include/display/VideoPlayer.hpp" afterPath="$PROJECT_DIR$/../cpp/tracking/include/display/VideoPlayer.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cpp/tracking/src/display/VideoPlayer.cpp" afterPath="$PROJECT_DIR$/../cpp/tracking/src/display/VideoPlayer.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cpp/tracking/src/track/Tracker.cpp" afterPath="$PROJECT_DIR$/../cpp/tracking/src/track/Tracker.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cpp/tracking/src/track/Tracking.cpp" afterPath="$PROJECT_DIR$/../cpp/tracking/src/track/Tracking.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/connect/Connection.java" afterPath="$PROJECT_DIR$/src/connect/Connection.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/connect/NativeClient.java" afterPath="$PROJECT_DIR$/src/connect/NativeClient.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/display/Controller.java" afterPath="$PROJECT_DIR$/src/display/Controller.java" />
+    </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -66,8 +100,8 @@
           <file leaf-file-name="Controller.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/display/Controller.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.69014084">
-                  <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+                <state vertical-scroll-proportion="1.0502512">
+                  <caret line="228" column="1" selection-start-line="228" selection-start-column="1" selection-end-line="228" selection-end-column="1" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -79,15 +113,8 @@
             <entry file="file://$PROJECT_DIR$/src/connect/Connection.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="15" column="20" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
-                  <folding>
-                    <element signature="e#287#288#0" expanded="true" />
-                    <element signature="e#317#318#0" expanded="true" />
-                    <element signature="e#361#362#0" expanded="true" />
-                    <element signature="e#400#401#0" expanded="true" />
-                    <element signature="e#442#443#0" expanded="true" />
-                    <element signature="e#491#492#0" expanded="true" />
-                  </folding>
+                  <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -95,17 +122,13 @@
         </leaf>
       </split-first>
       <split-second>
-        <leaf>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="NativeClient.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/connect/NativeClient.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.37688443">
-                  <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-                  <folding>
-                    <element signature="e#265#266#0" expanded="true" />
-                    <element signature="e#348#349#0" expanded="true" />
-                    <element signature="e#385#386#0" expanded="true" />
-                  </folding>
+                <state vertical-scroll-proportion="0.32663316">
+                  <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -126,6 +149,9 @@
       <setting name="OPEN_NEW_TAB" value="false" />
     </FindUsagesManager>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
       <projects_view />
@@ -141,8 +167,8 @@
         <option value="$PROJECT_DIR$/src/connect/NativeServer.java" />
         <option value="/usr/lib/jvm/java-8-oracle/src.zip!/java/lang/Thread.java" />
         <option value="$PROJECT_DIR$/src/connect/Connection.java" />
-        <option value="$PROJECT_DIR$/src/connect/NativeClient.java" />
         <option value="$PROJECT_DIR$/src/display/Controller.java" />
+        <option value="$PROJECT_DIR$/src/connect/NativeClient.java" />
       </list>
     </option>
   </component>
@@ -153,12 +179,12 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="1919" />
+    <option name="x" value="-1" />
     <option name="y" value="27" />
     <option name="width" value="1922" />
     <option name="height" value="1054" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
@@ -189,7 +215,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -247,6 +272,7 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -268,6 +294,9 @@
     <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
     <property name="GenerateAntBuildDialog.backupFiles" value="true" />
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="java" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration default="false" name="NativeClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -777,16 +806,19 @@
       <workItem from="1359379250712" duration="1302000" />
       <workItem from="1470652805332" duration="10656000" />
       <workItem from="1470740325051" duration="16149000" />
-      <workItem from="1470835877816" duration="5364000" />
+      <workItem from="1470835877816" duration="5927000" />
+      <workItem from="1470850834564" duration="6177000" />
+      <workItem from="1471003332927" duration="4035000" />
+      <workItem from="1471007550247" duration="6595000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33471000" />
+    <option name="totallyTimeSpent" value="50841000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1919" y="27" width="1922" height="1054" extended-state="6" />
-    <editor active="true" />
+    <frame x="-1" y="27" width="1922" height="1054" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -795,10 +827,10 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32969433" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32723358" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32723358" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.08785942" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.08785942" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -831,15 +863,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/connect/NativeClient.java</url>
-          <line>14</line>
-          <properties />
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="2" />
+      <option name="time" value="3" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -848,6 +872,84 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/display/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="64" column="12" selection-start-line="64" selection-start-column="12" selection-end-line="64" selection-end-column="12" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/connect/Connection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/connect/NativeClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/display/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="64" column="12" selection-start-line="64" selection-start-column="12" selection-end-line="64" selection-end-column="12" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/connect/Connection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="23" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/connect/NativeClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/display/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/connect/Connection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="20" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/connect/NativeClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/display/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -880,11 +982,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding>
-            <element signature="e#265#266#0" expanded="true" />
-            <element signature="e#348#349#0" expanded="true" />
-            <element signature="e#385#386#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -945,22 +1043,15 @@
     <entry file="file://$PROJECT_DIR$/src/connect/Connection.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="20" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
-          <folding>
-            <element signature="e#287#288#0" expanded="true" />
-            <element signature="e#317#318#0" expanded="true" />
-            <element signature="e#361#362#0" expanded="true" />
-            <element signature="e#400#401#0" expanded="true" />
-            <element signature="e#442#443#0" expanded="true" />
-            <element signature="e#491#492#0" expanded="true" />
-          </folding>
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/display/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.69014084">
-          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+        <state vertical-scroll-proportion="1.0502512">
+          <caret line="228" column="1" selection-start-line="228" selection-start-column="1" selection-end-line="228" selection-end-column="1" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -969,15 +1060,87 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/connect/NativeClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37688443">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding>
-            <element signature="e#265#266#0" expanded="true" />
-            <element signature="e#348#349#0" expanded="true" />
-            <element signature="e#385#386#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.32663316">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>JavaFXApp</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>java</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>

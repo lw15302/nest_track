@@ -24,7 +24,7 @@ opencv2/opencv.hpp
 opencv2/opencv.hpp
 -
 
-/home/liam/Documents/Project/github/nest_track/cpp/host/include/server.hpp
+/home/liam/Documents/Project/github/nest_track/cpp/host/include/Server.hpp
 stdio.h
 -
 sys/types.h
@@ -49,10 +49,12 @@ string
 -
 iostream
 -
+thread
+-
 
-/home/liam/Documents/Project/github/nest_track/cpp/host/src/server.cpp
-../include/server.hpp
-/home/liam/Documents/Project/github/nest_track/cpp/host/include/server.hpp
+/home/liam/Documents/Project/github/nest_track/cpp/host/src/Server.cpp
+../include/Server.hpp
+/home/liam/Documents/Project/github/nest_track/cpp/host/include/Server.hpp
 
 /home/liam/Documents/Project/github/nest_track/cpp/tracking/include/display/VideoPlayer.hpp
 iostream

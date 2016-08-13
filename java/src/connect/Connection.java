@@ -3,6 +3,7 @@ package connect;
 public class Connection {
     private NativeClient client;
     private boolean connectionStatus;
+    private boolean trackingStatus;
 
     public Connection() {
         client = new NativeClient();
@@ -13,7 +14,11 @@ public class Connection {
     }
 
     public void track() {
-        client.start();
+        trackingStatus = client.track();
+    }
+
+    public void stopTrack() {
+        client.stopTrack();
     }
 
     public boolean getConnectionStatus() {
@@ -21,6 +26,6 @@ public class Connection {
     }
 
     public boolean getTrackingStatus() {
-        return client.getTrackingStatus();
+        return trackingStatus;
     }
 }

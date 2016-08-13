@@ -118,35 +118,35 @@ CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o.provides: CMakeF
 
 CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o.provides.build: CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o
 
-CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o: CMakeFiles/EntranceTracker.dir/flags.make
-CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o: ../host/src/server.cpp
+CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.o: CMakeFiles/EntranceTracker.dir/flags.make
+CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.o: ../host/src/Server.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/liam/Documents/Project/github/nest_track/cpp/out/CMakeFiles $(CMAKE_PROGRESS_4)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o -c /home/liam/Documents/Project/github/nest_track/cpp/host/src/server.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.o -c /home/liam/Documents/Project/github/nest_track/cpp/host/src/Server.cpp
 
-CMakeFiles/EntranceTracker.dir/host/src/server.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/EntranceTracker.dir/host/src/server.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/liam/Documents/Project/github/nest_track/cpp/host/src/server.cpp > CMakeFiles/EntranceTracker.dir/host/src/server.cpp.i
+CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/liam/Documents/Project/github/nest_track/cpp/host/src/Server.cpp > CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.i
 
-CMakeFiles/EntranceTracker.dir/host/src/server.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/EntranceTracker.dir/host/src/server.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/liam/Documents/Project/github/nest_track/cpp/host/src/server.cpp -o CMakeFiles/EntranceTracker.dir/host/src/server.cpp.s
+CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/liam/Documents/Project/github/nest_track/cpp/host/src/Server.cpp -o CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.s
 
-CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o.requires:
-.PHONY : CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o.requires
+CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.o.requires:
+.PHONY : CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.o.requires
 
-CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o.provides: CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o.requires
-	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o.provides.build
-.PHONY : CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o.provides
+CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.o.provides: CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.o.requires
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.o.provides.build
+.PHONY : CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.o.provides
 
-CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o.provides.build: CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o
+CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.o.provides.build: CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.o
 
 # Object files for target EntranceTracker
 EntranceTracker_OBJECTS = \
 "CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.o" \
 "CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.o" \
 "CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o" \
-"CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o"
+"CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.o"
 
 # External object files for target EntranceTracker
 EntranceTracker_EXTERNAL_OBJECTS =
@@ -154,7 +154,7 @@ EntranceTracker_EXTERNAL_OBJECTS =
 EntranceTracker: CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.o
 EntranceTracker: CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.o
 EntranceTracker: CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o
-EntranceTracker: CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o
+EntranceTracker: CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.o
 EntranceTracker: CMakeFiles/EntranceTracker.dir/build.make
 EntranceTracker: /usr/local/lib/libopencv_viz.so.3.1.0
 EntranceTracker: /usr/local/lib/libopencv_videostab.so.3.1.0
@@ -184,7 +184,7 @@ CMakeFiles/EntranceTracker.dir/build: EntranceTracker
 CMakeFiles/EntranceTracker.dir/requires: CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.o.requires
 CMakeFiles/EntranceTracker.dir/requires: CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.o.requires
 CMakeFiles/EntranceTracker.dir/requires: CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o.requires
-CMakeFiles/EntranceTracker.dir/requires: CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o.requires
+CMakeFiles/EntranceTracker.dir/requires: CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.o.requires
 .PHONY : CMakeFiles/EntranceTracker.dir/requires
 
 CMakeFiles/EntranceTracker.dir/clean:

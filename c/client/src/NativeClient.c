@@ -3,6 +3,7 @@
 JNIEXPORT jboolean JNICALL Java_connect_NativeClient_connect(JNIEnv *env, jobject obj)
 {
   int sockfd = setUpConnection();
+  if(sockfd = -1) return FALSE;
 
   if(connectionCheck(sockfd)) {
     printf("\nConnection established");
@@ -20,6 +21,7 @@ JNIEXPORT jboolean JNICALL Java_connect_NativeClient_connect(JNIEnv *env, jobjec
 JNIEXPORT jboolean JNICALL Java_connect_NativeClient_track(JNIEnv *env, jobject obj)
 {
   int sockfd = setUpConnection();
+  if(sockfd = -1) return FALSE;
   int data;
 
   sendData(sockfd, INITIATE_TRACKING);
@@ -40,6 +42,29 @@ JNIEXPORT jboolean JNICALL Java_connect_NativeClient_track(JNIEnv *env, jobject 
 }
 
 
+JNIEXPORT jboolean JNICALL Java_connect_NativeClient_stopTrack(JNIEnv *env, jobject obj)
+{
+  int sockfd = setUpConnection();
+  int data;
+
+  sendData(sockfd, STOP_TRACKING);
+  printf("\nSent request to stop tracking: %d", STOP_TRACKING );
+  data = getData(sockfd);
+  printf("\nReceived reply: %d", data);
+
+  if(data = STOPPING_TRACKING) {
+    printf("\nTracking stopped");
+    close(sockfd);
+    return TRUE;
+  }
+  else {
+    printf("\nFailed to stop tracking");
+    close(sockfd);
+    return FALSE;
+  }
+}
+
+
 int setUpConnection(){
   int sockfd, portno = 51717, n;
   char serverIp[] = "127.0.0.1";
@@ -50,10 +75,12 @@ int setUpConnection(){
 
   setbuf(stdout, NULL);
   if( ( sockfd = socket(AF_INET, SOCK_STREAM, 0) ) < 0 ) {
-    error("ERROR opening socket\n");
+    fprintf(stderr, "ERROR opening socket\n");
+    return -1;
   }
   if( ( server = gethostbyname( serverIp ) ) == NULL ) {
-    error("ERROR no such host\n");
+    fprintf(stderr, "ERROR no such host\n");
+    return -1;
   }
 
   bzero( (char *) &serv_addr, sizeof(serv_addr));
@@ -63,7 +90,8 @@ int setUpConnection(){
   serv_addr.sin_port = htons(portno);
 
   if ( connect(sockfd,(struct sockaddr *)&serv_addr,sizeof(serv_addr)) < 0) {
-    error( "ERROR connecting" );
+    fprintf(stderr, "ERROR connecting" );
+    return -1;
   }
   return sockfd;
 }
@@ -104,7 +132,7 @@ Bool connectionCheck(int sockfd)
 }
 
 
-void error(char *msg) {
-  perror(msg);
-  exit(0);
-}
+// void error(char *msg) {
+//   perror(msg);
+//   exit(0);
+// }

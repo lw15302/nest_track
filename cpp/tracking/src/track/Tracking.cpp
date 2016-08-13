@@ -43,9 +43,9 @@ int Tracking::get(Property p)
 void Tracking::averageTrackingProperties(cv::Point2f centre, float radius)
 {
   if(samplePosition == SAMPLE) samplePosition = 0;
-  std::cout << "centre: " << centre << std::endl;
-  std::cout << "centreX: " << centre.x << std::endl;
-  std::cout << "centreY: " << centre.y << std::endl;
+  // std::cout << "centre: " << centre << std::endl;
+  // std::cout << "centreX: " << centre.x << std::endl;
+  // std::cout << "centreY: " << centre.y << std::endl;
   arrayX[samplePosition] = centre.x;
   arrayY[samplePosition] = centre.y;
   arrayRad[samplePosition] = radius;
@@ -54,8 +54,8 @@ void Tracking::averageTrackingProperties(cv::Point2f centre, float radius)
   setAvg(Y, arrayY);
   setAvg(RADIUS, arrayRad);
 
-  std::cout << "X: " << x << std::endl;
-  std::cout << "Y: " << y << std::endl;
+  // std::cout << "X: " << x << std::endl;
+  // std::cout << "Y: " << y << std::endl;
 
   samplePosition++;
 }
@@ -91,7 +91,7 @@ void Tracking::setAvg(Property p, int prop[])
     // std::cout << "value in loop: " << value << std::endl;
   }
   value = value/SAMPLE;
-  std::cout << "value in setAvg: " << value << std::endl;
+  // std::cout << "value in setAvg: " << value << std::endl;
 
   switch(p) {
     case X:

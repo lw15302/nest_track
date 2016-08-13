@@ -114,29 +114,29 @@ EntranceTracker/fast:
 	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/build
 .PHONY : EntranceTracker/fast
 
-host/src/server.o: host/src/server.cpp.o
-.PHONY : host/src/server.o
+host/src/Server.o: host/src/Server.cpp.o
+.PHONY : host/src/Server.o
 
 # target to build an object file
-host/src/server.cpp.o:
-	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/host/src/server.cpp.o
-.PHONY : host/src/server.cpp.o
+host/src/Server.cpp.o:
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.o
+.PHONY : host/src/Server.cpp.o
 
-host/src/server.i: host/src/server.cpp.i
-.PHONY : host/src/server.i
+host/src/Server.i: host/src/Server.cpp.i
+.PHONY : host/src/Server.i
 
 # target to preprocess a source file
-host/src/server.cpp.i:
-	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/host/src/server.cpp.i
-.PHONY : host/src/server.cpp.i
+host/src/Server.cpp.i:
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.i
+.PHONY : host/src/Server.cpp.i
 
-host/src/server.s: host/src/server.cpp.s
-.PHONY : host/src/server.s
+host/src/Server.s: host/src/Server.cpp.s
+.PHONY : host/src/Server.s
 
 # target to generate assembly for a file
-host/src/server.cpp.s:
-	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/host/src/server.cpp.s
-.PHONY : host/src/server.cpp.s
+host/src/Server.cpp.s:
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.s
+.PHONY : host/src/Server.cpp.s
 
 tracking/src/display/VideoPlayer.o: tracking/src/display/VideoPlayer.cpp.o
 .PHONY : tracking/src/display/VideoPlayer.o
@@ -219,9 +219,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... EntranceTracker"
-	@echo "... host/src/server.o"
-	@echo "... host/src/server.i"
-	@echo "... host/src/server.s"
+	@echo "... host/src/Server.o"
+	@echo "... host/src/Server.i"
+	@echo "... host/src/Server.s"
 	@echo "... tracking/src/display/VideoPlayer.o"
 	@echo "... tracking/src/display/VideoPlayer.i"
 	@echo "... tracking/src/display/VideoPlayer.s"

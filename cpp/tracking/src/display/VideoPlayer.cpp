@@ -8,10 +8,10 @@
  * transform() and a random number generator used for bounding box highlight
  * colours
  */
- VideoPlayer::VideoPlayer()
- {
+VideoPlayer::VideoPlayer()
+{
    tracker = Tracker();
- }
+}
 
 
 /**
@@ -33,7 +33,9 @@ void VideoPlayer::initVC()
   if(!capture.open("cut.mp4")) {
       throw "Cannot open video stream";
   }
-  cv::namedWindow("Tracker");
+  cv::namedWindow("Tracker", CV_WINDOW_AUTOSIZE);
+  cv::namedWindow("Original", CV_WINDOW_AUTOSIZE);
+  std::cout << "start tracking" << std::endl;
 }
 
 
@@ -56,35 +58,50 @@ void VideoPlayer::openStream()
  * and object detection
  */
 void VideoPlayer::captureStream() {
-  while(1) {
+  std::cout << "track outside loop: " << track << std::endl;
+  while(track) {
+    std::cout << "tracking" << std::endl;
     differenceFrame = cv::Mat();
+    std::cout << "tracking" << std::endl;
+
     if(!capture.read(frame)) break;
-    if(!capture.read(comparisonFrame)) return;
-    comparisonFrame = tracker.transform(comparisonFrame);
+    std::cout << "tracking1" << std::endl;
     cv::imshow("Original", frame);
+    std::cout << "tracking2" << std::endl;
     frame = tracker.transform(frame);
-    cv::imshow("Transformed", frame);
-
-    // removeBackground();
+    std::cout << "tracking3" << std::endl;
+    if(!capture.read(comparisonFrame)) break;
+    std::cout << "tracking4" << std::endl;
+    comparisonFrame = tracker.transform(comparisonFrame);
+    std::cout << "tracking5" << std::endl;
     cv::absdiff(frame, comparisonFrame, differenceFrame);
+    std::cout << "tracking6" << std::endl;
 
-    differenceFrame = tracker.boundingBox(differenceFrame);
+
+    differenceFrame = tracker.boundingBox(differenceFrame); //Rename function as it no longer creates a boundingBox
+    std::cout << "tracking7: " << track << std::endl;
+
+
     cv::imshow("Tracker", differenceFrame);
-
-    if(checkExit()) break;
+    std::cout << "tracking8" << std::endl;
+    cv::waitKey(30);
   }
-  frame.release();
-  differenceFrame.release();
-  comparisonFrame.release();
+  std::cout <<"Exiting loop" << std::endl;
+  exit();
 }
 
 
-bool VideoPlayer::checkExit()
+void VideoPlayer::exit()
 {
-  if(cv::waitKey(30) == 27) {
-    std::cout << "Exiting program" << std::endl;
-    capture.release();
-    return true;
-  }
-  return false;
+  cv::destroyAllWindows();
+  frame.release();
+  differenceFrame.release();
+  comparisonFrame.release();
+  capture.release();
+}
+
+
+void VideoPlayer::setTrackStatus(bool status)
+{
+  track = status;
 }

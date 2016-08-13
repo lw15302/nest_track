@@ -68,15 +68,15 @@ void Tracker::getContours()
  */
 void Tracker::getAverageTrackerProperties(int index)
 {
-  std::cout << "centre in getAverageTrackerProperties: " << centre[index] << std::endl;
+  // std::cout << "centre in getAverageTrackerProperties: " << centre[index] << std::endl;
   tracking.averageTrackingProperties(centre[index], radius[index]);
   lastX = trackX;
   trackX = tracking.get(X);
   trackY = tracking.get(Y);
   trackRad = tracking.get(RADIUS);
-  if(trackX > lastX) std::cout << "target moving right" << std::endl;
-  else if(trackX < lastX) std::cout << "target moving left" << std::endl;
-  else std::cout << "target is stationary" <<  std::endl;
+  // if(trackX > lastX) std::cout << "target moving right" << std::endl;
+  // else if(trackX < lastX) std::cout << "target moving left" << std::endl;
+  // else std::cout << "target is stationary" <<  std::endl;
 
   // std::cout<< "x:"<<trackX<<" y:"<<trackY<<" w:"<<trackW<<" h:"<<trackH<<std::endl;
 }
@@ -105,8 +105,8 @@ void Tracker::drawOnFrame(int index)
   cv::Scalar colour = cv::Scalar(0, 255, 0);
   cv::cvtColor(frame, frame, CV_GRAY2BGR);
   cv::drawContours(frame, contours_poly, index, colour, 1, 8, std::vector<cv::Vec4i>(), 0, cv::Point());
-  std::cout <<"centre: " << circCent << std::endl;
-  std::cout <<"radius: " << trackRad << std::endl;
+  // std::cout <<"centre: " << circCent << std::endl;
+  // std::cout <<"radius: " << trackRad << std::endl;
   cv::circle(frame, circCent, trackRad, colour, 2, 8, 0);
 }
 
@@ -124,5 +124,5 @@ void Tracker::getLargestContour(int* index)
     if(tempArea > area) *index = i;
     area = tempArea;
   }
-  std::cout<<"contourArea: " << area << std::endl;
+  // std::cout<<"contourArea: " << area << std::endl;
 }

@@ -56,23 +56,33 @@ public class Controller {
             disableSave(false);
             connected = false;
         }
+
     }
 
 
     @FXML
     private void startTracking() {
-        if(connected && !tracking) {
+        if(!tracking) {
+            start.setText("Stop Tracking");
             connection.track();
+            disableSave(true);
+            tracking = true;
             checkTrackingStatus();
         }
         else {
+            start.setText("Start Tracking");
+            disableSave(false);
             tracking = false;
+            connect.setDisable(false);
+            connection.stopTrack();
         }
     }
 
 
     @FXML
     private void setSavePreferences() {
+
+
         if(saveCheck.isSelected()) {
             saveLocation.setDisable(false);
             fileName.setDisable(false);
@@ -151,6 +161,7 @@ public class Controller {
         status.setText("Connected to Raspberry Pi device");
         status.setFill(Color.GREEN);
         start.setDisable(false);
+        connect.setDisable(true);
     }
 
 
@@ -214,13 +225,5 @@ public class Controller {
         }
 
         tracking = connection.getTrackingStatus();
-        if(tracking) {
-            start.setText("Stop Tracking");
-            connect.setDisable(true);
-        }
-        else {
-            start.setText("Start Tracking");
-            connect.setDisable(false);
-        }
     }
 }

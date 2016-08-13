@@ -1,12 +1,13 @@
-#include "../include/server.hpp"
+#include "../include/Server.hpp"
 
 int main(int argc, char *argv[]) {
-  run();
+  Server s = Server();
+  s.run();
   return 0;
 }
 
 
-void sendData( int sockfd, int data ) {
+void Server::sendData( int sockfd, int data ) {
   int n;
 
   char buffer[32];
@@ -19,7 +20,7 @@ void sendData( int sockfd, int data ) {
 }
 
 
-int getData( int sockfd ) {
+int Server::getData( int sockfd ) {
   char buffer[32];
   int n;
 
@@ -31,7 +32,7 @@ int getData( int sockfd ) {
 }
 
 
-void  run()
+void Server::run()
 {
   int sockfd, newsockfd, portno = 51717, clilen;
   char buffer[256];
@@ -39,7 +40,7 @@ void  run()
   int n;
   int data;
 
-  printf( "using port #%d\n", portno );
+  std::cout << "using port #" << portno << std::endl;
 
   sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -58,49 +59,75 @@ void  run()
   clilen = sizeof(cli_addr);
 
   while ( 1 ) {
-    printf( "waiting for new client...\n" );
+    std::cout << "waiting for new client" << std::endl;
 
     if ( ( newsockfd = accept( sockfd, (struct sockaddr *) &cli_addr,
     (socklen_t*) &clilen) ) < 0 )
     error( "ERROR on accept" );
-
-    printf( "Opened new communication with client\n" );
+    std::cout << "\n-------------------------------------" << std::endl;
+    std::cout << "opened new communication with client" << std::endl;
 
     data = getData( newsockfd );
-    printf( "Received - %d\n", data );
+    std::cout << "Received: " << data << std::endl;
     processSignal(data, newsockfd);
   }
   close( newsockfd );
 }
 
 
-void processSignal(int data, int sockfd)
+void Server::processSignal(int data, int sockfd)
 {
   switch(data) {
     case CONNECTION_REQUEST:
+      std::cout << "Replying: " << CONNECTION_APPROVED << std::endl;
       sendData(sockfd, CONNECTION_APPROVED);
-      printf("Repling - %d\n", CONNECTION_APPROVED);
       break;
     case INITIATE_TRACKING:
+      std::cout << "Replying: " << TRACKING_INITIATED << std::endl;
       sendData(sockfd, TRACKING_INITIATED);
-      initiateTracking();
+      tracking(START);
+      break;
+    case STOP_TRACKING:
+      std::cout << "Replying: " << STOPPING_TRACKING << std::endl;
+      sendData(sockfd, STOPPING_TRACKING);
+      tracking(STOP);
+      break;
     default:
+      std::cout << "Replying: " << DENIED << std::endl;
       sendData(sockfd, DENIED);
-      printf("Repling - %d\n", DENIED);
       break;
   }
 }
 
 
-void initiateTracking()
+void Server::tracking(Command c)
 {
-  VideoPlayer player = VideoPlayer();
-  // player.setTrack(true);
-  player.run();
+  switch(c) {
+    case START:
+      player = VideoPlayer();
+      player.setTrackStatus(true);
+      track();
+      player.setTrackStatus(false);
+      // t = std::thread(&Server::track, this);
+      // t.detach();
+      break;
+    case STOP:
+      player.setTrackStatus(false);
+      break;
+    default:
+      break;
+  }
 }
 
 
-void error( std::string msg ) {
+void Server::track()
+{
+  player.run();
+  return;
+}
+
+
+void Server::error( std::string msg ) {
   std::cout << msg << std::endl;
   exit(1);
 }

@@ -16,7 +16,7 @@ import java.util.Date;
 
 public class Controller {
     @FXML
-    private Button connect, start, find, setFileName;
+    private Button connect, start, find, setFileName, setIp;
 
     @FXML
     private ImageView dataView;
@@ -34,7 +34,7 @@ public class Controller {
     private Text status;
 
     @FXML
-    private TextField saveLocation, fileName;
+    private TextField saveLocation, fileName, ip1, ip2, ip3, ip4;
 
     @FXML
     private CheckBox saveCheck;
@@ -43,13 +43,15 @@ public class Controller {
     private Connection connection;
     private boolean connected;
     private boolean tracking;
+    private String[] hostIp;
 
 
     @FXML
     private void piConnection() {
+        getIp();
         if(!connected) {
             disableSave(true);
-            connection.open();
+            connection.open(hostIp);
             checkConnectionStatus();
         }
         else {
@@ -64,7 +66,7 @@ public class Controller {
     private void startTracking() {
         if(!tracking) {
             start.setText("Stop Tracking");
-            connection.track();
+            connection.track(hostIp);
             disableSave(true);
             tracking = true;
             checkTrackingStatus();
@@ -74,7 +76,7 @@ public class Controller {
             disableSave(false);
             tracking = false;
             connect.setDisable(false);
-            connection.stopTrack();
+            connection.stopTrack(hostIp);
         }
     }
 
@@ -149,6 +151,25 @@ public class Controller {
     }
 
 
+    @FXML
+    private void lockIp() {
+        if(setIp.getText().equals("Ok")) {
+            ip1.setDisable(true);
+            ip2.setDisable(true);
+            ip3.setDisable(true);
+            ip4.setDisable(true);
+            setIp.setText("Change");
+        }
+        else {
+            ip1.setDisable(false);
+            ip2.setDisable(false);
+            ip3.setDisable(false);
+            ip4.setDisable(false);
+            setIp.setText("Ok");
+        }
+    }
+
+
     private void failedConnection() {
         status.setVisible(true);
         status.setText("Could not detect Raspberry Pi device");
@@ -191,6 +212,7 @@ public class Controller {
     public void init(Stage primaryStage) {
         this.primaryStage = primaryStage;
         connection = new Connection();
+        setDefaultIp();
         connected = false;
         tracking = false;
     }
@@ -225,5 +247,41 @@ public class Controller {
         }
 
         tracking = connection.getTrackingStatus();
+    }
+
+
+    private void setDefaultIp() {
+        ip1.setText("127");
+        ip2.setText("0");
+        ip3.setText("0");
+        ip4.setText("1");
+    }
+
+
+    private void getIp() {
+        hostIp = new String[4];
+        try {
+            hostIp[0] = ip1.getText();
+            hostIp[1] = ip2.getText();
+            hostIp[2] = ip3.getText();
+            hostIp[3] = ip4.getText();
+        } catch (Exception e) {
+            //ERROR MESSAGE IF INCORRECT FORMAT!!!!!!
+
+
+
+            throw new Error("Number format exception");
+
+
+
+
+
+
+
+
+
+
+
+        }
     }
 }

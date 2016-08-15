@@ -31,14 +31,24 @@
           <children>
             <Text layoutX="14.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Save:" textAlignment="LEFT" underline="false">
               <font>
-                <Font name="System Bold" size="16.0" />
+                <Font name="System Bold" size="16.0" fx:id="x1" />
               </font>
             </Text>
             <CheckBox id="save" fx:id="saveCheck" layoutX="14.0" layoutY="116.0" mnemonicParsing="false" onAction="#setSavePreferences" selected="true" text="Save data?" />
             <TextField id="locationSave" fx:id="saveLocation" alignment="CENTER_LEFT" layoutX="14.0" layoutY="145.0" minWidth="-1.0" prefHeight="30.0" prefWidth="250.0" promptText="Save Location" />
-            <Button fx:id="find" layoutX="266.0" layoutY="145.0" mnemonicParsing="false" onAction="#setSaveLocation" prefHeight="30.0" prefWidth="70.0" text="Find..." />
+            <Button fx:id="find" layoutX="266.0" layoutY="145.0" mnemonicParsing="false" onAction="#setSaveLocation" prefHeight="30.0" prefWidth="75.0" text="Find..." />
             <TextField fx:id="fileName" layoutX="14.0" layoutY="185.0" prefHeight="30.0" prefWidth="250.0" promptText="File Name" />
             <Button fx:id="setFileName" layoutX="266.0" layoutY="185.0" mnemonicParsing="false" onAction="#lockFileName" prefHeight="30.0" prefWidth="75.0" text="Ok" />
+            <Text font="$x1" layoutX="14.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Connection:" />
+            <Text layoutX="14.0" layoutY="304.0" scaleX="1.0" scaleY="1.0573111609447599" strokeType="OUTSIDE" strokeWidth="0.0" text="Host Address:" />
+            <TextField fx:id="ip1" layoutX="104.0" layoutY="288.0" prefWidth="39.0" />
+            <TextField fx:id="ip2" layoutX="147.0" layoutY="288.0" prefWidth="39.0" />
+            <TextField fx:id="ip3" layoutX="190.0" layoutY="288.0" prefWidth="39.0" />
+            <TextField fx:id="ip4" layoutX="233.0" layoutY="288.0" prefWidth="39.0" />
+            <Text layoutX="143.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":" />
+            <Text layoutX="186.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":" />
+            <Text layoutX="229.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":" />
+            <Button id="setFileName" fx:id="setIp" layoutX="272.0" layoutY="284.0" mnemonicParsing="false" onAction="#lockIp" prefHeight="30.0" prefWidth="69.0" text="Ok" />
           </children>
         </AnchorPane>
       </right>

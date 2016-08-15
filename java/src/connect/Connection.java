@@ -9,16 +9,16 @@ public class Connection {
         client = new NativeClient();
     }
 
-    public void open() {
-        connectionStatus = client.connect();
+    public void open(String[] ip) {
+        connectionStatus = client.connect(ip);
     }
 
-    public void track() {
-        trackingStatus = client.track();
+    public void track(String[] ip) {
+        trackingStatus = client.track(ip);
     }
 
-    public void stopTrack() {
-        client.stopTrack();
+    public void stopTrack(String[] ip) {
+        client.stopTrack(ip);
     }
 
     public boolean getConnectionStatus() {

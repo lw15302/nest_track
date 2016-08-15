@@ -25,9 +25,10 @@ typedef enum bool {
   TRUE
 } Bool;
 
-void error(char *msg);
 void sendData( int sockfd, int x );
 int getData( int sockfd );
 Bool connectionCheck(int sockfd);
-int setUpConnection();
+int setUpConnection(jobjectArray ip, JNIEnv * env);
 void maintainConnection();
+void getIp(char *serverIp, jobjectArray ip, JNIEnv* env);
+char* getIpIndex(int index, jobjectArray ip, JNIEnv* env);

@@ -7,35 +7,29 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#undef connect_NativeClient_MIN_PRIORITY
-#define connect_NativeClient_MIN_PRIORITY 1L
-#undef connect_NativeClient_NORM_PRIORITY
-#define connect_NativeClient_NORM_PRIORITY 5L
-#undef connect_NativeClient_MAX_PRIORITY
-#define connect_NativeClient_MAX_PRIORITY 10L
 /*
  * Class:     connect_NativeClient
  * Method:    connect
- * Signature: ()Z
+ * Signature: ([Ljava/lang/String;)Z
  */
 JNIEXPORT jboolean JNICALL Java_connect_NativeClient_connect
-  (JNIEnv *, jobject);
+  (JNIEnv *, jobject, jobjectArray);
 
 /*
  * Class:     connect_NativeClient
  * Method:    track
- * Signature: ()Z
+ * Signature: ([Ljava/lang/String;)Z
  */
 JNIEXPORT jboolean JNICALL Java_connect_NativeClient_track
-  (JNIEnv *, jobject);
+  (JNIEnv *, jobject, jobjectArray);
 
 /*
  * Class:     connect_NativeClient
  * Method:    stopTrack
- * Signature: ()Z
+ * Signature: ([Ljava/lang/String;)Z
  */
 JNIEXPORT jboolean JNICALL Java_connect_NativeClient_stopTrack
-  (JNIEnv *, jobject);
+  (JNIEnv *, jobject, jobjectArray);
 
 #ifdef __cplusplus
 }

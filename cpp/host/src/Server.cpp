@@ -1,21 +1,38 @@
 #include "../include/Server.hpp"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
   Server s = Server();
   s.run();
   return 0;
 }
 
 
-void Server::sendData( int sockfd, int data ) {
+void Server::sendData( int sockfd, int data )
+{
   int n;
 
   char buffer[32];
   sprintf( buffer, "%d\n", data );
 
-  if ( (n = write( sockfd, buffer, strlen(buffer) ) ) < 0 )
+  if ( (n = write( sockfd, buffer, strlen(buffer) ) ) < 0 ) {
     error( "ERROR writing to socket" );
+  }
 
+  buffer[n] = '\0';
+}
+
+
+void Server::sendTrackingData(int sockfd, int* trackingData)
+{
+  int n;
+  char* buffer[DATA_SIZE];
+
+  dataToBuffer(buffer, trackingData);
+
+  if ( (n = write(sockfd,buffer,(DATA_SIZE - 1)) ) < 0 ) {
+    error(  "ERROR reading from socket" );
+  }
   buffer[n] = '\0';
 }
 
@@ -24,8 +41,9 @@ int Server::getData( int sockfd ) {
   char buffer[32];
   int n;
 
-  if ( (n = read(sockfd,buffer,31) ) < 0 )
+  if ( (n = read(sockfd,buffer,31) ) < 0 ) {
     error( "ERROR reading from socket" );
+  }
 
   buffer[n] = '\0';
   return atoi( buffer );
@@ -82,6 +100,7 @@ void Server::run()
 
 void Server::processSignal(int data, int sockfd)
 {
+  int* trackingData = (int*)malloc(DATA_SIZE * sizeof(int*));
   switch(data) {
     case CONNECTION_REQUEST:
       reply(sockfd, CONNECTION_APPROVED);
@@ -93,6 +112,11 @@ void Server::processSignal(int data, int sockfd)
     case STOP_TRACKING:
       reply(sockfd, STOP_TRACKING);
       tracking(STOP);
+      break;
+    case GET_TRACKING_DATA:
+      trackingData = getDataSet();
+      sendTrackingData(sockfd, trackingData);
+      free(trackingData);
       break;
     default:
       reply(sockfd, DENIED);
@@ -129,6 +153,21 @@ void Server::tracking(Command c)
     default:
       break;
   }
+}
+
+
+void Server::dataToBuffer(char* buffer[DATA_SIZE], int* data)
+{
+  int i;
+  for(i = 0; data[i] != 0; i++) {
+    sprintf(buffer[i], "%d", data[i]);
+  }
+}
+
+
+int* Server::getDataSet()
+{
+
 }
 
 

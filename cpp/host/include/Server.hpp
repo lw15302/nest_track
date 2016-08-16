@@ -13,6 +13,8 @@
 #include <memory>
 #include <iostream>
 
+#define DATA_SIZE 1000
+
 typedef enum command {
   START = 1,
   STOP = 0
@@ -44,10 +46,13 @@ class Server
     bool isRunning;
 
     void sendData( int sockfd, int x );
+    void sendTrackingData(int sockfd, int* trackingData);
     void error( std::string msg );
     void processSignal(int data, int newsockfd);
     int getData( int sockfd );
     void tracking(Command c);
     void track();
     void reply(int sockfd, int reply);
+    void dataToBuffer(char* buffer[DATA_SIZE], int* data);
+    int* getDataSet();
 };

@@ -9,6 +9,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -70,7 +71,17 @@ public class Controller {
             disableSave(true);
             tracking = true;
             checkTrackingStatus();
+
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    while(tracking) {
+                        int[] data = connection.getData(hostIp);
+                    }
+                }
+            });
         }
+
         else {
             start.setText("Start Tracking");
             disableSave(false);

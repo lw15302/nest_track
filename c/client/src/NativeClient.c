@@ -26,7 +26,7 @@ JNIEXPORT jboolean JNICALL Java_connect_NativeClient_track(JNIEnv *env, jobject 
 
   sendData(sockfd, INITIATE_TRACKING);
   printf("\nSent request to start tracking: %d", INITIATE_TRACKING);
-  data = getData( sockfd );
+  data = getReply( sockfd );
   printf("\nReceived reply: %d", data);
 
   if(data = TRACKING_INITIATED) {
@@ -50,7 +50,7 @@ JNIEXPORT jboolean JNICALL Java_connect_NativeClient_stopTrack(JNIEnv *env, jobj
 
   sendData(sockfd, STOP_TRACKING);
   printf("\nSent request to stop tracking: %d", STOP_TRACKING );
-  data = getData(sockfd);
+  data = getReply(sockfd);
   printf("\nReceived reply: %d", data);
 
   if(data = STOPPING_TRACKING) {
@@ -63,6 +63,22 @@ JNIEXPORT jboolean JNICALL Java_connect_NativeClient_stopTrack(JNIEnv *env, jobj
     close(sockfd);
     return FALSE;
   }
+}
+
+JNIEXPORT jintArray JNICALL Java_connect_NativeClient_getReply(JNIEnv *env, jobject obj, jobjectArray ip)
+{
+  int sockfd = setUpConnection(ip, env);
+  if(sockfd == -1) return (jintArray)-1;
+  int* data = (int*)malloc(DATA_SIZE * sizeof(int*));
+
+  sendData(sockfd, GET_TRACKING_DATA);
+  printf("\nSent request to get data: %d", GET_TRACKING_DATA);
+  sleep(500);
+  data = getData(sockfd);
+
+  jintArray dataPacket = convertDataPacket(data, env);
+  free(data);
+  return dataPacket;
 }
 
 
@@ -117,7 +133,7 @@ void sendData( int sockfd, int x )
 }
 
 
-int getData( int sockfd )
+int getReply( int sockfd )
 {
   char buffer[32];
   int n;
@@ -129,11 +145,34 @@ int getData( int sockfd )
 }
 
 
+int* getData(int sockfd)
+{
+  char* buffer[DATA_SIZE];
+  int* dataSet = (int*)malloc(DATA_SIZE * sizeof(int*));
+  int n;
+
+  if ( (n = read(sockfd,buffer,(DATA_SIZE - 1)) ) < 0 )
+  error(  "ERROR reading from socket" );
+  buffer[n] = '\0';
+
+  convertBuffer(buffer, dataSet);
+}
+
+
+void convertBuffer(char* buffer[DATA_SIZE], int* dataSet)
+{
+  int i;
+  for(i = 0; i < DATA_SIZE; i++) {
+    dataSet[i] = atoi(buffer[i]);
+  }
+}
+
+
 Bool connectionCheck(int sockfd)
 {
   sendData(sockfd, CONNECTION_REQUEST);
   printf("\nSent connection request to server: %d", CONNECTION_REQUEST);
-  int data = getData(sockfd);
+  int data = getReply(sockfd);
   printf("\nReply from server: %d", data);
   if(data == CONNECTION_APPROVED) return TRUE;
   else return FALSE;
@@ -154,6 +193,15 @@ void getIp(char* serverIp, jobjectArray ip, JNIEnv* env) {
 
   sprintf(serverIp, "%s.%s.%s.%s", x1, x2, x3, x4);
   printf("\nSending request to: %s", serverIp);
+}
+
+
+jintArray convertDataPacket(int* originalData, JNIEnv* env)
+{
+  const jint length = (*env)->GetArrayLength(env, (jarray)originalData);
+  jintArray convertedData = (*env)->NewIntArray(env, length);
+  (*env)->SetIntArrayRegion(env, convertedData, 0, length, originalData);
+  return convertedData;
 }
 
 

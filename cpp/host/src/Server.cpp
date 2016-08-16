@@ -39,6 +39,10 @@ void Server::run()
   struct sockaddr_in serv_addr, cli_addr;
   int n;
   int data;
+  isRunning = false;
+  player = NULL;
+  // t = std::thread();
+  // t.detach();
 
   std::cout << "using port #" << portno << std::endl;
 
@@ -59,12 +63,14 @@ void Server::run()
   clilen = sizeof(cli_addr);
 
   while ( 1 ) {
+    std::cout << "\n-------------------------------------" << std::endl;
     std::cout << "waiting for new client" << std::endl;
 
     if ( ( newsockfd = accept( sockfd, (struct sockaddr *) &cli_addr,
-    (socklen_t*) &clilen) ) < 0 )
-    error( "ERROR on accept" );
-    std::cout << "\n-------------------------------------" << std::endl;
+      (socklen_t*) &clilen) ) < 0 ){
+        error( "ERROR on accept" );
+      }
+
     std::cout << "opened new communication with client" << std::endl;
 
     data = getData( newsockfd );
@@ -74,29 +80,31 @@ void Server::run()
   close( newsockfd );
 }
 
-
 void Server::processSignal(int data, int sockfd)
 {
   switch(data) {
     case CONNECTION_REQUEST:
-      std::cout << "Replying: " << CONNECTION_APPROVED << std::endl;
-      sendData(sockfd, CONNECTION_APPROVED);
+      reply(sockfd, CONNECTION_APPROVED);
       break;
     case INITIATE_TRACKING:
-      std::cout << "Replying: " << TRACKING_INITIATED << std::endl;
-      sendData(sockfd, TRACKING_INITIATED);
+      reply(sockfd, TRACKING_INITIATED);
       tracking(START);
       break;
     case STOP_TRACKING:
-      std::cout << "Replying: " << STOPPING_TRACKING << std::endl;
-      sendData(sockfd, STOPPING_TRACKING);
+      reply(sockfd, STOP_TRACKING);
       tracking(STOP);
       break;
     default:
-      std::cout << "Replying: " << DENIED << std::endl;
-      sendData(sockfd, DENIED);
+      reply(sockfd, DENIED);
       break;
   }
+}
+
+
+void Server::reply(int sockfd, int reply)
+{
+  std::cout << "Replying: " << reply << std::endl;
+  sendData(sockfd, reply);
 }
 
 
@@ -104,26 +112,23 @@ void Server::tracking(Command c)
 {
   switch(c) {
     case START:
-      player = VideoPlayer();
-      player.setTrackStatus(true);
-      track();
-      player.setTrackStatus(false);
-      // t = std::thread(&Server::track, this);
-      // t.detach();
+      if(!isRunning) {
+        std::cout << "inside start" << std::endl;
+        player = make_unique<VideoPlayer>();
+        isRunning = true;
+        player->setTrackStatus(isRunning);
+      }
       break;
     case STOP:
-      player.setTrackStatus(false);
+      if(isRunning) {
+        isRunning = false;
+        player->setTrackStatus(isRunning);
+        player.reset();
+      }
       break;
     default:
       break;
   }
-}
-
-
-void Server::track()
-{
-  player.run();
-  return;
 }
 
 

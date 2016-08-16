@@ -8,19 +8,51 @@
  * transform() and a random number generator used for bounding box highlight
  * colours
  */
-VideoPlayer::VideoPlayer()
+VideoPlayer::VideoPlayer () : track(true)
 {
-   tracker = Tracker();
+  tracker = Tracker();
+  std::cout << "Inside VideoPlayer Constructor" << std::endl;
+  originalWindow = "Original";
+  trackerWindow = "Tracker";
+  // std::lock_guard<std::mutex> lock(mtx);
+  track_t = std::thread(&VideoPlayer::run, this);
+  // std::lock_guard<std::mutex> unlock(mtx);
 }
 
+
+VideoPlayer::~VideoPlayer()
+{
+  std::cout << "Inside VideoPlayer Destructor" << std::endl;
+  terminate();
+  std::cout << "flag1" << std::endl;
+  exit();
+  std::cout << "flag2" << std::endl;
+  joinThread();
+  std::cout << "flag3" << std::endl;
+  // std::lock_guard<std::mutex> lock(mtx);
+}
+
+
+void VideoPlayer::joinThread()
+{
+  if(track_t.joinable()) {
+    std::cout << "Trying to join thread" << std::endl;
+    track_t.join();
+    std::cout << "joining thread" << std::endl;
+    return;
+  }
+}
 
 /**
  * Calls the initialisation functions
  */
 void VideoPlayer::run(void)
 {
+  // std::lock_guard<std::mutex> lock(mtx);
+  std::cout << "inside run" << std::endl;
   initVC();
   openStream();
+  return;
 }
 
 
@@ -30,12 +62,16 @@ void VideoPlayer::run(void)
  */
 void VideoPlayer::initVC()
 {
+  // mtx.lock();
   if(!capture.open("cut.mp4")) {
       throw "Cannot open video stream";
   }
-  cv::namedWindow("Tracker", CV_WINDOW_AUTOSIZE);
-  cv::namedWindow("Original", CV_WINDOW_AUTOSIZE);
+  std::cout << "attempting namedWindow()1" << std::endl;
+  // cv::namedWindow(originalWindow, cv::WINDOW_NORMAL);
+  std::cout << "attempting namedWindow()2" << std::endl;
+  // cv::namedWindow(trackerWindow, cv::WINDOW_NORMAL);
   std::cout << "start tracking" << std::endl;
+
 }
 
 
@@ -43,61 +79,57 @@ void VideoPlayer::initVC()
  * Private functions
  */
 
-/**
- * Creates a comparisonFrame subtractor and calls the main video capturing function
- */
-void VideoPlayer::openStream()
-{
-  captureStream();
-}
-
 
 /**
  * Contains the main loop that captures and displays the frames from the
  * camera. It also calls a number of functions associated with image processing
  * and object detection
  */
-void VideoPlayer::captureStream() {
+void VideoPlayer::openStream() {
+  int n = 0;
   std::cout << "track outside loop: " << track << std::endl;
   while(track) {
-    std::cout << "tracking" << std::endl;
+    printf("running tracking frame: #");
+    printf("%d", n++);
     differenceFrame = cv::Mat();
-    std::cout << "tracking" << std::endl;
 
     if(!capture.read(frame)) break;
-    std::cout << "tracking1" << std::endl;
-    cv::imshow("Original", frame);
-    std::cout << "tracking2" << std::endl;
+    // cv::imshow(originalWindow, frame);
     frame = tracker.transform(frame);
-    std::cout << "tracking3" << std::endl;
     if(!capture.read(comparisonFrame)) break;
-    std::cout << "tracking4" << std::endl;
     comparisonFrame = tracker.transform(comparisonFrame);
-    std::cout << "tracking5" << std::endl;
     cv::absdiff(frame, comparisonFrame, differenceFrame);
-    std::cout << "tracking6" << std::endl;
 
 
     differenceFrame = tracker.boundingBox(differenceFrame); //Rename function as it no longer creates a boundingBox
-    std::cout << "tracking7: " << track << std::endl;
 
 
-    cv::imshow("Tracker", differenceFrame);
-    std::cout << "tracking8" << std::endl;
+    // cv::imshow(trackerWindow, differenceFrame);
     cv::waitKey(30);
   }
+  std::this_thread::sleep_for(std::chrono::seconds(1));
   std::cout <<"Exiting loop" << std::endl;
-  exit();
+
+  return;
 }
 
 
 void VideoPlayer::exit()
 {
-  cv::destroyAllWindows();
-  frame.release();
-  differenceFrame.release();
-  comparisonFrame.release();
+  // cv::destroyWindow(originalWindow);
+  // cv::destroyWindow(trackerWindow);
+  // frame.release();
+  // differenceFrame.release();
+  // comparisonFrame.release();
+
   capture.release();
+}
+
+
+void VideoPlayer::terminate()
+{
+  track = false;
+  // std::lock_guard<std::mutex> lock(mtx);
 }
 
 

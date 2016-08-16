@@ -31,6 +31,14 @@ JNIEXPORT jboolean JNICALL Java_connect_NativeClient_track
 JNIEXPORT jboolean JNICALL Java_connect_NativeClient_stopTrack
   (JNIEnv *, jobject, jobjectArray);
 
+/*
+ * Class:     connect_NativeClient
+ * Method:    getData
+ * Signature: ([Ljava/lang/String;)[I
+ */
+JNIEXPORT jintArray JNICALL Java_connect_NativeClient_getData
+  (JNIEnv *, jobject, jobjectArray);
+
 #ifdef __cplusplus
 }
 #endif

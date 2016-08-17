@@ -126,3 +126,9 @@ void Tracker::getLargestContour(int* index)
   }
   // std::cout<<"contourArea: " << area << std::endl;
 }
+
+
+int Tracker::getX()
+{
+  return trackX;
+}

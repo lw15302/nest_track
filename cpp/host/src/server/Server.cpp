@@ -1,54 +1,4 @@
-#include "../include/Server.hpp"
-
-int main(int argc, char *argv[])
-{
-  Server s = Server();
-  s.run();
-  return 0;
-}
-
-
-void Server::sendData( int sockfd, int data )
-{
-  int n;
-
-  char buffer[32];
-  sprintf( buffer, "%d\n", data );
-
-  if ( (n = write( sockfd, buffer, strlen(buffer) ) ) < 0 ) {
-    error( "ERROR writing to socket" );
-  }
-
-  buffer[n] = '\0';
-}
-
-
-void Server::sendTrackingData(int sockfd, int* trackingData)
-{
-  int n;
-  char* buffer[DATA_SIZE];
-
-  dataToBuffer(buffer, trackingData);
-
-  if ( (n = write(sockfd,buffer,(DATA_SIZE - 1)) ) < 0 ) {
-    error(  "ERROR reading from socket" );
-  }
-  buffer[n] = '\0';
-}
-
-
-int Server::getData( int sockfd ) {
-  char buffer[32];
-  int n;
-
-  if ( (n = read(sockfd,buffer,31) ) < 0 ) {
-    error( "ERROR reading from socket" );
-  }
-
-  buffer[n] = '\0';
-  return atoi( buffer );
-}
-
+#include "../../include/server/Server.hpp"
 
 void Server::run()
 {
@@ -75,7 +25,7 @@ void Server::run()
   serv_addr.sin_port = htons( portno );
 
   if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
-    error( "ERROR on binding" );
+  error( "ERROR on binding" );
 
   listen(sockfd,5);
   clilen = sizeof(cli_addr);
@@ -85,9 +35,9 @@ void Server::run()
     std::cout << "waiting for new client" << std::endl;
 
     if ( ( newsockfd = accept( sockfd, (struct sockaddr *) &cli_addr,
-      (socklen_t*) &clilen) ) < 0 ){
-        error( "ERROR on accept" );
-      }
+    (socklen_t*) &clilen) ) < 0 ){
+      error( "ERROR on accept" );
+    }
 
     std::cout << "opened new communication with client" << std::endl;
 
@@ -98,9 +48,51 @@ void Server::run()
   close( newsockfd );
 }
 
+void Server::sendData( int sockfd, int data )
+{
+  int n;
+
+  char buffer[32];
+  sprintf( buffer, "%d\n", data );
+
+  if ( (n = write( sockfd, buffer, strlen(buffer) ) ) < 0 ) {
+    error( "ERROR writing to socket" );
+  }
+
+  buffer[n] = '\0';
+}
+
+
+void Server::sendTrackingData(int sockfd)
+{
+  int n;
+  char* buffer[DATA_SIZE];
+
+  dataToBuffer(buffer);
+
+  if ( (n = write(sockfd,buffer,(DATA_SIZE - 1)) ) < 0 ) {
+    error(  "ERROR reading from socket" );
+  }
+  buffer[n] = '\0';
+}
+
+
+int Server::getData( int sockfd ) {
+  char buffer[32];
+  int n;
+
+  if ( (n = read(sockfd,buffer,31) ) < 0 ) {
+    error( "ERROR reading from socket" );
+  }
+
+  buffer[n] = '\0';
+  return atoi( buffer );
+}
+
+
+
 void Server::processSignal(int data, int sockfd)
 {
-  int* trackingData = (int*)malloc(DATA_SIZE * sizeof(int*));
   switch(data) {
     case CONNECTION_REQUEST:
       reply(sockfd, CONNECTION_APPROVED);
@@ -114,9 +106,14 @@ void Server::processSignal(int data, int sockfd)
       tracking(STOP);
       break;
     case GET_TRACKING_DATA:
-      trackingData = getDataSet();
-      sendTrackingData(sockfd, trackingData);
-      free(trackingData);
+      if(isRunning) {
+        rawData = player->getTrackingData();
+        sendTrackingData(sockfd);
+        resetRawData();
+      }
+      else {
+        reply(sockfd, DENIED);
+      }
       break;
     default:
       reply(sockfd, DENIED);
@@ -138,7 +135,7 @@ void Server::tracking(Command c)
     case START:
       if(!isRunning) {
         std::cout << "inside start" << std::endl;
-        player = make_unique<VideoPlayer>();
+        player = std::make_shared<VideoPlayer>();
         isRunning = true;
         player->setTrackStatus(isRunning);
       }
@@ -156,18 +153,21 @@ void Server::tracking(Command c)
 }
 
 
-void Server::dataToBuffer(char* buffer[DATA_SIZE], int* data)
+void Server::dataToBuffer(char* buffer[DATA_SIZE])
 {
   int i;
-  for(i = 0; data[i] != 0; i++) {
-    sprintf(buffer[i], "%d", data[i]);
+  for(i = 0; rawData[i] != 0; i++) {
+    sprintf(buffer[i], "%d", rawData[i]);
   }
 }
 
 
-int* Server::getDataSet()
+void Server::resetRawData()
 {
-
+  int i;
+  for(i = 0; i < DATA_SIZE; i++) {
+    rawData[i] = 0;
+  }
 }
 
 

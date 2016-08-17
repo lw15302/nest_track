@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <errno.h>
 
-#include "../../tracking/include/display/VideoPlayer.hpp"
+#include <VideoPlayer.hpp>
 #include <string>
 #include <memory>
 #include <iostream>
@@ -42,17 +42,19 @@ class Server
     void run();
 
   private:
-    std::unique_ptr<VideoPlayer> player;
+    int* rawData;
     bool isRunning;
 
+    std::shared_ptr<VideoPlayer> player;
+
     void sendData( int sockfd, int x );
-    void sendTrackingData(int sockfd, int* trackingData);
+    void sendTrackingData(int sockfd);
     void error( std::string msg );
-    void processSignal(int data, int newsockfd);
+    void processSignal(int data, int sockfd);
     int getData( int sockfd );
     void tracking(Command c);
     void track();
     void reply(int sockfd, int reply);
-    void dataToBuffer(char* buffer[DATA_SIZE], int* data);
-    int* getDataSet();
+    void dataToBuffer(char* buffer[DATA_SIZE]);
+    void resetRawData();
 };

@@ -4,9 +4,11 @@
 class Tracker
 {
   public:
-    Tracker();
     cv::Mat transform(cv::Mat frame);
     cv::Mat boundingBox(cv::Mat frame);
+
+    Tracker();
+    int getX();
 
   private:
     int threshold;

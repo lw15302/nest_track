@@ -76,7 +76,9 @@ public class Controller {
                 @Override
                 public void run() {
                     while(tracking) {
+                        System.out.println("flag");
                         int[] data = connection.getData(hostIp);
+                        System.out.println("Data: " + data);
                     }
                 }
             });

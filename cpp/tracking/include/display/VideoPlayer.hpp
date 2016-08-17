@@ -5,8 +5,10 @@
 #include <mutex>
 #include <memory>
 #include <atomic>
-#include <chrono>
+#include <chrono> // do I need this
+#include <ctime>
 
+#define DATA_SIZE 1000
 static std::mutex mtx;
 
 class VideoPlayer
@@ -15,25 +17,33 @@ class VideoPlayer
     VideoPlayer();
     ~VideoPlayer();
     void run(void);
+    int* getTrackingData();
     void setTrackStatus(bool status);
-    void terminate();
-    void exit();
-    void joinThread();
+
 
   private:
+    int* dataSet;
+    int lastX, dataIndex;
+    Tracker tracker;
+
     cv::Mat comparisonFrame;
     cv::Mat differenceFrame;
     cv::Mat frame;
     cv::VideoCapture capture;
 
-    std::string originalWindow;
-    std::string trackerWindow;
+    // std::string originalWindow;
+    // std::string trackerWindow;
 
+    std::clock_t start;
     std::thread track_t;
     std::atomic<bool> track;
     std::thread::id tId;
-    Tracker tracker;
 
     void initVC();
     void openStream();
+    void terminate();
+    void exit();
+    void joinThread();
+    void setTrackingData();
+    void resetData();
 };

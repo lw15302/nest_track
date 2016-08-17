@@ -114,29 +114,53 @@ EntranceTracker/fast:
 	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/build
 .PHONY : EntranceTracker/fast
 
-host/src/Server.o: host/src/Server.cpp.o
-.PHONY : host/src/Server.o
+host/src/main/main.o: host/src/main/main.cpp.o
+.PHONY : host/src/main/main.o
 
 # target to build an object file
-host/src/Server.cpp.o:
-	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.o
-.PHONY : host/src/Server.cpp.o
+host/src/main/main.cpp.o:
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/host/src/main/main.cpp.o
+.PHONY : host/src/main/main.cpp.o
 
-host/src/Server.i: host/src/Server.cpp.i
-.PHONY : host/src/Server.i
+host/src/main/main.i: host/src/main/main.cpp.i
+.PHONY : host/src/main/main.i
 
 # target to preprocess a source file
-host/src/Server.cpp.i:
-	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.i
-.PHONY : host/src/Server.cpp.i
+host/src/main/main.cpp.i:
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/host/src/main/main.cpp.i
+.PHONY : host/src/main/main.cpp.i
 
-host/src/Server.s: host/src/Server.cpp.s
-.PHONY : host/src/Server.s
+host/src/main/main.s: host/src/main/main.cpp.s
+.PHONY : host/src/main/main.s
 
 # target to generate assembly for a file
-host/src/Server.cpp.s:
-	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.s
-.PHONY : host/src/Server.cpp.s
+host/src/main/main.cpp.s:
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/host/src/main/main.cpp.s
+.PHONY : host/src/main/main.cpp.s
+
+host/src/server/Server.o: host/src/server/Server.cpp.o
+.PHONY : host/src/server/Server.o
+
+# target to build an object file
+host/src/server/Server.cpp.o:
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/host/src/server/Server.cpp.o
+.PHONY : host/src/server/Server.cpp.o
+
+host/src/server/Server.i: host/src/server/Server.cpp.i
+.PHONY : host/src/server/Server.i
+
+# target to preprocess a source file
+host/src/server/Server.cpp.i:
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/host/src/server/Server.cpp.i
+.PHONY : host/src/server/Server.cpp.i
+
+host/src/server/Server.s: host/src/server/Server.cpp.s
+.PHONY : host/src/server/Server.s
+
+# target to generate assembly for a file
+host/src/server/Server.cpp.s:
+	$(MAKE) -f CMakeFiles/EntranceTracker.dir/build.make CMakeFiles/EntranceTracker.dir/host/src/server/Server.cpp.s
+.PHONY : host/src/server/Server.cpp.s
 
 tracking/src/display/VideoPlayer.o: tracking/src/display/VideoPlayer.cpp.o
 .PHONY : tracking/src/display/VideoPlayer.o
@@ -219,9 +243,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... EntranceTracker"
-	@echo "... host/src/Server.o"
-	@echo "... host/src/Server.i"
-	@echo "... host/src/Server.s"
+	@echo "... host/src/main/main.o"
+	@echo "... host/src/main/main.i"
+	@echo "... host/src/main/main.s"
+	@echo "... host/src/server/Server.o"
+	@echo "... host/src/server/Server.i"
+	@echo "... host/src/server/Server.s"
 	@echo "... tracking/src/display/VideoPlayer.o"
 	@echo "... tracking/src/display/VideoPlayer.i"
 	@echo "... tracking/src/display/VideoPlayer.s"

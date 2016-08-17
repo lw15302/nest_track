@@ -1,5 +1,15 @@
 #include "../include/NativeClient.h"
 
+/**
+ * Sends a signal to the server to check if there is a suitable connection.
+ * If a server at the specified address is detected, then the server sends
+ * back an approved request. This approval is then passed back to the Java
+ * application
+ * @param  env - a pointer to the JNI interface
+ * @param  obj - a reference to the Java object
+ * @param  ip  - the IP address of the server to connect to
+ * @return     - connection success
+ */
 JNIEXPORT jboolean JNICALL Java_connect_NativeClient_connect(JNIEnv *env, jobject obj, jobjectArray ip)
 {
   int sockfd = setUpConnection(ip, env);
@@ -18,6 +28,14 @@ JNIEXPORT jboolean JNICALL Java_connect_NativeClient_connect(JNIEnv *env, jobjec
 }
 
 
+/**
+ * Sends a request to start the OpenCV tracking application. The server sends
+ * back a reply giving the initiation success
+ * @param  env - a pointer to the JNI interface
+ * @param  obj - a reference to the Java object
+ * @param  ip  - the IP address of the server to connect to
+ * @return     - tracking success
+ */
 JNIEXPORT jboolean JNICALL Java_connect_NativeClient_track(JNIEnv *env, jobject obj, jobjectArray ip)
 {
   int sockfd = setUpConnection(ip, env);
@@ -42,6 +60,14 @@ JNIEXPORT jboolean JNICALL Java_connect_NativeClient_track(JNIEnv *env, jobject 
 }
 
 
+/**
+ * Sends a request to the server to stop OpenCV the tracking application. The
+ * server sends back a reply giving the success
+ * @param  env - a pointer to the JNI interface
+ * @param  obj - a reference to the Java object
+ * @param  ip  - the IP address of the server to connect to
+ * @return     - stop tracking success
+ */
 JNIEXPORT jboolean JNICALL Java_connect_NativeClient_stopTrack(JNIEnv *env, jobject obj, jobjectArray ip)
 {
   int sockfd = setUpConnection(ip, env);
@@ -65,7 +91,16 @@ JNIEXPORT jboolean JNICALL Java_connect_NativeClient_stopTrack(JNIEnv *env, jobj
   }
 }
 
-JNIEXPORT jintArray JNICALL Java_connect_NativeClient_getReply(JNIEnv *env, jobject obj, jobjectArray ip)
+
+/**
+ * Sends a request for data and returns an array containing the
+ * reply
+ * @param  env - a pointer to the JNI interface
+ * @param  obj - a reference to the Java object
+ * @param  ip  - the IP address of the server to connect to
+ * @return     - data returned from the server
+ */
+JNIEXPORT jintArray JNICALL Java_connect_NativeClient_getData(JNIEnv *env, jobject obj, jobjectArray ip)
 {
   int sockfd = setUpConnection(ip, env);
   if(sockfd == -1) return (jintArray)-1;
@@ -73,7 +108,7 @@ JNIEXPORT jintArray JNICALL Java_connect_NativeClient_getReply(JNIEnv *env, jobj
 
   sendData(sockfd, GET_TRACKING_DATA);
   printf("\nSent request to get data: %d", GET_TRACKING_DATA);
-  sleep(500);
+  sleep(100);
   data = getData(sockfd);
 
   jintArray dataPacket = convertDataPacket(data, env);
@@ -82,6 +117,12 @@ JNIEXPORT jintArray JNICALL Java_connect_NativeClient_getReply(JNIEnv *env, jobj
 }
 
 
+/**
+ * [setUpConnection description]
+ * @param  ip  - the IP address of the server to connect to
+ * @param  env - a pointer to the JNI interface
+ * @return     - returns the id of the socket. -1 returned on failure
+ */
 int setUpConnection(jobjectArray ip, JNIEnv* env)
 {
   int sockfd, portno = 51717, n;
@@ -121,6 +162,11 @@ int setUpConnection(jobjectArray ip, JNIEnv* env)
 }
 
 
+/**
+ * Sends signal to the server via the specified socket
+ * @param sockfd - id of the socket
+ * @param x      - signal to send to the server
+ */
 void sendData( int sockfd, int x )
 {
   int n;
@@ -133,6 +179,11 @@ void sendData( int sockfd, int x )
 }
 
 
+/**
+ * Receives a reply from the server on the specified socket
+ * @param  sockfd - id of the socket
+ * @return        - reply signal
+ */
 int getReply( int sockfd )
 {
   char buffer[32];
@@ -145,6 +196,12 @@ int getReply( int sockfd )
 }
 
 
+/**
+ * Gets the data from the server on the specified socket following a data
+ * request
+ * @param  sockfd - id of the socket
+ * @return        - array containing data
+ */
 int* getData(int sockfd)
 {
   char* buffer[DATA_SIZE];
@@ -159,6 +216,11 @@ int* getData(int sockfd)
 }
 
 
+/**
+ * Formats the data set into a buffer ready to be sent back to the application
+ * @param buffer  - array of integers in string form to be sent back to the application
+ * @param dataSet - data set from the server
+ */
 void convertBuffer(char* buffer[DATA_SIZE], int* dataSet)
 {
   int i;
@@ -168,6 +230,11 @@ void convertBuffer(char* buffer[DATA_SIZE], int* dataSet)
 }
 
 
+/**
+ * Checks if there is a valid connection to the specified address
+ * @param  sockfd - id of the socket
+ * @return        - connection success
+ */
 Bool connectionCheck(int sockfd)
 {
   sendData(sockfd, CONNECTION_REQUEST);
@@ -179,6 +246,12 @@ Bool connectionCheck(int sockfd)
 }
 
 
+/**
+ * Converts the IP address sent by the application into a C readable format
+ * @param serverIp - the C readable character array of the server
+ * @param ip       - the IP address from the application
+ * @param  env     - a pointer to the JNI interface
+ */
 void getIp(char* serverIp, jobjectArray ip, JNIEnv* env) {
   char* x1;
   char* x2;
@@ -196,6 +269,13 @@ void getIp(char* serverIp, jobjectArray ip, JNIEnv* env) {
 }
 
 
+/**
+ * Converts the data from the server into an appropriate format to send back
+ * to the application
+ * @param  originalData - data from the server
+ * @param  env          - a pointer to the JNI interface
+ * @return              - data in jintArray format
+ */
 jintArray convertDataPacket(int* originalData, JNIEnv* env)
 {
   const jint length = (*env)->GetArrayLength(env, (jarray)originalData);
@@ -205,6 +285,13 @@ jintArray convertDataPacket(int* originalData, JNIEnv* env)
 }
 
 
+/**
+ * Gets the value at the specified index of the IP address array
+ * @param  index - index at which the value of interest is stored
+ * @param  ip    - the full IP address
+ * @param  env   - a pointer to the JNI interface
+ * @return       - the segment of the address of interest as a character array
+ */
 char* getIpIndex(int index, jobjectArray ip, JNIEnv* env)
 {
   jstring string = (*env)->GetObjectArrayElement(env, ip, index);

@@ -1,4 +1,4 @@
-#include <VideoPlayer.hpp>
+#include "../../include/display/VideoPlayer.hpp"
 /**
  * Public functions
  */
@@ -12,10 +12,13 @@ VideoPlayer::VideoPlayer () : track(true)
 {
   tracker = Tracker();
   std::cout << "Inside VideoPlayer Constructor" << std::endl;
-  originalWindow = "Original";
-  trackerWindow = "Tracker";
+  // originalWindow = "Original";
+  // trackerWindow = "Tracker";
   // std::lock_guard<std::mutex> lock(mtx);
   track_t = std::thread(&VideoPlayer::run, this);
+  dataSet = (int*)calloc(DATA_SIZE, sizeof(int*));
+  lastX = 0;
+  dataIndex = 0;
   // std::lock_guard<std::mutex> unlock(mtx);
 }
 
@@ -24,12 +27,9 @@ VideoPlayer::~VideoPlayer()
 {
   std::cout << "Inside VideoPlayer Destructor" << std::endl;
   terminate();
-  std::cout << "flag1" << std::endl;
   exit();
-  std::cout << "flag2" << std::endl;
   joinThread();
-  std::cout << "flag3" << std::endl;
-  // std::lock_guard<std::mutex> lock(mtx);
+  free(dataSet);
 }
 
 
@@ -48,7 +48,6 @@ void VideoPlayer::joinThread()
  */
 void VideoPlayer::run(void)
 {
-  // std::lock_guard<std::mutex> lock(mtx);
   std::cout << "inside run" << std::endl;
   initVC();
   openStream();
@@ -87,10 +86,8 @@ void VideoPlayer::initVC()
  */
 void VideoPlayer::openStream() {
   int n = 0;
-  std::cout << "track outside loop: " << track << std::endl;
+  start = std::clock_t();
   while(track) {
-    printf("running tracking frame: #");
-    printf("%d", n++);
     differenceFrame = cv::Mat();
 
     if(!capture.read(frame)) break;
@@ -102,13 +99,13 @@ void VideoPlayer::openStream() {
 
 
     differenceFrame = tracker.boundingBox(differenceFrame); //Rename function as it no longer creates a boundingBox
-
+    setTrackingData();
 
     // cv::imshow(trackerWindow, differenceFrame);
     cv::waitKey(30);
   }
   std::this_thread::sleep_for(std::chrono::seconds(1));
-  std::cout <<"Exiting loop" << std::endl;
+  std::cout <<"Exiting tracking" << std::endl;
 
   return;
 }
@@ -136,4 +133,39 @@ void VideoPlayer::terminate()
 void VideoPlayer::setTrackStatus(bool status)
 {
   track = status;
+}
+
+
+void VideoPlayer::setTrackingData()
+{
+  int x = tracker.getX();
+  int difference = abs(x - lastX);
+  double currentTime = 0;
+  if(difference > 20) {
+    currentTime = (std::clock_t() - start) / (double)CLOCKS_PER_SEC;
+    if(x < lastX) {
+      currentTime *= -1;
+    }
+    dataSet[dataIndex] = currentTime;
+    dataIndex++;
+  }
+  lastX = x;
+}
+
+
+void VideoPlayer::resetData()
+{
+  int i;
+  for(i = 0; i < DATA_SIZE; i++) {
+    dataSet[i] = 0;
+  }
+}
+
+
+
+int* VideoPlayer::getTrackingData()
+{
+  int* dataOut = dataSet;
+  resetData();
+  return dataOut;
 }

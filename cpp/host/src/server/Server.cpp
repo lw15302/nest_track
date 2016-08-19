@@ -9,6 +9,7 @@ void Server::run()
   int data;
   isRunning = false;
   player = NULL;
+  int yes = 1;
   // t = std::thread();
   // t.detach();
 
@@ -23,6 +24,11 @@ void Server::run()
   serv_addr.sin_family = AF_INET;
   serv_addr.sin_addr.s_addr = INADDR_ANY;
   serv_addr.sin_port = htons( portno );
+
+  if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes)) == -1) {
+    error("setsockopt");
+    exit(1);
+}
 
   if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
   error( "ERROR on binding" );
@@ -66,14 +72,24 @@ void Server::sendData( int sockfd, int data )
 void Server::sendTrackingData(int sockfd)
 {
   int n;
-  char* buffer[DATA_SIZE];
+  // int* buffer;
 
-  dataToBuffer(buffer);
+  // dataToBuffer(buffer);
+  int* data = convertRawData(rawData);
 
-  if ( (n = write(sockfd,buffer,(DATA_SIZE - 1)) ) < 0 ) {
+  printf("data in senddata: ");
+  for(int i = 0; i < DATA_SIZE; i++) {
+    if(i %20 == 0) {
+      printf("\n");
+    }
+    printf("%d  ", rawData[i]);
+  }
+  printf("\n");
+
+  if ( (n = write(sockfd,data,(DATA_SIZE - 1)) ) < 0 ) {
     error(  "ERROR reading from socket" );
   }
-  buffer[n] = '\0';
+  // buffer[n] = '\0';
 }
 
 
@@ -108,6 +124,14 @@ void Server::processSignal(int data, int sockfd)
     case GET_TRACKING_DATA:
       if(isRunning) {
         rawData = player->getTrackingData();
+        // std::cout << "data: ";
+        // for(int i = 0; i < DATA_SIZE; i++) {
+        //   std::cout << rawData[i] << " ";
+        //   if(i % 10 == 0) {
+        //     std::cout << "\n";
+        //   }
+        // }
+        // std::cout << "\n";
         sendTrackingData(sockfd);
         resetRawData();
       }
@@ -174,4 +198,14 @@ void Server::resetRawData()
 void Server::error( std::string msg ) {
   std::cout << msg << std::endl;
   exit(1);
+}
+
+
+int* Server::convertRawData(int* rawData)
+{
+  int* data = (int*)calloc(DATA_SIZE, sizeof(int*));
+  for(int i = 0; i < DATA_SIZE; i++) {
+    data[i] = rawData[i];
+  }
+  return data;
 }

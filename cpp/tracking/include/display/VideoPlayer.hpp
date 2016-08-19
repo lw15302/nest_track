@@ -23,7 +23,9 @@ class VideoPlayer
 
   private:
     int* dataSet;
-    int lastX, dataIndex;
+    int* dataOut;
+    int lastX;
+    int dataIndex;
     Tracker tracker;
 
     cv::Mat comparisonFrame;
@@ -34,7 +36,7 @@ class VideoPlayer
     // std::string originalWindow;
     // std::string trackerWindow;
 
-    std::clock_t start;
+    std::clock_t start, current;
     std::thread track_t;
     std::atomic<bool> track;
     std::thread::id tId;

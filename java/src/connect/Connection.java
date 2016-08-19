@@ -24,7 +24,7 @@ public class Connection {
     public int[] getData(String[] ip) {
             int[] data = client.getData(ip);
             try {
-                Thread.sleep(250);
+                Thread.sleep(1);
             } catch (Exception e) {
                 e.printStackTrace();
             }

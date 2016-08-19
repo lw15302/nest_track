@@ -37,4 +37,6 @@ void maintainConnection();
 void getIp(char *serverIp, jobjectArray ip, JNIEnv* env);
 char* getIpIndex(int index, jobjectArray ip, JNIEnv* env);
 jintArray convertDataPacket(int* originalData, JNIEnv* env);
-void convertBuffer(char* buffer[DATA_SIZE], int* dataSet); 
+void convertBuffer(char* buffer[DATA_SIZE], int* dataSet);
+void allocateBuffer(char* buffer[DATA_SIZE]);
+void freeBuffer(char* buffer[DATA_SIZE]);

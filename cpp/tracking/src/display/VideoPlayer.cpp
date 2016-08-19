@@ -15,10 +15,12 @@ VideoPlayer::VideoPlayer () : track(true)
   // originalWindow = "Original";
   // trackerWindow = "Tracker";
   // std::lock_guard<std::mutex> lock(mtx);
-  track_t = std::thread(&VideoPlayer::run, this);
   dataSet = (int*)calloc(DATA_SIZE, sizeof(int*));
+  dataOut = (int*)malloc(DATA_SIZE * sizeof(int*));
   lastX = 0;
   dataIndex = 0;
+  track_t = std::thread(&VideoPlayer::run, this);
+
   // std::lock_guard<std::mutex> unlock(mtx);
 }
 
@@ -27,9 +29,15 @@ VideoPlayer::~VideoPlayer()
 {
   std::cout << "Inside VideoPlayer Destructor" << std::endl;
   terminate();
+  std::cout << "destructor flag 1" << std::endl;
   exit();
+  std::cout << "destructor flag 2" << std::endl;
   joinThread();
+  std::cout << "destructor flag 3" << std::endl;
   free(dataSet);
+  std::cout << "destructor flag 4" << std::endl;
+  free(dataOut);
+  std::cout << "destructor flag 5" << std::endl;
 }
 
 
@@ -51,6 +59,9 @@ void VideoPlayer::run(void)
   std::cout << "inside run" << std::endl;
   initVC();
   openStream();
+  // if(track) {
+  //   delete this;
+  // }
   return;
 }
 
@@ -86,10 +97,9 @@ void VideoPlayer::initVC()
  */
 void VideoPlayer::openStream() {
   int n = 0;
-  start = std::clock_t();
+  start = std::clock();
   while(track) {
     differenceFrame = cv::Mat();
-
     if(!capture.read(frame)) break;
     // cv::imshow(originalWindow, frame);
     frame = tracker.transform(frame);
@@ -105,9 +115,10 @@ void VideoPlayer::openStream() {
     cv::waitKey(30);
   }
   std::this_thread::sleep_for(std::chrono::seconds(1));
+
   std::cout <<"Exiting tracking" << std::endl;
 
-  return;
+  // return;
 }
 
 
@@ -139,16 +150,29 @@ void VideoPlayer::setTrackStatus(bool status)
 void VideoPlayer::setTrackingData()
 {
   int x = tracker.getX();
+  std::cout << "x position: " << x << std::endl;
   int difference = abs(x - lastX);
-  double currentTime = 0;
-  if(difference > 20) {
-    currentTime = (std::clock_t() - start) / (double)CLOCKS_PER_SEC;
+  std::cout << "difference: " << difference << std::endl;
+  float currentTime;
+
+  if(difference >= 3) {
+    current = std::clock();
+    double elapsed = (1000.0)*(current - start) / (double)CLOCKS_PER_SEC;
     if(x < lastX) {
-      currentTime *= -1;
+      elapsed *= -1;
     }
-    dataSet[dataIndex] = currentTime;
+    dataSet[dataIndex] = elapsed;
     dataIndex++;
+    std::cout << "time: " << elapsed << std::endl;
   }
+  // printf("data in set: ");
+  // for(int i = 0; i < DATA_SIZE; i++) {
+  //   if(i % 20 == 0) {
+  //     printf("\n");
+  //   }
+  //   std::cout << dataSet[i] << " ";
+  // }
+  // printf("\n");
   lastX = x;
 }
 
@@ -159,13 +183,24 @@ void VideoPlayer::resetData()
   for(i = 0; i < DATA_SIZE; i++) {
     dataSet[i] = 0;
   }
+  dataIndex = 0;
 }
 
 
 
 int* VideoPlayer::getTrackingData()
 {
-  int* dataOut = dataSet;
+  memcpy(dataOut, dataSet, sizeof(dataSet));
+  int i;
+  std::cout << "data in VideoPlayer: ";
+  // for(i = 0; i < DATA_SIZE; i++) {
+  //   std::cout << dataOut[i] << " ";
+  //   if(i % 20 == 0) {
+  //     printf("\n");
+  //   }
+  // }
+  // printf("\n");
+
   resetData();
   return dataOut;
 }

@@ -57,4 +57,5 @@ class Server
     void reply(int sockfd, int reply);
     void dataToBuffer(char* buffer[DATA_SIZE]);
     void resetRawData();
+    int* convertRawData(int* rawData);
 };

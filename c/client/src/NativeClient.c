@@ -47,7 +47,7 @@ JNIEXPORT jboolean JNICALL Java_connect_NativeClient_track(JNIEnv *env, jobject 
   data = getReply( sockfd );
   printf("\nReceived reply: %d", data);
 
-  if(data = TRACKING_INITIATED) {
+  if(data == TRACKING_INITIATED) {
     printf("\nTracking initiated");
     close(sockfd);
     return TRUE;
@@ -79,7 +79,7 @@ JNIEXPORT jboolean JNICALL Java_connect_NativeClient_stopTrack(JNIEnv *env, jobj
   data = getReply(sockfd);
   printf("\nReceived reply: %d", data);
 
-  if(data = STOPPING_TRACKING) {
+  if(data == STOPPING_TRACKING) {
     printf("\nTracking stopped");
     close(sockfd);
     return TRUE;
@@ -104,15 +104,25 @@ JNIEXPORT jintArray JNICALL Java_connect_NativeClient_getData(JNIEnv *env, jobje
 {
   int sockfd = setUpConnection(ip, env);
   if(sockfd == -1) return (jintArray)-1;
-  int* data = (int*)malloc(DATA_SIZE * sizeof(int*));
+  int* data = (int*)calloc(DATA_SIZE, sizeof(int*));
 
   sendData(sockfd, GET_TRACKING_DATA);
   printf("\nSent request to get data: %d", GET_TRACKING_DATA);
-  sleep(100);
+  sleep(1);
   data = getData(sockfd);
-
   jintArray dataPacket = convertDataPacket(data, env);
+  int len = sizeof(data)/sizeof(data[0]);
+  int i;
+  // printf("data in set: ");
+  // for(i = 0; i < DATA_SIZE; i++) {
+  //   if(i % 20 == 0) {
+  //     printf("\n");
+  //   }
+  //   printf("%d ", data[i]);
+  // }
+  // printf("\n");
   free(data);
+
   return dataPacket;
 }
 
@@ -125,13 +135,11 @@ JNIEXPORT jintArray JNICALL Java_connect_NativeClient_getData(JNIEnv *env, jobje
  */
 int setUpConnection(jobjectArray ip, JNIEnv* env)
 {
-  int sockfd, portno = 51717, n;
+  int sockfd, portno = 51717;
   char* serverIp = (char *)malloc(20 * sizeof(char));
   getIp(serverIp, ip, env);
   struct sockaddr_in serv_addr;
   struct hostent *server;
-  char buffer[256];
-  int data;
 
   setbuf(stdout, NULL);
   if( ( sockfd = socket(AF_INET, SOCK_STREAM, 0) ) < 0 ) {
@@ -204,30 +212,47 @@ int getReply( int sockfd )
  */
 int* getData(int sockfd)
 {
-  char* buffer[DATA_SIZE];
+  // char* buffer[DATA_SIZE];
+  // allocateBuffer(buffer);
   int* dataSet = (int*)malloc(DATA_SIZE * sizeof(int*));
-  int n;
+  int n, i;
 
-  if ( (n = read(sockfd,buffer,(DATA_SIZE - 1)) ) < 0 )
+  if ( (n = read(sockfd,dataSet,(DATA_SIZE - 1)) ) < 0 )
   error(  "ERROR reading from socket" );
-  buffer[n] = '\0';
-
-  convertBuffer(buffer, dataSet);
-}
-
-
-/**
- * Formats the data set into a buffer ready to be sent back to the application
- * @param buffer  - array of integers in string form to be sent back to the application
- * @param dataSet - data set from the server
- */
-void convertBuffer(char* buffer[DATA_SIZE], int* dataSet)
-{
-  int i;
+  // buffer[n] = '\0';
+  printf("data in getdata: ");
   for(i = 0; i < DATA_SIZE; i++) {
-    dataSet[i] = atoi(buffer[i]);
+    if(i %20 == 0) {
+      printf("\n");
+    }
+    printf("%d  ", dataSet[i]);
   }
+  printf("\n");
+  // convertBuffer(buffer, dataSet);
+
+  // freeBuffer(buffer);
+
+  return dataSet;
 }
+
+
+// /**
+//  * Formats the data set into a buffer ready to be sent back to the application
+//  * @param buffer  - array of integers in string form to be sent back to the application
+//  * @param dataSet - data set from the server
+//  */
+// void convertBuffer(char* buffer[DATA_SIZE], int* dataSet)
+// {
+//   int i;
+//   printf("convertBuffer flag1\n");
+//   for(i = 0; i < DATA_SIZE; i++) {
+//     printf("buffer: %s\n", buffer[i]);
+//     if(buffer[i] != '\0') {
+//       printf("convertBuffer loop flag: %d\n", i);
+//       dataSet[i] = atoi(buffer[i]);
+//     }
+//   }
+// }
 
 
 /**
@@ -278,9 +303,9 @@ void getIp(char* serverIp, jobjectArray ip, JNIEnv* env) {
  */
 jintArray convertDataPacket(int* originalData, JNIEnv* env)
 {
-  const jint length = (*env)->GetArrayLength(env, (jarray)originalData);
-  jintArray convertedData = (*env)->NewIntArray(env, length);
-  (*env)->SetIntArrayRegion(env, convertedData, 0, length, originalData);
+  int length = sizeof(originalData)/sizeof(originalData[0]);
+  jintArray convertedData = (*env)->NewIntArray(env, (jint)length);
+  (*env)->SetIntArrayRegion(env, convertedData, 0, length, (jint*)originalData);
   return convertedData;
 }
 
@@ -298,3 +323,24 @@ char* getIpIndex(int index, jobjectArray ip, JNIEnv* env)
   char* raw = (char *)(*env)->GetStringUTFChars(env, string, 0);
   return raw;
 }
+
+
+//
+// void allocateBuffer(char* buffer[DATA_SIZE])
+// {
+//   int i;
+//   buffer = malloc(DATA_SIZE * sizeof(char*));
+//   for(i = 0; i < DATA_SIZE; i++) {
+//     buffer[i] = (char*)malloc(10 * sizeof(char*));
+//   }
+// }
+//
+//
+// void freeBuffer(char* buffer[DATA_SIZE])
+// {
+//   int i;
+//   for(i = 0; i < DATA_SIZE; i++) {
+//     free(buffer[i]);
+//   }
+//   free(buffer);
+// }

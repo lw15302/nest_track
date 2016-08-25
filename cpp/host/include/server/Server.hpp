@@ -42,7 +42,7 @@ class Server
     void run();
 
   private:
-    int* rawData;
+    std::array<int, DATA_SIZE> rawData;
     bool isRunning;
 
     std::shared_ptr<VideoPlayer> player;
@@ -57,5 +57,5 @@ class Server
     void reply(int sockfd, int reply);
     void dataToBuffer(char* buffer[DATA_SIZE]);
     void resetRawData();
-    int* convertRawData(int* rawData);
+    int* convertRawData(std::array<int, DATA_SIZE> rawData);
 };

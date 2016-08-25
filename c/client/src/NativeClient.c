@@ -110,15 +110,16 @@ JNIEXPORT jintArray JNICALL Java_connect_NativeClient_getData(JNIEnv *env, jobje
   printf("\nSent request to get data: %d", GET_TRACKING_DATA);
   sleep(1);
   data = getData(sockfd);
+  // int len = sizeof(data)/sizeof(data[0]);
+  // printf("\n\nlength of data: %d\n\n", len);
   jintArray dataPacket = convertDataPacket(data, env);
-  int len = sizeof(data)/sizeof(data[0]);
-  int i;
-  // printf("data in set: ");
+  // int i;
+  // printf("\ndata in set: ");
   // for(i = 0; i < DATA_SIZE; i++) {
   //   if(i % 20 == 0) {
   //     printf("\n");
   //   }
-  //   printf("%d ", data[i]);
+  //   printf("%d ", dataPacket[i]);
   // }
   // printf("\n");
   free(data);
@@ -214,20 +215,20 @@ int* getData(int sockfd)
 {
   // char* buffer[DATA_SIZE];
   // allocateBuffer(buffer);
-  int* dataSet = (int*)malloc(DATA_SIZE * sizeof(int*));
+  int* dataSet = (int*)calloc(DATA_SIZE, sizeof(int*));
   int n, i;
 
   if ( (n = read(sockfd,dataSet,(DATA_SIZE - 1)) ) < 0 )
   error(  "ERROR reading from socket" );
   // buffer[n] = '\0';
-  printf("data in getdata: ");
-  for(i = 0; i < DATA_SIZE; i++) {
-    if(i %20 == 0) {
-      printf("\n");
-    }
-    printf("%d  ", dataSet[i]);
-  }
-  printf("\n");
+  // printf("\ndata in getdata: ");
+  // for(i = 0; i < DATA_SIZE; i++) {
+  //   if(i %20 == 0) {
+  //     printf("\n");
+  //   }
+  //   printf("%d  ", dataSet[i]);
+  // }
+  // printf("\n");
   // convertBuffer(buffer, dataSet);
 
   // freeBuffer(buffer);
@@ -303,9 +304,10 @@ void getIp(char* serverIp, jobjectArray ip, JNIEnv* env) {
  */
 jintArray convertDataPacket(int* originalData, JNIEnv* env)
 {
-  int length = sizeof(originalData)/sizeof(originalData[0]);
-  jintArray convertedData = (*env)->NewIntArray(env, (jint)length);
-  (*env)->SetIntArrayRegion(env, convertedData, 0, length, (jint*)originalData);
+  // int length = sizeof(originalData)/sizeof(originalData[0]);
+  // printf("\n\nlength: %d\n\n", length);
+  jintArray convertedData = (*env)->NewIntArray(env, DATA_SIZE);
+  (*env)->SetIntArrayRegion(env, convertedData, 0, DATA_SIZE, (jint*)originalData);
   return convertedData;
 }
 

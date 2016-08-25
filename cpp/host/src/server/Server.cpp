@@ -30,8 +30,9 @@ void Server::run()
     exit(1);
 }
 
-  if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
-  error( "ERROR on binding" );
+  if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
+    error( "ERROR on binding" );
+  }
 
   listen(sockfd,5);
   clilen = sizeof(cli_addr);
@@ -77,14 +78,14 @@ void Server::sendTrackingData(int sockfd)
   // dataToBuffer(buffer);
   int* data = convertRawData(rawData);
 
-  printf("data in senddata: ");
-  for(int i = 0; i < DATA_SIZE; i++) {
-    if(i %20 == 0) {
-      printf("\n");
-    }
-    printf("%d  ", rawData[i]);
-  }
-  printf("\n");
+  // printf("data in senddata: ");
+  // for(int i = 0; i < DATA_SIZE; i++) {
+  //   if(i %20 == 0) {
+  //     printf("\n");
+  //   }
+  //   printf("%d  ", rawData[i]);
+  // }
+  // printf("\n");
 
   if ( (n = write(sockfd,data,(DATA_SIZE - 1)) ) < 0 ) {
     error(  "ERROR reading from socket" );
@@ -201,7 +202,7 @@ void Server::error( std::string msg ) {
 }
 
 
-int* Server::convertRawData(int* rawData)
+int* Server::convertRawData(std::array<int,DATA_SIZE> rawData)
 {
   int* data = (int*)calloc(DATA_SIZE, sizeof(int*));
   for(int i = 0; i < DATA_SIZE; i++) {

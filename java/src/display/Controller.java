@@ -1,26 +1,32 @@
 package display;
 
 import connect.Connection;
+import data.DataManager;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 public class Controller {
     @FXML
     private Button connect, start, find, setFileName, setIp;
-
-    @FXML
-    private ImageView dataView;
 
     @FXML
     private MenuBar menu;
@@ -40,11 +46,25 @@ public class Controller {
     @FXML
     private CheckBox saveCheck;
 
+    @FXML
+    private LineChart<Number, Number> chart;
+
+    @FXML
+    private NumberAxis xAxis, yAxis;
+
+    private ObservableList<LineChart.Series<Number, Number>> nestCount;
+
+    private XYChart.Series<Number, Number> series;
     private Stage primaryStage;
     private Connection connection;
+    private DataManager dm;
+    private ScheduledExecutorService executor;
+    private ScheduledFuture future;
+
     private boolean connected;
     private boolean tracking;
     private String[] hostIp;
+    private int[] data;
 
 
     @FXML
@@ -66,28 +86,86 @@ public class Controller {
     @FXML
     private void startTracking() {
         if(!tracking) {
+            chart.getData().removeAll(series.getData());
+            series.getData().removeAll();
+            System.out.println("\nflag1");
             start.setText("Stop Tracking");
             connection.track(hostIp);
             disableSave(true);
+            disableIp(true);
             tracking = true;
             checkTrackingStatus();
 
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    while(tracking) {
-                        System.out.println("\ntracking: " + tracking);
-                        int[] data = connection.getData(hostIp);
-
-//                        System.out.println("Data: " + data);
+            Runnable dataGetter = () -> {
+                while (tracking) {
+                    if (videoStopped(data)) {
+                        System.out.println("\nflag");
+                        tracking = false;
+                        start.setText("Start Tracking");
+                        disableSave(false);
+                        tracking = false;
+                        connect.setDisable(false);
+                        connection.stopTrack(hostIp);
+                        break;
                     }
+//                    try {
+//                        Thread.sleep(100); //Try without this
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+
+                    data = connection.getData(hostIp);
+                    Platform.runLater(() -> {
+                        dm.setSeries(data, series);
+                        System.out.println("Series: " + series.getData());
+                        chart.getData().retainAll();
+                        chart.getData().addAll(series);
+                    });
                 }
-            });
+            };
+
+            future = executor.scheduleWithFixedDelay(dataGetter, 0, 1, TimeUnit.SECONDS);
         }
 
-        else {
+
+//            Platform.runLater(new Runnable() {
+//                @Override
+//                public void run() {
+//                    while (tracking) {
+//                        System.out.println("\ntracking: " + tracking);
+//                        int[] data = connection.getData(hostIp);
+////                        for(int i = 0; i < data.length; i++) {
+////                            System.out.print("\nData at: " + i + " " + data[i]);
+////                        }
+//                        dm.setSeries(data, series);
+//                        System.out.println("\nSeries: " + series.getData());
+//
+//
+//                        if(!series.getData().isEmpty()) {
+////                            nestCount.addAll(series.getData());
+//                        }
+
+
+
+
+//                            nestCount.addAll(dm.setBuffer(data));
+//                        addToNestCount();
+//                        System.out.println("Data in Controller: ");
+//                        for(XYChart.Series<Number, Number> data1 : list) {
+//                            System.out.println(data1.getData());
+//                        }
+//                        chart.setData(list);
+//                        chart.getData().addAll(dm.setBuffer(data));
+//                    }
+//                }
+//            });
+//        }
+        else if(tracking){
             start.setText("Start Tracking");
+            future.cancel(true);
+            future = null;
             disableSave(false);
+            disableIp(false);
             tracking = false;
             connect.setDisable(false);
             connection.stopTrack(hostIp);
@@ -226,10 +304,37 @@ public class Controller {
     public void init(Stage primaryStage) {
         this.primaryStage = primaryStage;
         connection = new Connection();
+        dm = new DataManager();
+        executor = Executors.newSingleThreadScheduledExecutor();
+        data = new int[1000];
+
+        nestCount = FXCollections.observableArrayList();
+//      xAxis.setForceZeroInRange(false);
+        xAxis.setAutoRanging(true);
+        yAxis.setAutoRanging(true);
+
+        series = new XYChart.Series<Number, Number>();
+        series.setName("Nest count");
+//        series.getData().add(new XYChart.Data<Number, Number>(0, 0));
+        chart.setAnimated(false);
+
+        chart.getData().addAll(series);
+
+//        dataView.setImage(chart);
         setDefaultIp();
         connected = false;
         tracking = false;
     }
+
+
+    private void disableIp(boolean disable) {
+        ip1.setDisable(disable);
+        ip2.setDisable(disable);
+        ip3.setDisable(disable);
+        ip4.setDisable(disable);
+        setIp.setDisable(disable);
+    }
+
 
     private void disableSave(boolean disable) {
         saveLocation.setDisable(disable);
@@ -298,4 +403,23 @@ public class Controller {
 
         }
     }
+
+
+    private boolean videoStopped(int[] data) {
+        int count = 0;
+        int len = data.length;
+        for(int i = 0; i < len; i++) {
+            if(data[i] == -1) count++;
+        }
+        if(count == 5) return true;
+        else return false;
+    }
+
+
+
+
+//    private void addToNestCount() {
+//        List<LineChart.Series<Number, Number>>
+//        for()
+//    }
 }

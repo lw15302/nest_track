@@ -17,15 +17,15 @@ class VideoPlayer
     VideoPlayer();
     ~VideoPlayer();
     void run(void);
-    int* getTrackingData();
+    std::array<int, DATA_SIZE> getTrackingData();
     void setTrackStatus(bool status);
 
 
   private:
-    int* dataSet;
-    int* dataOut;
+    std::array<int, DATA_SIZE> dataSet;
     int lastX;
     int dataIndex;
+    bool sendingData;
     Tracker tracker;
 
     cv::Mat comparisonFrame;

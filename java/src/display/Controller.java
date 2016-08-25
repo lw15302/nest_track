@@ -1,24 +1,33 @@
 package display;
 
 import connect.Connection;
+
 import data.DataManager;
-import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import data.SpreadSheetHandler;
+import data.TextDataHandler;
+
 import javafx.fxml.FXML;
+import javafx.application.Platform;
+
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -52,15 +61,16 @@ public class Controller {
     @FXML
     private NumberAxis xAxis, yAxis;
 
-    private ObservableList<LineChart.Series<Number, Number>> nestCount;
-
     private XYChart.Series<Number, Number> series;
     private Stage primaryStage;
     private Connection connection;
     private DataManager dm;
+    private TextDataHandler textData;
+    private SpreadSheetHandler spreadSheetData;
     private ScheduledExecutorService executor;
     private ScheduledFuture future;
 
+    private String previousFileName;
     private boolean connected;
     private boolean tracking;
     private String[] hostIp;
@@ -71,12 +81,10 @@ public class Controller {
     private void piConnection() {
         getIp();
         if(!connected) {
-            disableSave(true);
             connection.open(hostIp);
             checkConnectionStatus();
         }
         else {
-            disableSave(false);
             connected = false;
         }
 
@@ -86,35 +94,27 @@ public class Controller {
     @FXML
     private void startTracking() {
         if(!tracking) {
-            chart.getData().removeAll(series.getData());
-            series.getData().removeAll();
-            System.out.println("\nflag1");
+            fillEmptySaveLocation();
+            previousFileName = fileName.getText();
+
+            clearChart();
             start.setText("Stop Tracking");
+            disable(true);
+
             connection.track(hostIp);
-            disableSave(true);
-            disableIp(true);
-            tracking = true;
             checkTrackingStatus();
+            if(!tracking) {
+                connection.stopTrack(hostIp);
+                return;
+            }
 
             Runnable dataGetter = () -> {
+
                 while (tracking) {
-                    if (videoStopped(data)) {
-                        System.out.println("\nflag");
-                        tracking = false;
-                        start.setText("Start Tracking");
-                        disableSave(false);
-                        tracking = false;
-                        connect.setDisable(false);
-                        connection.stopTrack(hostIp);
+                    data = connection.getData(hostIp);
+                    if (trackingStopped(data)) {
                         break;
                     }
-//                    try {
-//                        Thread.sleep(100); //Try without this
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-
-                    data = connection.getData(hostIp);
                     Platform.runLater(() -> {
                         dm.setSeries(data, series);
                         System.out.println("Series: " + series.getData());
@@ -123,60 +123,23 @@ public class Controller {
                     });
                 }
             };
-
-            future = executor.scheduleWithFixedDelay(dataGetter, 0, 1, TimeUnit.SECONDS);
+            future = executor.scheduleWithFixedDelay(dataGetter, 0, 10, TimeUnit.MILLISECONDS);
         }
-
-
-//            Platform.runLater(new Runnable() {
-//                @Override
-//                public void run() {
-//                    while (tracking) {
-//                        System.out.println("\ntracking: " + tracking);
-//                        int[] data = connection.getData(hostIp);
-////                        for(int i = 0; i < data.length; i++) {
-////                            System.out.print("\nData at: " + i + " " + data[i]);
-////                        }
-//                        dm.setSeries(data, series);
-//                        System.out.println("\nSeries: " + series.getData());
-//
-//
-//                        if(!series.getData().isEmpty()) {
-////                            nestCount.addAll(series.getData());
-//                        }
-
-
-
-
-//                            nestCount.addAll(dm.setBuffer(data));
-//                        addToNestCount();
-//                        System.out.println("Data in Controller: ");
-//                        for(XYChart.Series<Number, Number> data1 : list) {
-//                            System.out.println(data1.getData());
-//                        }
-//                        chart.setData(list);
-//                        chart.getData().addAll(dm.setBuffer(data));
-//                    }
-//                }
-//            });
-//        }
         else if(tracking){
             start.setText("Start Tracking");
             future.cancel(true);
             future = null;
-            disableSave(false);
-            disableIp(false);
+            disable(false);
             tracking = false;
             connect.setDisable(false);
             connection.stopTrack(hostIp);
+            if(saveCheck.isSelected()) saveText();
         }
     }
 
 
     @FXML
     private void setSavePreferences() {
-
-
         if(saveCheck.isSelected()) {
             saveLocation.setDisable(false);
             fileName.setDisable(false);
@@ -197,25 +160,18 @@ public class Controller {
         FileChooser navigator = new FileChooser();
         navigator.setTitle("Set Save Location");
         File f = navigator.showOpenDialog(primaryStage);
-        String saveDir = formatSaveLocation(f.getPath());
-        saveLocation.setText(saveDir);
+        String toSave = f.getPath();
+        System.out.println("\nf.getpath(): " + toSave);
+        String saveDir = formatSaveLocation(toSave, SavePath.DIRECTORYNAME);
+        String file = formatSaveLocation(toSave, SavePath.FILENAME);
 
+        saveLocation.setText(saveDir);
+        fileName.setText(file);
 
 
 
 
         //Can't pick current folder, have to navigate to lowest child
-
-
-
-
-
-        if(f.getName() != null) {
-            fileName.setText(f.getName());
-        }
-        else {
-            fileName.setText("default: " + "\"" + setDefaultSave() + "\"");
-        }
     }
 
 
@@ -278,7 +234,7 @@ public class Controller {
     }
 
 
-    private String setDefaultSave() {
+    private String setDefaultFileName() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy:MM:dd_HH:mm:ss");
         Date date = new Date();
         String defaultFileName = dateFormat.format(date) + ".txt";
@@ -286,7 +242,7 @@ public class Controller {
     }
 
 
-    private String formatSaveLocation(String filePath) {
+    private String formatSaveLocation(String filePath, SavePath s) {
         int len = filePath.length();
         int slash = 0;
 
@@ -296,8 +252,16 @@ public class Controller {
             }
         }
 
-        String saveDir = filePath.substring(0, slash);
-        return saveDir;
+        switch(s) {
+            case FILENAME:
+                String save = filePath.substring(slash + 1, len);
+                if(!save.endsWith(".txt")) return save + ".txt";
+                return save;
+            case DIRECTORYNAME:
+                return filePath.substring(0, slash + 1);
+            default:
+                return "";
+        }
     }
 
 
@@ -308,40 +272,36 @@ public class Controller {
         executor = Executors.newSingleThreadScheduledExecutor();
         data = new int[1000];
 
-        nestCount = FXCollections.observableArrayList();
-//      xAxis.setForceZeroInRange(false);
+        spreadSheetData = new SpreadSheetHandler();
+
         xAxis.setAutoRanging(true);
         yAxis.setAutoRanging(true);
 
-        series = new XYChart.Series<Number, Number>();
+        series = new XYChart.Series<>();
         series.setName("Nest count");
-//        series.getData().add(new XYChart.Data<Number, Number>(0, 0));
+        chart.setLegendVisible(false);
         chart.setAnimated(false);
 
         chart.getData().addAll(series);
 
-//        dataView.setImage(chart);
         setDefaultIp();
         connected = false;
         tracking = false;
     }
 
 
-    private void disableIp(boolean disable) {
-        ip1.setDisable(disable);
-        ip2.setDisable(disable);
-        ip3.setDisable(disable);
-        ip4.setDisable(disable);
-        setIp.setDisable(disable);
-    }
+    private void disable(boolean toDisable) {
+        ip1.setDisable(toDisable);
+        ip2.setDisable(toDisable);
+        ip3.setDisable(toDisable);
+        ip4.setDisable(toDisable);
+        setIp.setDisable(toDisable);
 
-
-    private void disableSave(boolean disable) {
-        saveLocation.setDisable(disable);
-        setFileName.setDisable(disable);
-        saveCheck.setDisable(disable);
-        fileName.setDisable(disable);
-        find.setDisable(disable);
+        saveLocation.setDisable(toDisable);
+        setFileName.setDisable(toDisable);
+        saveCheck.setDisable(toDisable);
+        fileName.setDisable(toDisable);
+        find.setDisable(toDisable);
     }
 
 
@@ -385,41 +345,97 @@ public class Controller {
             hostIp[2] = ip3.getText();
             hostIp[3] = ip4.getText();
         } catch (Exception e) {
-            //ERROR MESSAGE IF INCORRECT FORMAT!!!!!!
-
-
-
             throw new Error("Number format exception");
-
-
-
-
-
-
-
-
-
-
-
         }
     }
 
 
-    private boolean videoStopped(int[] data) {
+    private boolean trackingStopped(int[] data) {
         int count = 0;
         int len = data.length;
         for(int i = 0; i < len; i++) {
             if(data[i] == -1) count++;
+
+            if(count > 4) {
+                future.cancel(true);
+                future = null;
+                tracking = false;
+                disable(false);
+                connect.setDisable(false);
+                connection.stopTrack(hostIp);
+                if(future.isCancelled()) start.setText("Start Tracking");
+                if(saveCheck.isSelected()) saveText();
+
+                return true;
+            }
         }
-        if(count == 5) return true;
-        else return false;
+        return false;
     }
 
 
+    private void saveText() {
+        try {
+            List<Object> timeData = new ArrayList<>();
+            List<Object> countData = new ArrayList<>();
+
+            String savePlace = saveLocation.getText();
+            String file = fileName.getText();
+
+            System.out.println("\nSave dir: " + savePlace);
+            System.out.println("\nfileName: " + file);
+            textData = new TextDataHandler(savePlace, file);
+
+            dataToSave(timeData, DataType.TIME);
+
+            dataToSave(countData, DataType.COUNT);
 
 
-//    private void addToNestCount() {
-//        List<LineChart.Series<Number, Number>>
-//        for()
-//    }
+
+
+            textData.save(timeData, countData);
+        } catch (IOException e) {
+            System.err.println("\nUnable to save to this location");
+
+            //Handle with on screen warning
+        }
+
+    }
+
+
+    private void dataToSave(List<Object> data, DataType type) {
+        switch(type) {
+            case TIME:
+                for(XYChart.Data xy : series.getData()) {
+                    data.add(xy.getXValue());
+                }
+                break;
+            case COUNT:
+                for(XYChart.Data xy : series.getData()) {
+                    data.add( xy.getYValue());
+                }
+                break;
+            default:
+                return;
+        }
+
+    }
+
+
+    private void fillEmptySaveLocation() {
+        if(saveCheck.isSelected()) {
+            if(saveLocation.getText().equals("")) {
+                saveLocation.setText(System.getProperty("user.dir") + "/data/text" + "/");
+            }
+            if(fileName.getText().equals("") || fileName.getText().equals(previousFileName)) {
+                fileName.setText(setDefaultFileName());
+            }
+        }
+    }
+
+
+    private void clearChart() {
+        chart.getData().removeAll(series);
+        series.getData().clear();
+        dm.resetCount();
+    }
 }

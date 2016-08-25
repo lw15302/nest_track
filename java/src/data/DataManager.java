@@ -11,15 +11,13 @@ import java.util.List;
 
 public class DataManager {
     private final int dataSize;
-    private int count, lastCount;
+    private int count;
 
 
     public DataManager() {
         count = 0;
         dataSize = 1000;
-//        nestCount.setName("Count");
-//        series = new XYChart.Series<Number, Number>();
-//        series.setName("Nest Count");
+
     }
 
 
@@ -31,21 +29,22 @@ public class DataManager {
                 float plottable = convertData(data[i], Direction.IN);
                 if(plottable < 0) return;
                 series.getData().add(new XYChart.Data<Number, Number>(plottable, count));
-                lastCount = count;
-                System.out.println("flag2" + " count: " + count);
             }
             else if (data[i] > 0) {
                 count += 1;
                 float plottable = convertData(data[i], Direction.OUT);
                 if (plottable < 0) return;
                 series.getData().add(new XYChart.Data<Number, Number>(plottable, count));
-                lastCount = count;
-                System.out.println("flag3" + " count: " + count);
             }
             else {
 
             }
         }
+    }
+
+
+    public void resetCount() {
+        count = 0;
     }
 
 

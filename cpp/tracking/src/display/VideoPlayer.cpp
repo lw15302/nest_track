@@ -121,8 +121,7 @@ void VideoPlayer::openStream() {
     // cv::imshow(trackerWindow, differenceFrame);
     // cv::waitKey(30);
   }
-  std::this_thread::sleep_for(std::chrono::seconds(1));
-
+  std::this_thread::sleep_for(std::chrono::seconds(2));
   std::cout <<"Exiting tracking" << std::endl;
 
   // return;
@@ -173,14 +172,6 @@ void VideoPlayer::setTrackingData()
     std::cout << "time: " << elapsed << std::endl;
   }
 
-  // printf("data in set: ");
-  // for(int i = 0; i < DATA_SIZE; i++) {
-  //   if(i % 20 == 0) {
-  //     printf("\n");
-  //   }
-  //   std::cout << dataSet[i] << " ";
-  // }
-  // printf("\n");
   lastX = x;
 }
 
@@ -210,28 +201,11 @@ std::array<int, DATA_SIZE> VideoPlayer::getTrackingData()
     return dataOut;
   }
   dataOut = dataSet;
-  // std::cout << "\n\nsendingData\n\n" << std::endl;
-  int i;
-  std::cout << "data in VideoPlayer: ";
-  for(i = 0; i < DATA_SIZE; i++) {
-    std::cout << dataSet[i] << " ";
-    if(i % 20 == 0) {
-      printf("\n");
-    }
-  }
-  printf("\n");
-
-  printf("\ndata in vp: ");
-  for(int i = 0; i < DATA_SIZE; i++) {
-    if(i %20 == 0) {
-      printf("\n");
-    }
-    printf("%d  ", dataOut[i]);
-  }
-  printf("\n");
 
   resetData();
   mtx.unlock();
   sendingData = false;
+
+  std::cout << "Replying with data" << std::endl;
   return dataOut;
 }

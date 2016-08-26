@@ -4,15 +4,20 @@ import connect.Connection;
 
 import data.DataManager;
 import data.SpreadSheetHandler;
+import data.Table;
 import data.TextDataHandler;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.application.Platform;
 
+import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
@@ -22,18 +27,20 @@ import javafx.stage.Stage;
 import java.io.File;
 
 import java.io.IOException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-public class Controller {
+public class Controller implements Initializable {
     @FXML
     private Button connect, start, find, setFileName, setIp;
 
@@ -59,6 +66,15 @@ public class Controller {
     private LineChart<Number, Number> chart;
 
     @FXML
+    private TableView dataTable;
+
+    @FXML
+    private TableColumn<Table, Float> timeCol;
+
+    @FXML
+    private TableColumn<Table, Integer> countCol;
+
+    @FXML
     private NumberAxis xAxis, yAxis;
 
     private XYChart.Series<Number, Number> series;
@@ -69,12 +85,14 @@ public class Controller {
     private SpreadSheetHandler spreadSheetData;
     private ScheduledExecutorService executor;
     private ScheduledFuture future;
+    private ObservableList<Table> dataForTable;
 
     private String previousFileName;
     private boolean connected;
     private boolean tracking;
     private String[] hostIp;
     private int[] data;
+    private int countForTable;
 
 
     @FXML
@@ -97,7 +115,7 @@ public class Controller {
             fillEmptySaveLocation();
             previousFileName = fileName.getText();
 
-            clearChart();
+            clearData();
             start.setText("Stop Tracking");
             disable(true);
 
@@ -115,6 +133,9 @@ public class Controller {
                     if (trackingStopped(data)) {
                         break;
                     }
+//                    Platform.runLater(() -> {
+                        addToTable();
+//                    });
                     Platform.runLater(() -> {
                         dm.setSeries(data, series);
                         System.out.println("Series: " + series.getData());
@@ -270,7 +291,12 @@ public class Controller {
         connection = new Connection();
         dm = new DataManager();
         executor = Executors.newSingleThreadScheduledExecutor();
+
+
+
         data = new int[1000];
+
+        countForTable = 0;
 
         spreadSheetData = new SpreadSheetHandler();
 
@@ -433,9 +459,41 @@ public class Controller {
     }
 
 
-    private void clearChart() {
+    private void clearData() {
         chart.getData().removeAll(series);
         series.getData().clear();
         dm.resetCount();
+        dataForTable.clear();
+        dataTable.setItems(dataForTable);
+        countForTable = 0;
+    }
+
+
+    private void addToTable() {
+        int len = data.length;
+        for(int i = 0; i < len && data[i] != 0; i++) {
+            if(data[i] < 0) {
+                float timeForTable;
+                countForTable--;
+                timeForTable = data[i] * -1;
+                Table t = new Table(countForTable, timeForTable/1000);
+                dataForTable.add(t);
+            }
+            else {
+                countForTable++;
+                Table t = new Table(countForTable, (float)data[i]/1000);
+                dataForTable.add(t);
+            }
+            System.out.println("inside addToTable loop, i: " + i);
+        }
+    }
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        countCol.setCellValueFactory(new PropertyValueFactory<Table, Integer>("count"));
+        timeCol.setCellValueFactory(new PropertyValueFactory<Table, Float>("time"));
+
+        dataTable.setItems(dataForTable);
     }
 }

@@ -1,12 +1,14 @@
 package display;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class Main extends Application {
     private double screenW, screenH;
@@ -28,6 +30,14 @@ public class Main extends Application {
 
             mainController = loader.getController();
             mainController.init(primaryStage);
+
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    mainController.stop();
+                    primaryStage.close();
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
 

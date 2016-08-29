@@ -4,7 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/liam/Documents/Project/github/nest_track/cpp/host/src/Server.cpp" "/home/liam/Documents/Project/github/nest_track/cpp/out/CMakeFiles/EntranceTracker.dir/host/src/Server.cpp.o"
+  "/home/liam/Documents/Project/github/nest_track/cpp/host/src/main/main.cpp" "/home/liam/Documents/Project/github/nest_track/cpp/out/CMakeFiles/EntranceTracker.dir/host/src/main/main.cpp.o"
+  "/home/liam/Documents/Project/github/nest_track/cpp/host/src/server/Server.cpp" "/home/liam/Documents/Project/github/nest_track/cpp/out/CMakeFiles/EntranceTracker.dir/host/src/server/Server.cpp.o"
   "/home/liam/Documents/Project/github/nest_track/cpp/tracking/src/display/VideoPlayer.cpp" "/home/liam/Documents/Project/github/nest_track/cpp/out/CMakeFiles/EntranceTracker.dir/tracking/src/display/VideoPlayer.cpp.o"
   "/home/liam/Documents/Project/github/nest_track/cpp/tracking/src/track/Tracker.cpp" "/home/liam/Documents/Project/github/nest_track/cpp/out/CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracker.cpp.o"
   "/home/liam/Documents/Project/github/nest_track/cpp/tracking/src/track/Tracking.cpp" "/home/liam/Documents/Project/github/nest_track/cpp/out/CMakeFiles/EntranceTracker.dir/tracking/src/track/Tracking.cpp.o"
@@ -21,7 +22,6 @@ set(CMAKE_C_TARGET_INCLUDE_PATH
   "/usr/local/include"
   "../tracking/include/display"
   "../tracking/include/track"
-  "../host/include/Server.hpp"
   )
 set(CMAKE_CXX_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})
 set(CMAKE_Fortran_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})

@@ -492,6 +492,11 @@ public class Controller implements Initializable {
     }
 
 
+    public void stop() {
+        connection.stopTrack(hostIp);
+    }
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         countCol.setCellValueFactory(new PropertyValueFactory<Table, Integer>("count"));

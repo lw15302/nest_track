@@ -26,9 +26,9 @@
               <content>
                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                   <children>
-                    <LineChart fx:id="chart" layoutX="0.0" layoutY="-12.0" prefHeight="856.0" prefWidth="1556.0">
+                    <LineChart fx:id="chart" layoutX="0.0" layoutY="-12.0" prefHeight="806.0" prefWidth="1556.0">
                       <xAxis>
-                        <NumberAxis fx:id="xAxis" label="Time (seconds)" minorTickCount="1" minorTickLength="0.5" side="BOTTOM" tickMarkVisible="true" tickUnit="10.0" upperBound="100.0" />
+                        <NumberAxis fx:id="xAxis" forceZeroInRange="false" label="Time (seconds)" minorTickCount="1" minorTickLength="0.5" side="BOTTOM" tickMarkVisible="true" tickUnit="10.0" upperBound="100.0" />
                       </xAxis>
                       <yAxis>
                         <NumberAxis fx:id="yAxis" label="Count" side="LEFT" />

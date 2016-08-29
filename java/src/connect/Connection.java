@@ -22,8 +22,7 @@ public class Connection {
     }
 
     public int[] getData(String[] ip) {
-        int[] data = client.getData(ip);
-        return data;
+        return client.getData(ip);
     }
 
     public boolean getConnectionStatus() {

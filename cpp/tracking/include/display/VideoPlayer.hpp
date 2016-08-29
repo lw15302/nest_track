@@ -23,7 +23,7 @@ class VideoPlayer
 
   private:
     std::array<int, DATA_SIZE> dataSet;
-    int lastX;
+    int lastY;
     int dataIndex;
     bool sendingData;
     Tracker tracker;

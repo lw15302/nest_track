@@ -295,7 +295,7 @@ public class Controller implements Initializable {
 
 
         data = new int[1000];
-
+        dataForTable = FXCollections.observableArrayList();
         countForTable = 0;
 
         spreadSheetData = new SpreadSheetHandler();
@@ -460,10 +460,13 @@ public class Controller implements Initializable {
 
 
     private void clearData() {
+
         chart.getData().removeAll(series);
         series.getData().clear();
         dm.resetCount();
-        dataForTable.clear();
+        if(!dataForTable.isEmpty()) {
+            dataForTable.clear();
+        }
         dataTable.setItems(dataForTable);
         countForTable = 0;
     }

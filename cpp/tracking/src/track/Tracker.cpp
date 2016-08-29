@@ -5,7 +5,8 @@ Tracker::Tracker()
   tracking = Tracking();
   threshold = 75;
   threshold_max = 255;
-  rng(12345);
+  lastY = 0;
+  pMOG2 = cv::createBackgroundSubtractorMOG2();
 }
 
 
@@ -16,22 +17,31 @@ Tracker::Tracker()
  */
 cv::Mat Tracker::transform(cv::Mat frame)
 {
-  cv::cvtColor(frame, frame, CV_BGR2GRAY);
-  cv::threshold(frame, frame, threshold, threshold_max, cv::THRESH_BINARY);
-  cv::erode(frame, frame, cv::Mat());
-  cv::dilate(frame, frame, cv::Mat());
-  cv::blur(frame, frame, cv::Size(3, 3));
-  cv::Canny(frame, frame, 100, 200);
+  cv::Mat outFrame = cv::Mat();
+  cv::cvtColor(frame, outFrame, CV_BGR2GRAY);
+  cv::threshold(frame, outFrame, threshold, threshold_max, cv::THRESH_BINARY);
+  cv::erode(frame, outFrame, cv::Mat());
+  cv::dilate(frame, outFrame, cv::Mat());
+  cv::blur(frame, outFrame, cv::Size(3, 3));
+  cv::Canny(frame, outFrame, 100, 200);
   return frame;
 }
+
+
+cv::Mat Tracker::backgroundSubtraction(cv::Mat frame)
+{
+  pMOG2->apply(frame, fgMaskMOG2, 0.1);
+  return fgMaskMOG2;
+}
+
 
 
 /**
  * Draws a bounding box around the object with the largest contour
  */
-cv::Mat Tracker::boundingBox(cv::Mat frame)
+cv::Mat Tracker::highlight(cv::Mat frame)
 {
-  this->frame = frame;
+  boundFrame = frame;
   int largestIdx = 0;
 
   getContours();
@@ -41,7 +51,7 @@ cv::Mat Tracker::boundingBox(cv::Mat frame)
     getAverageTrackerProperties(largestIdx);
     drawOnFrame(largestIdx);
   }
-  return this->frame;
+  return boundFrame;
 }
 
 
@@ -51,7 +61,7 @@ cv::Mat Tracker::boundingBox(cv::Mat frame)
  */
 void Tracker::getContours()
 {
-  cv::findContours(frame, contours, hierarchy, CV_RETR_LIST,
+  cv::findContours(boundFrame, contours, hierarchy, CV_RETR_LIST,
     CV_CHAIN_APPROX_SIMPLE, cv::Point(0, 0));
 
     cSize = contours.size();
@@ -70,7 +80,6 @@ void Tracker::getAverageTrackerProperties(int index)
 {
   // std::cout << "centre in getAverageTrackerProperties: " << centre[index] << std::endl;
   tracking.averageTrackingProperties(centre[index], radius[index]);
-  lastX = trackX;
   trackX = tracking.get(X);
   trackY = tracking.get(Y);
   trackRad = tracking.get(RADIUS);
@@ -103,11 +112,11 @@ void Tracker::drawOnFrame(int index)
 {
   cv::Point2f circCent(trackX, trackY);
   cv::Scalar colour = cv::Scalar(0, 255, 0);
-  cv::cvtColor(frame, frame, CV_GRAY2BGR);
-  cv::drawContours(frame, contours_poly, index, colour, 1, 8, std::vector<cv::Vec4i>(), 0, cv::Point());
+  cv::cvtColor(boundFrame, boundFrame, CV_GRAY2BGR);
+  cv::drawContours(boundFrame, contours_poly, index, colour, 1, 8, std::vector<cv::Vec4i>(), 0, cv::Point());
   // std::cout <<"centre: " << circCent << std::endl;
   // std::cout <<"radius: " << trackRad << std::endl;
-  cv::circle(frame, circCent, trackRad, colour, 2, 8, 0);
+  cv::circle(boundFrame, circCent, trackRad, colour, 2, 8, 0);
 }
 
 /**
@@ -128,7 +137,58 @@ void Tracker::getLargestContour(int* index)
 }
 
 
-int Tracker::getX()
+void Tracker::setFrameProp(double frameHeight)
 {
-  return trackX;
+  this->frameHeight = frameHeight;
+  thirdHeight = (frameHeight / 3);
+  twoThirdHeight = (frameHeight / 3) * 2;
+  std::cout <<"frame height: " << frameHeight << " third: " << thirdHeight << " twothird: " << twoThirdHeight << std::endl;
+}
+
+
+int Tracker::findActivity()
+{
+  Direction travelling = travelDirection();
+
+  if(travelling == IN) {
+    if(trackY >= twoThirdHeight) {
+      if(tracking.getRegion() == REGION1) {
+        tracking.setRegion(NONE);
+        return 1;
+      }
+    }
+    else if(trackY <= thirdHeight) {
+      std::cout << "Region1 1 set, ypos: " << trackY << std::endl;
+      tracking.setRegion(REGION1);
+    }
+  }
+  else if(travelling == OUT) {
+    if(trackY <= thirdHeight) {
+      if(tracking.getRegion() == REGION2) {
+        tracking.setRegion(NONE);
+        return 2;
+      }
+    }
+    else if(trackY >= twoThirdHeight) {
+      tracking.setRegion(REGION2);
+    }
+  }
+  else return -1;
+
+
+
+  lastY = trackY;
+}
+
+Direction Tracker::travelDirection()
+{
+  int difference = trackY - lastY;
+
+  if(difference < 0) {
+    return OUT;
+  }
+  else if(difference > 0) {
+    return IN;
+  }
+  else return STATIONARY;
 }

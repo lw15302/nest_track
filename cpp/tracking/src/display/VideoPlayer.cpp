@@ -16,7 +16,7 @@ VideoPlayer::VideoPlayer () : track(true)
   // trackerWindow = "Tracker";
   // std::lock_guard<std::mutex> lock(mtx);
   dataSet = {0};
-  lastX = 0;
+  lastY = 0;
   dataIndex = 0;
   sendingData = false;
   track_t = std::thread(&VideoPlayer::run, this);
@@ -55,9 +55,6 @@ void VideoPlayer::run(void)
   std::cout << "inside run" << std::endl;
   initVC();
   openStream();
-  // if(track) {
-  //   delete this;
-  // }
   return;
 }
 
@@ -68,8 +65,7 @@ void VideoPlayer::run(void)
  */
 void VideoPlayer::initVC()
 {
-  // mtx.lock();
-  if(!capture.open("cut.mp4")) {
+  if(!capture.open("test2.mp4")) {
       throw "Cannot open video stream";
   }
   std::cout << "attempting namedWindow()1" << std::endl;
@@ -77,7 +73,7 @@ void VideoPlayer::initVC()
   std::cout << "attempting namedWindow()2" << std::endl;
   // cv::namedWindow(trackerWindow, cv::WINDOW_NORMAL);
   std::cout << "start tracking" << std::endl;
-
+  tracker.setFrameProp(capture.get(cv::CAP_PROP_FRAME_HEIGHT));
 }
 
 
@@ -99,7 +95,14 @@ void VideoPlayer::openStream() {
     while(sendingData) {
       std::cout << "\ntracking paused\n" << std::endl;
     }
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+
+
+
+    // std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+
+
     differenceFrame = cv::Mat();
     if(!capture.read(frame)) {
       track = false;
@@ -114,12 +117,13 @@ void VideoPlayer::openStream() {
     comparisonFrame = tracker.transform(comparisonFrame);
     cv::absdiff(frame, comparisonFrame, differenceFrame);
 
+    differenceFrame = tracker.backgroundSubtraction(differenceFrame);
 
-    differenceFrame = tracker.boundingBox(differenceFrame); //Rename function as it no longer creates a boundingBox
+    differenceFrame = tracker.highlight(differenceFrame);
     setTrackingData();
 
     // cv::imshow(trackerWindow, differenceFrame);
-    // cv::waitKey(30);
+    cv::waitKey(30);
   }
   std::this_thread::sleep_for(std::chrono::seconds(2));
   std::cout <<"Exiting tracking" << std::endl;
@@ -155,24 +159,55 @@ void VideoPlayer::setTrackStatus(bool status)
 
 void VideoPlayer::setTrackingData()
 {
-  int x = tracker.getX();
-  std::cout << "x position: " << x << std::endl;
-  int difference = abs(x - lastX);
-  std::cout << "difference: " << difference << std::endl;
-  float currentTime;
+  // int y = tracker.getY();
+  // std::cout << "x position: " << x << std::endl;
+  // int direction = travelDirection(y);
+  // if(direction == STATIONARY) return;
 
-  if(difference > 3) {
+  int result = tracker.findActivity();
+
+  if(result == 1) {
     current = std::clock();
-    double elapsed = (1000.0)*(current - start) / (double)CLOCKS_PER_SEC;
-    if(x < lastX) {
-      elapsed *= -1;
-    }
-    dataSet[dataIndex] = elapsed;
-    dataIndex++;
-    std::cout << "time: " << elapsed << std::endl;
-  }
+    float timeElapsed = (1000.0) * (current - start) / (double)CLOCKS_PER_SEC;
 
-  lastX = x;
+    std::cout << "Ant entered nest at: " << timeElapsed << std::endl;
+    dataSet[dataIndex] = timeElapsed;
+    dataIndex++;
+  }
+  else if(result == 2) {
+    float timeElapsed = (1000.0) * (current - start) / (double)CLOCKS_PER_SEC;
+    timeElapsed *= -1;
+    dataSet[dataIndex] = timeElapsed;
+    dataIndex++;
+  }
+  else return;
+
+  // CONTINUE FROM HERE!!!!
+
+  // int difference = abs(x - lastX);
+  // std::cout << "difference: " << difference << std::endl;
+  // float currentTime;
+
+  // if(difference > 3) {
+  //
+  //
+  //
+  //
+    // current = std::clock();
+    // double elapsed = (1000.0)*(current - (start + sendingTime)) / (double)CLOCKS_PER_SEC;
+    // if(x < lastX) {
+    //   elapsed *= -1;
+    // }
+    // dataSet[dataIndex] = elapsed;
+    // dataIndex++;
+    // std::cout << "time: " << elapsed << std::endl;
+  //
+  //
+  //
+  //
+  // }
+
+  // lastY = y;
 }
 
 
@@ -201,6 +236,14 @@ std::array<int, DATA_SIZE> VideoPlayer::getTrackingData()
     return dataOut;
   }
   dataOut = dataSet;
+
+
+  for(int i = 0; i < DATA_SIZE; i++) {
+    if(i % 20 == 0) printf("\n");
+    std::cout << dataOut[i] << " ";
+  }
+  printf("\n");
+
 
   resetData();
   mtx.unlock();

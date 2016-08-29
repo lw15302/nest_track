@@ -1,25 +1,39 @@
 #include <Tracking.hpp>
 #include <opencv2/opencv.hpp>
 
+typedef enum direction {
+  STATIONARY,
+  IN,
+  OUT
+} Direction;
+
 class Tracker
 {
   public:
     cv::Mat transform(cv::Mat frame);
-    cv::Mat boundingBox(cv::Mat frame);
+    cv::Mat highlight(cv::Mat frame);
+    cv::Mat backgroundSubtraction(cv::Mat frame);
+
+    void setFrameProp(double frameHeight);
+    int findActivity();
+
 
     Tracker();
-    int getX();
 
   private:
     int threshold;
     int threshold_max;
     int cSize;
     int trackX, trackY, trackRad;
-    int lastX;
+    int lastY;
+
+    double frameHeight, thirdHeight, twoThirdHeight;
 
     Tracking tracking;
     cv::RNG rng;
-    cv::Mat frame;
+    cv::Mat boundFrame;
+    cv::Mat fgMaskMOG2;
+    cv::Ptr<cv::BackgroundSubtractor> pMOG2;
 
     std::vector<std::vector<cv::Point> > contours;
     std::vector<cv::Vec4i> hierarchy;
@@ -32,4 +46,5 @@ class Tracker
     void getBoundingShapes(int index);
     void drawOnFrame(int index);
     void getLargestContour(int* index);
+    Direction travelDirection();
 };

@@ -107,3 +107,15 @@ void Tracking::setAvg(Property p, int prop[])
       break;
   }
 }
+
+
+void Tracking::setRegion(Region region)
+{
+  this->region = region;
+}
+
+
+Region Tracking::getRegion()
+{
+  return this->region;
+}

@@ -119,6 +119,8 @@ public class Controller implements Initializable {
             start.setText("Stop Tracking");
             disable(true);
 
+            series.getData().add(new XYChart.Data<Number, Number>((float)0.0, 0));
+
             connection.track(hostIp);
             checkTrackingStatus();
             if(!tracking) {

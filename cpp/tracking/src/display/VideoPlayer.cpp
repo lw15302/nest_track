@@ -18,7 +18,8 @@ VideoPlayer::VideoPlayer () : track(true)
   dataSet = {0};
   lastY = 0;
   dataIndex = 0;
-  sendingData = false;
+  accessingData = false;
+
   track_t = std::thread(&VideoPlayer::run, this);
 
   // std::lock_guard<std::mutex> unlock(mtx);
@@ -65,7 +66,7 @@ void VideoPlayer::run(void)
  */
 void VideoPlayer::initVC()
 {
-  if(!capture.open("test2.mp4")) {
+  if(!capture.open("presentation_cut.mp4")) {
       throw "Cannot open video stream";
   }
   std::cout << "attempting namedWindow()1" << std::endl;
@@ -89,14 +90,11 @@ void VideoPlayer::initVC()
  */
 void VideoPlayer::openStream() {
   int n = 0;
-  start = std::clock();
+  start = std::time(0);
   while(track) {
     printf("\n n: %d\n", n++);
-    while(sendingData) {
-      std::cout << "\ntracking paused\n" << std::endl;
-    }
 
-
+    while(accessingData) {}
 
 
     // std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -116,10 +114,12 @@ void VideoPlayer::openStream() {
     }
     comparisonFrame = tracker.transform(comparisonFrame);
     cv::absdiff(frame, comparisonFrame, differenceFrame);
-
+    differenceFrame = tracker.transform(differenceFrame);
+    imshow("diff", differenceFrame);
     differenceFrame = tracker.backgroundSubtraction(differenceFrame);
 
     differenceFrame = tracker.highlight(differenceFrame);
+
     setTrackingData();
 
     cv::imshow(trackerWindow, differenceFrame);
@@ -163,12 +163,12 @@ void VideoPlayer::setTrackingData()
   // std::cout << "x position: " << x << std::endl;
   // int direction = travelDirection(y);
   // if(direction == STATIONARY) return;
-
+  accessingData = true;
   int result = tracker.findActivity();
 
   if(result == 1) {
-    current = std::clock();
-    float timeElapsed = (1000.0) * (current - start) / (double)CLOCKS_PER_SEC;
+    // double processingTime = std::difftime(std::time(0), processStart);
+    float timeElapsed = std::abs(1000.0 * std::difftime(std::time(0), start));
 
     std::cout << "Ant entered nest at: " << timeElapsed << std::endl;
     dataSet[dataIndex] = timeElapsed;
@@ -176,42 +176,15 @@ void VideoPlayer::setTrackingData()
     dataIndex++;
   }
   else if(result == 2) {
-    current = std::clock();
-    float timeElapsed = (1000.0) * (current - start) / (double)CLOCKS_PER_SEC;
+    // double processingTime = std::difftime(std::time(0), processStart);
+    float timeElapsed = std::abs((1000.0) * std::difftime(std::time(0), start));
     std::cout << "Ant left nest at: " << timeElapsed << std::endl;
     timeElapsed *= -1;
     dataSet[dataIndex] = timeElapsed;
     std::cout << dataSet[dataIndex] << " " << std::endl;
     dataIndex++;
   }
-  else return;
-
-  // CONTINUE FROM HERE!!!!
-
-  // int difference = abs(x - lastX);
-  // std::cout << "difference: " << difference << std::endl;
-  // float currentTime;
-
-  // if(difference > 3) {
-  //
-  //
-  //
-  //
-    // current = std::clock();
-    // double elapsed = (1000.0)*(current - (start + sendingTime)) / (double)CLOCKS_PER_SEC;
-    // if(x < lastX) {
-    //   elapsed *= -1;
-    // }
-    // dataSet[dataIndex] = elapsed;
-    // dataIndex++;
-    // std::cout << "time: " << elapsed << std::endl;
-  //
-  //
-  //
-  //
-  // }
-
-  // lastY = y;
+  accessingData = false;
 }
 
 
@@ -229,13 +202,13 @@ void VideoPlayer::resetData()
 std::array<int, DATA_SIZE> VideoPlayer::getTrackingData()
 {
   std::array<int, DATA_SIZE> dataOut;
-  sendingData = true;
+  accessingData = true;
   mtx.lock();
   if(!track) {
     for(int i = 0; i < 5; i++) {
       dataOut[i] = -1;
     }
-    sendingData = false;
+    accessingData = false;
     mtx.unlock();
     return dataOut;
   }
@@ -251,7 +224,7 @@ std::array<int, DATA_SIZE> VideoPlayer::getTrackingData()
 
   resetData();
   mtx.unlock();
-  sendingData = false;
+  accessingData = false;
 
   std::cout << "Replying with data" << std::endl;
   return dataOut;

@@ -3,7 +3,7 @@
 Tracker::Tracker()
 {
   tracking = Tracking();
-  threshold = 75;
+  threshold = 70;
   threshold_max = 255;
   lastY = 0;
   pMOG2 = cv::createBackgroundSubtractorMOG2();
@@ -23,7 +23,7 @@ cv::Mat Tracker::transform(cv::Mat frame)
   cv::erode(frame, outFrame, cv::Mat());
   cv::dilate(frame, outFrame, cv::Mat());
   cv::blur(frame, outFrame, cv::Size(3, 3));
-  // cv::Canny(frame, outFrame, 100, 200);
+  cv::Canny(frame, outFrame, 100, 200);
   return frame;
 }
 

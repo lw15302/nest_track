@@ -5,8 +5,9 @@
 #include <mutex>
 #include <memory>
 #include <atomic>
+#include <cmath>
 #include <chrono> // do I need this
-#include <ctime>
+#include <time.h>
 
 #define DATA_SIZE 1000
 static std::mutex mtx;
@@ -25,8 +26,9 @@ class VideoPlayer
     std::array<int, DATA_SIZE> dataSet;
     int lastY;
     int dataIndex;
-    bool sendingData;
+    bool accessingData;
     Tracker tracker;
+
 
     cv::Mat comparisonFrame;
     cv::Mat differenceFrame;
@@ -36,7 +38,7 @@ class VideoPlayer
     // std::string originalWindow;
     std::string trackerWindow;
 
-    std::clock_t start, current;
+    std::time_t start, current;
     std::thread track_t;
     std::atomic<bool> track;
     std::thread::id tId;

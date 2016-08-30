@@ -18,7 +18,7 @@ public class TextDataHandler {
             int length = timeData.size();
 
             for(int i = 0; i < length; i++) {
-                String time = Float.toString((float)timeData.get(i));
+                String time = Float.toString((Float)timeData.get(i));
                 int count = (int)countData.get(i);
 
                 out.print(time);

@@ -18,12 +18,14 @@ Tracker::Tracker()
 cv::Mat Tracker::transform(cv::Mat frame)
 {
   cv::Mat outFrame = cv::Mat();
+
   cv::cvtColor(frame, outFrame, CV_BGR2GRAY);
   cv::threshold(frame, outFrame, threshold, threshold_max, cv::THRESH_BINARY);
   cv::erode(frame, outFrame, cv::Mat());
   cv::dilate(frame, outFrame, cv::Mat());
   cv::blur(frame, outFrame, cv::Size(3, 3));
   cv::Canny(frame, outFrame, 100, 200);
+
   return frame;
 }
 
@@ -33,7 +35,6 @@ cv::Mat Tracker::backgroundSubtraction(cv::Mat frame)
   pMOG2->apply(frame, fgMaskMOG2, 0.1);
   return fgMaskMOG2;
 }
-
 
 
 /**
@@ -48,7 +49,7 @@ cv::Mat Tracker::highlight(cv::Mat frame)
   if( !contours.empty() ) {
     getLargestContour(&largestIdx);
     getBoundingShapes(largestIdx);
-    getAverageTrackerProperties(largestIdx);
+    getTrackerProperties(largestIdx);
     drawOnFrame(largestIdx);
   }
   return boundFrame;
@@ -76,18 +77,12 @@ void Tracker::getContours()
  * Sets the tracking properties based on an average of the past 5 frames. These
  * values are used later to draw a bounding rectangle
  */
-void Tracker::getAverageTrackerProperties(int index)
+void Tracker::getTrackerProperties(int index)
 {
-  // std::cout << "centre in getAverageTrackerProperties: " << centre[index] << std::endl;
-  tracking.averageTrackingProperties(centre[index], radius[index]);
+  tracking.setTrackingProperties(centre[index], radius[index]);
   trackX = tracking.get(X);
   trackY = tracking.get(Y);
   trackRad = tracking.get(RADIUS);
-  // if(trackX > lastX) std::cout << "target moving right" << std::endl;
-  // else if(trackX < lastX) std::cout << "target moving left" << std::endl;
-  // else std::cout << "target is stationary" <<  std::endl;
-
-  // std::cout<< "x:"<<trackX<<" y:"<<trackY<<" w:"<<trackW<<" h:"<<trackH<<std::endl;
 }
 
 
@@ -99,7 +94,6 @@ void Tracker::getAverageTrackerProperties(int index)
 void Tracker::getBoundingShapes(int index)
 {
   cv::approxPolyDP(cv::Mat(contours[index]), contours_poly[index], 5, true);
-  // boundRect = boundingRect(cv::Mat(contours_poly[index]));
   cv::minEnclosingCircle((cv::Mat)contours_poly[index], centre[index], radius[index]);
 }
 
@@ -114,8 +108,6 @@ void Tracker::drawOnFrame(int index)
   cv::Scalar colour = cv::Scalar(0, 255, 0);
   cv::cvtColor(boundFrame, boundFrame, CV_GRAY2BGR);
   cv::drawContours(boundFrame, contours_poly, index, colour, 1, 8, std::vector<cv::Vec4i>(), 0, cv::Point());
-  // std::cout <<"centre: " << circCent << std::endl;
-  // std::cout <<"radius: " << trackRad << std::endl;
   cv::circle(boundFrame, circCent, trackRad, colour, 2, 8, 0);
 }
 
@@ -133,7 +125,6 @@ void Tracker::getLargestContour(int* index)
     if(tempArea > area) *index = i;
     area = tempArea;
   }
-  std::cout<<"contourArea: " << area << std::endl;
 }
 
 
@@ -142,7 +133,6 @@ void Tracker::setFrameProp(double frameHeight)
   this->frameHeight = frameHeight;
   thirdHeight = (frameHeight / 3);
   twoThirdHeight = (frameHeight / 3) * 2;
-  std::cout <<"frame height: " << frameHeight << " third: " << thirdHeight << " twothird: " << twoThirdHeight << std::endl;
 }
 
 
@@ -152,13 +142,9 @@ int Tracker::findActivity()
 
   checkClear();
 
-  std::cout << "ypos: " << trackY << std::endl;
   if(travelling == IN) {
-    std::cout << "findActivity flag1" << std::endl;
     if(trackY >= twoThirdHeight) {
-      std::cout << "findActivity flag2" << std::endl;
       if(tracking.getRegion() == REGION1) {
-        std::cout << "findActivity flag3" << std::endl;
         tracking.setRegion(NONE);
         lastY = trackY;
         return 1;
@@ -166,21 +152,15 @@ int Tracker::findActivity()
       lastY = trackY;
     }
     else if(trackY <= thirdHeight) {
-      std::cout << "findActivity flag4" << std::endl;
-      std::cout << "Region1 1 set, ypos: " << trackY << std::endl;
       tracking.setRegion(REGION1);
-      std::cout << "findActivity flag5" << std::endl;
       lastY = trackY;
       return -1;
     }
     lastY = trackY;
   }
   else if(travelling == OUT) {
-    std::cout << "findActivity flag6" << std::endl;
     if(trackY <= thirdHeight) {
-      std::cout << "findActivity flag7" << std::endl;
       if(tracking.getRegion() == REGION2) {
-        std::cout << "findActivity flag8" << std::endl;
         tracking.setRegion(NONE);
         lastY = trackY;
         return 2;
@@ -188,7 +168,6 @@ int Tracker::findActivity()
       lastY = trackY;
     }
     else if(trackY >= twoThirdHeight) {
-      std::cout << "findActivity flag9" << std::endl;
       tracking.setRegion(REGION2);
       lastY = trackY;
       return -1;
@@ -218,7 +197,7 @@ Direction Tracker::travelDirection()
 void Tracker::checkClear()
 {
   int absoluteDifference = abs(trackY - lastY);
-  std::cout << "absolute difference: " << absoluteDifference << std::endl;
+
   if(absoluteDifference > 200) {
     tracking.setRegion(NONE);
   }

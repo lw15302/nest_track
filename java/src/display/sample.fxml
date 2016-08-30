@@ -31,7 +31,7 @@
                         <NumberAxis fx:id="xAxis" forceZeroInRange="false" label="Time (seconds)" minorTickCount="1" minorTickLength="0.5" side="BOTTOM" tickMarkVisible="true" tickUnit="10.0" upperBound="100.0" />
                       </xAxis>
                       <yAxis>
-                        <NumberAxis fx:id="yAxis" label="Count" side="LEFT" />
+                        <NumberAxis fx:id="yAxis" label="Count" side="LEFT" upperBound="10.0" />
                       </yAxis>
                     </LineChart>
                   </children>

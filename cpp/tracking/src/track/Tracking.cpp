@@ -41,7 +41,7 @@ int Tracking::get(Property p)
  * used to calculate the average value over the previous 5 frames
  * @param box - current bounding box from VideoPlayer object
  */
-void Tracking::averageTrackingProperties(cv::Point2f centre, float radius)
+void Tracking::setTrackingProperties(cv::Point2f centre, float radius)
 {
   // if(samplePosition == SAMPLE) samplePosition = 0;
   // std::cout << "centre: " << centre << std::endl;

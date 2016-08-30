@@ -23,7 +23,7 @@ class Tracking
 
     int get(Property p);
     void set(int val, Property p);
-    void averageTrackingProperties(cv::Point2f centre, float radius);
+    void setTrackingProperties(cv::Point2f centre, float radius);
 
   private:
     int x, y, rad;

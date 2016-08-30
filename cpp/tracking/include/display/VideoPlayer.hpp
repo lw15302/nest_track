@@ -6,7 +6,7 @@
 #include <memory>
 #include <atomic>
 #include <cmath>
-#include <chrono> // do I need this
+#include <chrono>
 #include <time.h>
 
 #define DATA_SIZE 1000
@@ -17,30 +17,26 @@ class VideoPlayer
   public:
     VideoPlayer();
     ~VideoPlayer();
-    void run(void);
+
     std::array<int, DATA_SIZE> getTrackingData();
     void setTrackStatus(bool status);
-
+    void run(void);
 
   private:
-    std::array<int, DATA_SIZE> dataSet;
-    int lastY;
-    int dataIndex;
-    bool accessingData;
     Tracker tracker;
+    int dataIndex;
+    int lastY;
+    bool accessingData;
 
-
+    cv::Mat frame;
     cv::Mat comparisonFrame;
     cv::Mat differenceFrame;
-    cv::Mat frame;
     cv::VideoCapture capture;
 
-    // std::string originalWindow;
-    std::string trackerWindow;
-
+    std::array<int, DATA_SIZE> dataSet;
     std::time_t start, current;
-    std::thread track_t;
     std::atomic<bool> track;
+    std::thread track_t;
     std::thread::id tId;
 
     void initVC();

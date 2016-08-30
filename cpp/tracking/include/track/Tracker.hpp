@@ -42,7 +42,7 @@ class Tracker
     std::vector< float > radius;
 
     void getContours();
-    void getAverageTrackerProperties(int index);
+    void getTrackerProperties(int index);
     void getBoundingShapes(int index);
     void drawOnFrame(int index);
     void getLargestContour(int* index);

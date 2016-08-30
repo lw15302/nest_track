@@ -28,15 +28,16 @@ typedef enum bool {
   TRUE
 } Bool;
 
-void sendData( int sockfd, int x );
-int getReply( int sockfd );
-int* getData(int sockfd);
+
+jintArray convertDataPacket(int* originalData, JNIEnv* env);
 Bool connectionCheck(int sockfd);
+int getReply( int sockfd );
 int setUpConnection(jobjectArray ip, JNIEnv * env);
+int* getData(int sockfd);
+char* getIpIndex(int index, jobjectArray ip, JNIEnv* env);
 void maintainConnection();
 void getIp(char *serverIp, jobjectArray ip, JNIEnv* env);
-char* getIpIndex(int index, jobjectArray ip, JNIEnv* env);
-jintArray convertDataPacket(int* originalData, JNIEnv* env);
+void sendData( int sockfd, int x );
 void convertBuffer(char* buffer[DATA_SIZE], int* dataSet);
 void allocateBuffer(char* buffer[DATA_SIZE]);
 void freeBuffer(char* buffer[DATA_SIZE]);

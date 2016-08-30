@@ -9,10 +9,11 @@
  */
 Tracking::Tracking()
 {
-  samplePosition = 0;
-  initArray(arrayX);
-  initArray(arrayY);
-  initArray(arrayRad);
+  // samplePosition = 0;
+  // initArray(arrayX);
+  // initArray(arrayY);
+  // initArray(arrayRad);
+  x = y = rad = 0;
 }
 
 
@@ -42,22 +43,26 @@ int Tracking::get(Property p)
  */
 void Tracking::averageTrackingProperties(cv::Point2f centre, float radius)
 {
-  if(samplePosition == SAMPLE) samplePosition = 0;
+  // if(samplePosition == SAMPLE) samplePosition = 0;
   // std::cout << "centre: " << centre << std::endl;
   // std::cout << "centreX: " << centre.x << std::endl;
   // std::cout << "centreY: " << centre.y << std::endl;
-  arrayX[samplePosition] = centre.x;
-  arrayY[samplePosition] = centre.y;
-  arrayRad[samplePosition] = radius;
-
-  setAvg(X, arrayX);
-  setAvg(Y, arrayY);
-  setAvg(RADIUS, arrayRad);
-
-  // std::cout << "X: " << x << std::endl;
-  // std::cout << "Y: " << y << std::endl;
-
-  samplePosition++;
+  // arrayX[samplePosition] = centre.x;
+  // arrayY[samplePosition] = centre.y;
+  // arrayRad[samplePosition] = radius;
+  //
+  // setAvg(X, arrayX);
+  // setAvg(Y, arrayY);
+  // setAvg(RADIUS, arrayRad);
+  //
+  // // std::cout << "X: " << x << std::endl;
+  // // std::cout << "Y: " << y << std::endl;
+  //
+  // samplePosition++;
+  //
+  x = centre.x;
+  y = centre.y;
+  rad = radius;
 }
 
 
@@ -71,9 +76,9 @@ void Tracking::averageTrackingProperties(cv::Point2f centre, float radius)
  */
 void Tracking::initArray(int prop[])
 {
-  for(int i = 0; i < SAMPLE; i++) {
-    prop[i] = 0;
-  }
+  // for(int i = 0; i < SAMPLE; i++) {
+  //   prop[i] = 0;
+  // }
 }
 
 
@@ -85,27 +90,27 @@ void Tracking::initArray(int prop[])
  */
 void Tracking::setAvg(Property p, int prop[])
 {
-  int value = 0;
-  for(int i = 0; i < SAMPLE; i++) {
-    value += prop[i];
-    // std::cout << "value in loop: " << value << std::endl;
-  }
-  value = value/SAMPLE;
-  // std::cout << "value in setAvg: " << value << std::endl;
-
-  switch(p) {
-    case X:
-      x = value;
-      break;
-    case Y:
-      y = value;
-      break;
-    case RADIUS:
-      rad = value;
-      break;
-    default:
-      break;
-  }
+  // int value = 0;
+  // for(int i = 0; i < SAMPLE; i++) {
+  //   value += prop[i];
+  //   // std::cout << "value in loop: " << value << std::endl;
+  // }
+  // value = value/SAMPLE;
+  // // std::cout << "value in setAvg: " << value << std::endl;
+  //
+  // switch(p) {
+  //   case X:
+  //     x = value;
+  //     break;
+  //   case Y:
+  //     y = value;
+  //     break;
+  //   case RADIUS:
+  //     rad = value;
+  //     break;
+  //   default:
+  //     break;
+  // }
 }
 
 

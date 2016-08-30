@@ -493,6 +493,7 @@ public class Controller implements Initializable {
 
 
     public void stop() {
+        tracking = false;
         connection.stopTrack(hostIp);
     }
 

@@ -34,7 +34,7 @@ class VideoPlayer
     cv::VideoCapture capture;
 
     // std::string originalWindow;
-    // std::string trackerWindow;
+    std::string trackerWindow;
 
     std::clock_t start, current;
     std::thread track_t;

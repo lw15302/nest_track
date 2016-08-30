@@ -23,7 +23,7 @@ cv::Mat Tracker::transform(cv::Mat frame)
   cv::erode(frame, outFrame, cv::Mat());
   cv::dilate(frame, outFrame, cv::Mat());
   cv::blur(frame, outFrame, cv::Size(3, 3));
-  cv::Canny(frame, outFrame, 100, 200);
+  // cv::Canny(frame, outFrame, 100, 200);
   return frame;
 }
 
@@ -133,7 +133,7 @@ void Tracker::getLargestContour(int* index)
     if(tempArea > area) *index = i;
     area = tempArea;
   }
-  // std::cout<<"contourArea: " << area << std::endl;
+  std::cout<<"contourArea: " << area << std::endl;
 }
 
 
@@ -150,34 +150,55 @@ int Tracker::findActivity()
 {
   Direction travelling = travelDirection();
 
+  checkClear();
+
+  std::cout << "ypos: " << trackY << std::endl;
   if(travelling == IN) {
+    std::cout << "findActivity flag1" << std::endl;
     if(trackY >= twoThirdHeight) {
+      std::cout << "findActivity flag2" << std::endl;
       if(tracking.getRegion() == REGION1) {
+        std::cout << "findActivity flag3" << std::endl;
         tracking.setRegion(NONE);
+        lastY = trackY;
         return 1;
       }
+      lastY = trackY;
     }
     else if(trackY <= thirdHeight) {
+      std::cout << "findActivity flag4" << std::endl;
       std::cout << "Region1 1 set, ypos: " << trackY << std::endl;
       tracking.setRegion(REGION1);
+      std::cout << "findActivity flag5" << std::endl;
+      lastY = trackY;
+      return -1;
     }
+    lastY = trackY;
   }
   else if(travelling == OUT) {
+    std::cout << "findActivity flag6" << std::endl;
     if(trackY <= thirdHeight) {
+      std::cout << "findActivity flag7" << std::endl;
       if(tracking.getRegion() == REGION2) {
+        std::cout << "findActivity flag8" << std::endl;
         tracking.setRegion(NONE);
+        lastY = trackY;
         return 2;
       }
+      lastY = trackY;
     }
     else if(trackY >= twoThirdHeight) {
+      std::cout << "findActivity flag9" << std::endl;
       tracking.setRegion(REGION2);
+      lastY = trackY;
+      return -1;
     }
+    lastY = trackY;
   }
-  else return -1;
-
-
-
-  lastY = trackY;
+  else {
+    lastY = trackY;
+    return -1;
+  }
 }
 
 Direction Tracker::travelDirection()
@@ -191,4 +212,14 @@ Direction Tracker::travelDirection()
     return IN;
   }
   else return STATIONARY;
+}
+
+
+void Tracker::checkClear()
+{
+  int absoluteDifference = abs(trackY - lastY);
+  std::cout << "absolute difference: " << absoluteDifference << std::endl;
+  if(absoluteDifference > 200) {
+    tracking.setRegion(NONE);
+  }
 }

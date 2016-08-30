@@ -1,6 +1,7 @@
 package display;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -36,6 +37,7 @@ public class Main extends Application {
                 public void handle(WindowEvent event) {
                     mainController.stop();
                     primaryStage.close();
+                    Platform.exit();
                 }
             });
         } catch (Exception e) {

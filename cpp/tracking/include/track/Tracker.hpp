@@ -47,4 +47,5 @@ class Tracker
     void drawOnFrame(int index);
     void getLargestContour(int* index);
     Direction travelDirection();
+    void checkClear();
 };

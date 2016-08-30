@@ -1,6 +1,6 @@
 #include <opencv2/opencv.hpp>
 
-#define SAMPLE 10
+// #define SAMPLE 10
 typedef enum Property {
   X,
   Y,
@@ -27,7 +27,7 @@ class Tracking
 
   private:
     int x, y, rad;
-    int arrayX[SAMPLE], arrayY[SAMPLE], arrayRad[SAMPLE];
+    // int arrayX[SAMPLE], arrayY[SAMPLE], arrayRad[SAMPLE];
     int samplePosition;
     Region region;
 

@@ -13,7 +13,7 @@ VideoPlayer::VideoPlayer () : track(true)
   tracker = Tracker();
   std::cout << "Inside VideoPlayer Constructor" << std::endl;
   // originalWindow = "Original";
-  // trackerWindow = "Tracker";
+  trackerWindow = "Tracker";
   // std::lock_guard<std::mutex> lock(mtx);
   dataSet = {0};
   lastY = 0;
@@ -71,7 +71,7 @@ void VideoPlayer::initVC()
   std::cout << "attempting namedWindow()1" << std::endl;
   // cv::namedWindow(originalWindow, cv::WINDOW_NORMAL);
   std::cout << "attempting namedWindow()2" << std::endl;
-  // cv::namedWindow(trackerWindow, cv::WINDOW_NORMAL);
+  cv::namedWindow(trackerWindow, cv::WINDOW_NORMAL);
   std::cout << "start tracking" << std::endl;
   tracker.setFrameProp(capture.get(cv::CAP_PROP_FRAME_HEIGHT));
 }
@@ -122,7 +122,7 @@ void VideoPlayer::openStream() {
     differenceFrame = tracker.highlight(differenceFrame);
     setTrackingData();
 
-    // cv::imshow(trackerWindow, differenceFrame);
+    cv::imshow(trackerWindow, differenceFrame);
     cv::waitKey(30);
   }
   std::this_thread::sleep_for(std::chrono::seconds(2));
@@ -135,7 +135,7 @@ void VideoPlayer::openStream() {
 void VideoPlayer::exit()
 {
   // cv::destroyWindow(originalWindow);
-  // cv::destroyWindow(trackerWindow);
+  cv::destroyWindow(trackerWindow);
   // frame.release();
   // differenceFrame.release();
   // comparisonFrame.release();
@@ -172,12 +172,16 @@ void VideoPlayer::setTrackingData()
 
     std::cout << "Ant entered nest at: " << timeElapsed << std::endl;
     dataSet[dataIndex] = timeElapsed;
+    std::cout << dataSet[dataIndex] << " " << std::endl;
     dataIndex++;
   }
   else if(result == 2) {
+    current = std::clock();
     float timeElapsed = (1000.0) * (current - start) / (double)CLOCKS_PER_SEC;
+    std::cout << "Ant left nest at: " << timeElapsed << std::endl;
     timeElapsed *= -1;
     dataSet[dataIndex] = timeElapsed;
+    std::cout << dataSet[dataIndex] << " " << std::endl;
     dataIndex++;
   }
   else return;

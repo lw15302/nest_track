@@ -136,7 +136,6 @@ public class Controller implements Initializable {
 //                    Platform.runLater(() -> {
                         addToTable();
 //                    });
-
                     Platform.runLater(() -> {
                         dm.setSeries(data, series);
                         System.out.println("Series: " + series.getData());
@@ -490,12 +489,6 @@ public class Controller implements Initializable {
             }
             System.out.println("inside addToTable loop, i: " + i);
         }
-    }
-
-
-    public void stop() {
-        tracking = false;
-        connection.stopTrack(hostIp);
     }
 
 

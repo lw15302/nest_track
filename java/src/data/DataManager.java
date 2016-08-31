@@ -11,13 +11,18 @@ import java.util.List;
 
 public class DataManager {
     private final int dataSize;
-    private int count;
+    private int count, highestCount, total;
+    private float mean;
+    private float recentActivity;
 
 
     public DataManager() {
         count = 0;
         dataSize = 1000;
-
+        recentActivity = 0;
+        highestCount = 0;
+        mean = 0;
+        total = 0;
     }
 
 
@@ -28,12 +33,18 @@ public class DataManager {
                 count -= 1;
                 float plottable = convertData(data[i], Direction.IN);
                 if(plottable < 0) return;
+                recentActivity = plottable;
+                calculateMean(series);
+                if(count > highestCount) highestCount = count;
                 series.getData().add(new XYChart.Data<Number, Number>(plottable, count));
             }
             else if (data[i] > 0) {
                 count += 1;
                 float plottable = convertData(data[i], Direction.OUT);
                 if (plottable < 0) return;
+                recentActivity = plottable;
+                calculateMean(series);
+                if(count > highestCount) highestCount = count;
                 series.getData().add(new XYChart.Data<Number, Number>(plottable, count));
             }
             else {
@@ -43,8 +54,31 @@ public class DataManager {
     }
 
 
-    public void resetCount() {
+    public void reset() {
+        recentActivity = 0;
         count = 0;
+        highestCount = 0;
+        mean = 0;
+        total = 0;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+
+    public float getRecentActivity() {
+        return recentActivity;
+    }
+
+
+    public int getHighestCount() {
+        return highestCount;
+    }
+
+
+    public float getMean() {
+        return mean;
     }
 
 
@@ -59,5 +93,11 @@ public class DataManager {
             default:
                 return -1;
         }
+    }
+
+
+    private void calculateMean(XYChart.Series<Number, Number> series) {
+        total += count;
+        mean = total / series.getData().size();
     }
 }

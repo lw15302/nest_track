@@ -57,6 +57,9 @@ public class Controller implements Initializable {
     private Text status;
 
     @FXML
+    private Text statsCount, statsHighCount, statsMean,statsRecent;
+
+    @FXML
     private TextField saveLocation, fileName, ip1, ip2, ip3, ip4;
 
     @FXML
@@ -143,6 +146,7 @@ public class Controller implements Initializable {
                         System.out.println("Series: " + series.getData());
                         chart.getData().retainAll();
                         chart.getData().addAll(series);
+                        updateStats();
                     });
                 }
             };
@@ -294,7 +298,7 @@ public class Controller implements Initializable {
         dm = new DataManager();
         executor = Executors.newSingleThreadScheduledExecutor();
 
-
+        resetStats();
 
         data = new int[1000];
         dataForTable = FXCollections.observableArrayList();
@@ -465,7 +469,7 @@ public class Controller implements Initializable {
 
         chart.getData().removeAll(series);
         series.getData().clear();
-        dm.resetCount();
+        dm.reset();
         if(!dataForTable.isEmpty()) {
             dataForTable.clear();
         }
@@ -491,6 +495,22 @@ public class Controller implements Initializable {
             }
             System.out.println("inside addToTable loop, i: " + i);
         }
+    }
+
+
+    private void resetStats() {
+        statsCount.setText("0");
+        statsHighCount.setText("0");
+        statsMean.setText("0.0");
+        statsRecent.setText("0.0");
+    }
+
+
+    private void updateStats() {
+        statsCount.setText(Integer.toString(dm.getCount()));
+        statsRecent.setText(Float.toString(dm.getRecentActivity()));
+        statsHighCount.setText(Integer.toString(dm.getHighestCount()));
+        statsMean.setText(Float.toString(dm.getMean()));
     }
 
 

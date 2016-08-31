@@ -5,6 +5,7 @@
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
 <GridPane alignment="CENTER" hgap="10.0" prefHeight="1080.0" prefWidth="1920.0" vgap="10.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="display.Controller">
@@ -78,6 +79,25 @@
             <Text layoutX="186.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":" />
             <Text layoutX="229.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":" />
             <Button id="setFileName" fx:id="setIp" layoutX="272.0" layoutY="284.0" mnemonicParsing="false" onAction="#lockIp" prefHeight="30.0" prefWidth="69.0" text="Ok" />
+            <Text font="$x1" layoutX="14.0" layoutY="384.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Statistics:" />
+            <Text layoutX="14.0" layoutY="424.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Count:">
+              <font>
+                <Font size="14.0" fx:id="x2" />
+              </font>
+            </Text>
+            <Text font="$x2" layoutX="14.0" layoutY="461.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Highest Count:" />
+            <Text font="$x2" layoutX="14.0" layoutY="540.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Most Recent Activity:" />
+            <Line endX="157.0" endY="-1.0" layoutX="157.0" layoutY="241.0" startX="-145.0" startY="-2.0" />
+            <Line endX="157.0" endY="-1.0" layoutX="157.0" layoutY="340.0" startX="-145.0" startY="-2.0" />
+            <Text fx:id="statsCount" layoutX="250.0" layoutY="416.0" strokeType="OUTSIDE" strokeWidth="0.0" text="">
+              <font>
+                <Font name="System Bold" size="14.0" fx:id="x3" />
+              </font>
+            </Text>
+            <Text id="highCountStats" fx:id="statsHighCount" font="$x3" layoutX="250.0" layoutY="461.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
+            <Text fx:id="statsMean" font="$x3" layoutX="252.0" layoutY="502.0" scaleX="1.0" scaleY="1.0000080665978317" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
+            <Text font="$x2" layoutX="14.0" layoutY="499.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mean:" />
+            <Text fx:id="statsRecent" font="$x3" layoutX="252.0" layoutY="543.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
           </children>
         </AnchorPane>
       </right>

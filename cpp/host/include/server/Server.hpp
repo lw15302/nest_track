@@ -47,14 +47,14 @@ class Server
 
     std::shared_ptr<VideoPlayer> player;
 
-    void sendData( int sockfd, int x );
-    void sendTrackingData(int sockfd);
+    void sendData( int socketfd, int x );
+    void sendTrackingData(int socketfd);
     void error( std::string msg );
-    void processSignal(int data, int sockfd);
-    int getData( int sockfd );
+    void processSignal(int data, int socketfd);
+    int getData( int socketfd );
     void tracking(Command c);
     void track();
-    void reply(int sockfd, int reply);
+    void reply(int socketfd, int reply);
     void dataToBuffer(char* buffer[DATA_SIZE]);
     void resetRawData();
     int* convertRawData(std::array<int, DATA_SIZE> rawData);

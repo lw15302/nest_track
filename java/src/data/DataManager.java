@@ -26,6 +26,11 @@ public class DataManager {
     }
 
 
+    /**
+     * Updates the data series
+     * @param data the raw data in an array
+     * @param series the data series to be updated
+     */
     public void setSeries(int[] data, XYChart.Series<Number, Number> series) {
         int len = data.length;
         for (int i = 0; i < len; i++) {
@@ -82,6 +87,12 @@ public class DataManager {
     }
 
 
+    /**
+     * Convert data to seconds and make positive if it is negative
+     * @param data data value
+     * @param d indicates whether or not to multiply by -1
+     * @return
+     */
     private float convertData(float data, Direction d) {
         float converted = 0;
         converted = (data / 1000);
@@ -98,6 +109,6 @@ public class DataManager {
 
     private void calculateMean(XYChart.Series<Number, Number> series) {
         total += count;
-        mean = total / series.getData().size();
+        mean = (float)total / series.getData().size();
     }
 }

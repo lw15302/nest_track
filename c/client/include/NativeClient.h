@@ -30,14 +30,14 @@ typedef enum bool {
 
 
 jintArray convertDataPacket(int* originalData, JNIEnv* env);
-Bool connectionCheck(int sockfd);
-int getReply( int sockfd );
+Bool connectionCheck(int socketfd);
+int getReply( int socketfd );
 int setUpConnection(jobjectArray ip, JNIEnv * env);
-int* getData(int sockfd);
+int* getData(int socketfd);
 char* getIpIndex(int index, jobjectArray ip, JNIEnv* env);
 void maintainConnection();
 void getIp(char *serverIp, jobjectArray ip, JNIEnv* env);
-void sendData( int sockfd, int x );
+void sendData( int socketfd, int x );
 void convertBuffer(char* buffer[DATA_SIZE], int* dataSet);
 void allocateBuffer(char* buffer[DATA_SIZE]);
 void freeBuffer(char* buffer[DATA_SIZE]);

@@ -3,7 +3,7 @@
 Tracker::Tracker()
 {
   tracking = Tracking();
-  threshold = 70;
+  threshold = 60;
   threshold_max = 255;
   lastY = 0;
   pMOG2 = cv::createBackgroundSubtractorMOG2();
@@ -48,9 +48,11 @@ cv::Mat Tracker::highlight(cv::Mat frame)
   getContours();
   if( !contours.empty() ) {
     getLargestContour(&largestIdx);
-    getBoundingShapes(largestIdx);
-    getTrackerProperties(largestIdx);
-    drawOnFrame(largestIdx);
+    if(cv::contourArea(contours[largestIdx], false) > 1)  {
+      getBoundingShapes(largestIdx);
+      getTrackerProperties(largestIdx);
+      drawOnFrame(largestIdx);
+    }
   }
   return boundFrame;
 }
@@ -128,6 +130,10 @@ void Tracker::getLargestContour(int* index)
 }
 
 
+/**
+ * Sets the frame regions
+ * @param frameHeight - height of the frame
+ */
 void Tracker::setFrameProp(double frameHeight)
 {
   this->frameHeight = frameHeight;
@@ -136,6 +142,11 @@ void Tracker::setFrameProp(double frameHeight)
 }
 
 
+/**
+ * Determines whether or not an ant has entered or left the nest
+ * @return integer that indicates whether an ant has entered/left/done nothing
+ *         1 = ant has entered, 2 = ant has left, -1 = nothing to record
+ */
 int Tracker::findActivity()
 {
   Direction travelling = travelDirection();
@@ -159,7 +170,7 @@ int Tracker::findActivity()
     lastY = trackY;
   }
   else if(travelling == OUT) {
-    if(trackY <= thirdHeight) {
+    if(trackY <= thirdHeight && lastY <= thirdHeight) {
       if(tracking.getRegion() == REGION2) {
         tracking.setRegion(NONE);
         lastY = trackY;
@@ -167,7 +178,7 @@ int Tracker::findActivity()
       }
       lastY = trackY;
     }
-    else if(trackY >= twoThirdHeight) {
+    else if(trackY >= twoThirdHeight && lastY >= twoThirdHeight) {
       tracking.setRegion(REGION2);
       lastY = trackY;
       return -1;
@@ -180,6 +191,11 @@ int Tracker::findActivity()
   }
 }
 
+/**
+ * Calculate the direction in which the ant is currently travelling, based on
+ * their previous position
+ * @return travel direction
+ */
 Direction Tracker::travelDirection()
 {
   int difference = trackY - lastY;
@@ -194,6 +210,10 @@ Direction Tracker::travelDirection()
 }
 
 
+/**
+ * Checks if there is a big jump in position, indicating whether a new ant
+ * has entered the frame
+ */
 void Tracker::checkClear()
 {
   int absoluteDifference = abs(trackY - lastY);

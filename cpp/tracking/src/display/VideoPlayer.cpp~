@@ -53,11 +53,17 @@ void VideoPlayer::run(void)
  */
 void VideoPlayer::initVC()
 {
-  if(!capture.open(0)) {
+  if(!capture.open("presentation_cut.mp4")) {
       throw "Cannot open video stream";
   }
   tracker.setFrameProp(capture.get(cv::CAP_PROP_FRAME_HEIGHT));
 }
+
+
+/**
+ * Private functions
+ */
+
 
 /**
  * Contains the main loop that captures and displays the frames from the
@@ -83,7 +89,6 @@ void VideoPlayer::openStream() {
       track = false;
       break;
     }
-
     comparisonFrame = tracker.transform(comparisonFrame);
     cv::absdiff(frame, comparisonFrame, differenceFrame);
     differenceFrame = tracker.transform(differenceFrame);
@@ -91,8 +96,8 @@ void VideoPlayer::openStream() {
     differenceFrame = tracker.backgroundSubtraction(differenceFrame);
 
     differenceFrame = tracker.highlight(differenceFrame);
-
     setTrackingData();
+
     std::this_thread::sleep_for(std::chrono::milliseconds(35));
   }
   std::this_thread::sleep_for(std::chrono::seconds(2));
@@ -101,8 +106,7 @@ void VideoPlayer::openStream() {
 
 
 void VideoPlayer::exit()
-{
-  capture.release( );
+{  capture.release( );
 }
 
 
@@ -118,9 +122,6 @@ void VideoPlayer::setTrackStatus(bool status)
 }
 
 
-/**
- * Sets the data array when activity (ant enters or leaves the nest) is recorded
- */
 void VideoPlayer::setTrackingData()
 {
   accessingData = true;
@@ -152,10 +153,7 @@ void VideoPlayer::resetData()
 }
 
 
-/**
- * Returns the tracking data upon client requests.
- * @return the data array containing times that activity occurred 
- */
+
 std::array<int, DATA_SIZE> VideoPlayer::getTrackingData()
 {
   std::array<int, DATA_SIZE> dataOut;

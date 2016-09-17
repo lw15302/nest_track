@@ -27,10 +27,6 @@ class Tracking
 
   private:
     int x, y, rad;
-    // int arrayX[SAMPLE], arrayY[SAMPLE], arrayRad[SAMPLE];
     int samplePosition;
     Region region;
-
-    void setAvg(Property p, int prop[]);
-    void initArray(int prop[]);
 };

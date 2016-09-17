@@ -12,7 +12,12 @@ public class TextDataHandler {
         this.fileName = fileName;
     }
 
-
+    /**
+     * Save data to text file
+     * @param timeData time data
+     * @param countData count data
+     * @throws IOException throws exception if save is not possible
+     */
     public void save(List<Object> timeData, List<Object> countData) throws IOException {
         try ( PrintWriter out = new PrintWriter(saveLocation + fileName)) {
             int length = timeData.size();

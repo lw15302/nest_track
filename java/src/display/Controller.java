@@ -54,7 +54,7 @@ public class Controller implements Initializable {
     private MenuItem save, exit, mean, median, stDev, about;
 
     @FXML
-    private Text status;
+    private Text status, trackingStatus;
 
     @FXML
     private Text statsCount, statsHighCount, statsMean,statsRecent;
@@ -98,6 +98,10 @@ public class Controller implements Initializable {
     private int countForTable;
 
 
+    /**
+     * Sends a signal to the address specified. If there is a server at the specified address then it returns a signal.
+     * The GUI can then react accordingly
+     */
     @FXML
     private void piConnection() {
         getIp();
@@ -112,9 +116,13 @@ public class Controller implements Initializable {
     }
 
 
+    /**
+     * Contains the logic to start/stop and maintain tracking. Also updates the live chart.
+     */
     @FXML
     private void startTracking() {
         if(!tracking) {
+            trackingStatus.setVisible(true);
             fillEmptySaveLocation();
             previousFileName = fileName.getText();
 
@@ -135,12 +143,15 @@ public class Controller implements Initializable {
 
                 while (tracking) {
                     data = connection.getData(hostIp);
+                    for(int i = 0; i < 10; i++) {
+                        System.out.print(data[i] + " ");
+                    }
+                    System.out.println();
                     if (trackingStopped(data)) {
                         break;
                     }
-//                    Platform.runLater(() -> {
-                        addToTable();
-//                    });
+                    addToTable();
+
                     Platform.runLater(() -> {
                         dm.setSeries(data, series);
                         System.out.println("Series: " + series.getData());
@@ -153,6 +164,7 @@ public class Controller implements Initializable {
             future = executor.scheduleWithFixedDelay(dataGetter, 0, 10, TimeUnit.MILLISECONDS);
         }
         else if(tracking){
+            trackingStatus.setVisible(false);
             start.setText("Start Tracking");
             future.cancel(true);
             future = null;
@@ -165,6 +177,9 @@ public class Controller implements Initializable {
     }
 
 
+    /**
+     * Enable/disable save options
+     */
     @FXML
     private void setSavePreferences() {
         if(saveCheck.isSelected()) {
@@ -182,6 +197,9 @@ public class Controller implements Initializable {
     }
 
 
+    /**
+     * Opens a file chooser to allow the user to graphically choose save location
+     */
     @FXML
     private void setSaveLocation() {
         FileChooser navigator = new FileChooser();
@@ -194,27 +212,18 @@ public class Controller implements Initializable {
 
         saveLocation.setText(saveDir);
         fileName.setText(file);
-
-
-
-
-        //Can't pick current folder, have to navigate to lowest child
     }
 
 
+    /**
+     * Enable/disable file name
+     */
     @FXML
     private void lockFileName() {
         if(setFileName.getText().equals("Ok")) {
             find.setDisable(true);
             saveLocation.setDisable(true);
             fileName.setDisable(true);
-
-
-            //Get save location and filename. If the filename does not have an extension, then add .txt. If another
-            //extension, then warn them.
-
-
-
             setFileName.setText("Change");
         }
         else if(setFileName.getText().equals("Change")){
@@ -226,6 +235,9 @@ public class Controller implements Initializable {
     }
 
 
+    /**
+     * Enable/disable IP choice
+     */
     @FXML
     private void lockIp() {
         if(setIp.getText().equals("Ok")) {
@@ -245,6 +257,9 @@ public class Controller implements Initializable {
     }
 
 
+    /**
+     * Called if no server detected. Displays red error message
+     */
     private void failedConnection() {
         status.setVisible(true);
         status.setText("Could not detect Raspberry Pi device");
@@ -252,6 +267,9 @@ public class Controller implements Initializable {
     }
 
 
+    /**
+     * Called if server is available. Displays green message
+     */
     private void successfulConnection() {
         status.setVisible(true);
         status.setText("Connected to Raspberry Pi device");
@@ -261,6 +279,10 @@ public class Controller implements Initializable {
     }
 
 
+    /**
+     * Sets default file name to date and time if none is chosen
+     * @return default file name
+     */
     private String setDefaultFileName() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy:MM:dd_HH:mm:ss");
         Date date = new Date();
@@ -269,6 +291,12 @@ public class Controller implements Initializable {
     }
 
 
+    /**
+     * Ensures that file name or directory name are in the correct format
+     * @param filePath The file name/directory name entered
+     * @param s file name or directory name
+     * @return The formatted file name or directory name
+     */
     private String formatSaveLocation(String filePath, SavePath s) {
         int len = filePath.length();
         int slash = 0;
@@ -322,6 +350,10 @@ public class Controller implements Initializable {
     }
 
 
+    /**
+     * Enables or disables the user selectable options
+     * @param toDisable enable or disable
+     */
     private void disable(boolean toDisable) {
         ip1.setDisable(toDisable);
         ip2.setDisable(toDisable);
@@ -337,6 +369,9 @@ public class Controller implements Initializable {
     }
 
 
+    /**
+     * Check if a connection is possible
+     */
     private void checkConnectionStatus() {
         try {
             Thread.sleep(100);
@@ -350,6 +385,9 @@ public class Controller implements Initializable {
     }
 
 
+    /**
+     * Check if tracking is running
+     */
     private void checkTrackingStatus() {
         try {
             Thread.sleep(100);
@@ -361,6 +399,9 @@ public class Controller implements Initializable {
     }
 
 
+    /**
+     * Sets IP boxes to default values
+     */
     private void setDefaultIp() {
         ip1.setText("127");
         ip2.setText("0");
@@ -369,6 +410,9 @@ public class Controller implements Initializable {
     }
 
 
+    /**
+     * Get the IP from the IP boxes
+     */
     private void getIp() {
         hostIp = new String[4];
         try {
@@ -382,22 +426,30 @@ public class Controller implements Initializable {
     }
 
 
+    /**
+     * Steps taken when tracking is stopped
+     * @param data the data array
+     * @return true if tracking has stopped,  else false
+     */
     private boolean trackingStopped(int[] data) {
         int count = 0;
         int len = data.length;
         for(int i = 0; i < len; i++) {
             if(data[i] == -1) count++;
-
             if(count > 4) {
-                future.cancel(true);
-                future = null;
-                tracking = false;
-                disable(false);
-                connect.setDisable(false);
-                connection.stopTrack(hostIp);
-                if(future.isCancelled()) start.setText("Start Tracking");
-                if(saveCheck.isSelected()) saveText();
-
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        trackingStatus.setVisible(false);
+                        future.cancel(true);
+                        future = null;
+                        tracking = false;
+                        disable(false);
+                        connect.setDisable(false);
+                        start.setText("Start Tracking");
+                        if(saveCheck.isSelected()) saveText();
+                    }
+                });
                 return true;
             }
         }
@@ -405,6 +457,9 @@ public class Controller implements Initializable {
     }
 
 
+    /**
+     * Save the results to a text file
+     */
     private void saveText() {
         try {
             List<Object> timeData = new ArrayList<>();
@@ -413,16 +468,11 @@ public class Controller implements Initializable {
             String savePlace = saveLocation.getText();
             String file = fileName.getText();
 
-            System.out.println("\nSave dir: " + savePlace);
-            System.out.println("\nfileName: " + file);
             textData = new TextDataHandler(savePlace, file);
 
             dataToSave(timeData, DataType.TIME);
 
             dataToSave(countData, DataType.COUNT);
-
-
-
 
             textData.save(timeData, countData);
         } catch (IOException e) {
@@ -430,10 +480,14 @@ public class Controller implements Initializable {
 
             //Handle with on screen warning
         }
-
     }
 
 
+    /**
+     * Convert data series to a list, ready to save
+     * @param data a list to fill with data
+     * @param type time or count
+     */
     private void dataToSave(List<Object> data, DataType type) {
         switch(type) {
             case TIME:
@@ -453,6 +507,9 @@ public class Controller implements Initializable {
     }
 
 
+    /**
+     * Fills save location with default values if the user doesn't enter one
+     */
     private void fillEmptySaveLocation() {
         if(saveCheck.isSelected()) {
             if(saveLocation.getText().equals("")) {
@@ -465,8 +522,10 @@ public class Controller implements Initializable {
     }
 
 
+    /**
+     * Clears data series, chart and table at the end of the experiment
+      */
     private void clearData() {
-
         chart.getData().removeAll(series);
         series.getData().clear();
         dm.reset();
@@ -478,6 +537,9 @@ public class Controller implements Initializable {
     }
 
 
+    /**
+     * Add data to table
+     */
     private void addToTable() {
         int len = data.length;
         for(int i = 0; i < len && data[i] != 0; i++) {
@@ -498,17 +560,23 @@ public class Controller implements Initializable {
     }
 
 
+    /**
+     * Reset the stats box
+     */
     private void resetStats() {
         statsCount.setText("0");
         statsHighCount.setText("0");
         statsMean.setText("0.0");
-        statsRecent.setText("0.0");
+        statsRecent.setText("0.0 seconds");
     }
 
 
+    /**
+     * Update stats with new values
+     */
     private void updateStats() {
         statsCount.setText(Integer.toString(dm.getCount()));
-        statsRecent.setText(Float.toString(dm.getRecentActivity()));
+        statsRecent.setText(Float.toString(dm.getRecentActivity()) + " seconds");
         statsHighCount.setText(Integer.toString(dm.getHighestCount()));
         statsMean.setText(Float.toString(dm.getMean()));
     }
